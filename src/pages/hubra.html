@@ -1,0 +1,83 @@
+<!--
+path: /hubra/
+title: Hubra
+description: Hubra is club management software for Swiss clubs: members, Swiss QR bills, events and training sessions, votes and groups in one place.
+-->
+<main id="main">
+<section class="page-hero">
+  <div class="wrap">
+    <div class="ph-grid">
+      <div>
+    <p class="prompt"><b>$</b> <i>show project</i></p>
+    <div class="unit-title">{{hubra}}<div><h1>Hubra</h1></div></div>
+    <p class="lede">Club software for Swiss clubs. Members, fees, events, votes and groups in one app, run for the club with updates and encrypted backups. All a member needs is a browser.</p>
+    <div class="btns"><a class="btn btn-p" href="https://hubra.club">Visit hubra.club {{icon:ext}}</a></div>
+    <div class="chips"><span class="chip">Hosted in Europe</span><span class="chip">No tracking, no ads</span><span class="chip">German &amp; English</span><span class="chip">Started at VollBuild</span><span class="chip">Not open to other clubs yet</span><span class="chip">Pilot phase</span><span class="chip">Swiss FADP &amp; EU GDPR</span></div>
+      </div>
+    <div class="console slim">
+      <header><span>hubra&gt; show status</span><span>pilot</span></header>
+<pre><span class="k">Status:</span>      <span class="o">pilot phase</span>
+<span class="k">First club:</span>  VollBuild makerspace
+<span class="k">Other clubs:</span> none yet
+<span class="k">Hosting:</span>     Europe, FADP &amp; GDPR
+<span class="k">Languages:</span>   German, English
+<span class="k">Clients:</span>     any browser
+<span class="k">Source:</span>      closed, on GitHub for CI and IaC
+<span class="k">Self-host:</span>   Docker Compose or Kubernetes
+<span class="k">Pricing:</span>     on request, by club size</pre>
+    </div>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap">
+    <div class="section-head"><p class="label">What it does</p><h2>Everything a club board does, in one place.</h2><p>The board works in the same app as the members. Everyone sees what they need, and nothing more.</p></div>
+    <div class="grid3">
+      <div class="feature"><h3>Members</h3><p>Applications, membership tiers, offices and a member directory each member opts into.</p></div>
+      <div class="feature"><h3>Finance</h3><p>Fee schedules, Swiss QR bills, automatic reminders and payment matching from a camt.054 bank file.</p></div>
+      <div class="feature"><h3>Events and training</h3><p>Recurring sessions, sign-ups, guests and attendance with one tap, plus push reminders.</p></div>
+      <div class="feature"><h3>Polls and votes</h3><p>Vote online, by proxy too, for all members or just one group.</p></div>
+      <div class="feature"><h3>Security</h3><p>Passkeys, hosting in Europe, a key per club and encrypted backups.</p></div>
+      <div class="feature"><h3>Plugins</h3><p>Payments, bookings, inventory, documents, keys, a till, a Discord bridge and more, from the <a href="https://github.com/hubra-app/hubra-plugins">plugin catalogue</a>.</p></div>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap">
+    <div class="section-head"><p class="prompt"><b>$</b> <i>show security</i></p><h2>Built for members' data.</h2><p>Clubs keep addresses, payments and sometimes data about children.</p></div>
+    <div class="grid3">
+      <div class="feature"><h3>Hosted in Europe</h3><p>Servers and backups in European data centres, following the Swiss FADP and the EU GDPR.</p></div>
+      <div class="feature"><h3>A key per club</h3><p>Each club has its own space and its own keys for confidential data such as door codes.</p></div>
+      <div class="feature"><h3>Encrypted backups</h3><p>Daily, and encrypted before they leave the server, so not even the storage provider can read them.</p></div>
+      <div class="feature"><h3>Sign-in</h3><p>Passkeys, one-time codes and a mail for every sign-in from a new device. Clubs can require 2FA for the board.</p></div>
+      <div class="feature"><h3>Audit log</h3><p>The board sees who changed what and when. Support access needs a reason, is time-limited and shows as a banner.</p></div>
+      <div class="feature"><h3>Run it yourself</h3><p>With Docker Compose or Kubernetes, for federations or clubs with their own IT.</p></div>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap">
+    <div class="section-head"><p class="prompt"><b>$</b> <i>show roadmap</i></p><h2>What's next</h2><p>Clubs suggest and vote on ideas on <a href="https://support.hubra.club">support.hubra.club</a>. The full list is on the <a href="https://hubra.club/en/roadmap/">roadmap</a>.</p></div>
+    <ul class="status">
+      <li class="next"><span class="st">next</span><span class="mod">finance</span><span><b>TWINT</b> for invoices and donations, booked automatically, plus a donation page per club.</span></li>
+      <li class="next"><span class="st">next</span><span class="mod">finance</span><span><b>Simple annual accounts</b>: chart of accounts, year close, and a balance sheet as a PDF for the AGM.</span></li>
+      <li class="next"><span class="st">next</span><span class="mod">club</span><span><b>Document library</b> for statutes, minutes and forms, visible by role or group.</span></li>
+      <li><span class="st">later</span><span class="mod">roles</span><span><b>Roles per group</b>, like "manage the youth team's events".</span></li>
+      <li><span class="st">later</span><span class="mod">platform</span><span><b>Your own domain</b>, such as members.yourclub.ch.</span></li>
+      <li class="done"><span class="st">done</span><span class="mod">events</span><span><b>Recurring trainings</b> and attendance.</span></li>
+      <li class="done"><span class="st">done</span><span class="mod">security</span><span><b>Passkeys</b> and two-factor sign-in.</span></li>
+      <li class="done"><span class="st">done</span><span class="mod">finance</span><span><b>Recurring fees</b> and a monthly statement.</span></li>
+      <li class="done"><span class="st">done</span><span class="mod">plugins</span><span><b>Discord bot</b> for clubs.</span></li>
+    </ul>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap prose">
+    <p class="label">Background</p>
+    <h2>Why I built it</h2>
+    <p>I wanted club software that looks good, has every feature I wanted, and is priced so that even small clubs can afford it.</p>
+    <p>It started for VollBuild, the makerspace club I'm part of, and grew from there into what it is today. Hubra isn't public or in production yet, and no other clubs are on it so far.</p>
+    <p>Hubra is closed source. The code lives on GitHub for the automation and infrastructure as code that comes with it.</p>
+  </div>
+</section>
+</main>
