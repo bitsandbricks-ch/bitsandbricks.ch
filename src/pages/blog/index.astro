@@ -1,0 +1,31 @@
+---
+import Site from "../../layouts/Site.astro";
+import { posts, day, minutes, facility } from "../../lib/blog";
+const all = await posts();
+---
+<Site title="Blog" description="Write-ups from the lab, the network and LAN party weekends." path="/blog/">
+<main id="main" class="view"><div class="wrap">
+  <div class="vhead">
+    <p class="prompt"><b>$</b> <i>show logging | include blog</i></p>
+    <h1>Blog</h1>
+    <p class="lede">Write-ups from the lab and the network. Newest first. <a href="/blog/rss.xml">RSS feed</a>.</p>
+  </div>
+  <label class="filterbox" for="q"><b>filter&gt;</b> include <input id="q" type="text" placeholder="homelab, ospf, python" autocomplete="off"></label>
+  <div class="syslog" id="loglist">
+    {all.map((p) => (
+      <a class="row" href={`/blog/${p.id}/`} data-s={(p.data.title + " " + p.data.tags.join(" ") + " " + facility(p)).toLowerCase()}>
+        <span class="ts">{day(p.data.date)}</span><span class="fac">{facility(p)}</span>
+        <span class="t">{p.data.title}<small>{p.data.summary}</small></span>
+        <span class="m">{minutes(p)} min · {p.data.tags.join(", ")}</span>
+      </a>
+    ))}
+  </div>
+  {all.length === 0 && <div class="empty">No posts yet.</div>}
+  <script is:inline>
+    document.getElementById("q").addEventListener("input", function (e) {
+      var q = e.target.value.trim().toLowerCase();
+      document.querySelectorAll("#loglist .row").forEach(function (r) { r.hidden = !!q && r.dataset.s.indexOf(q) < 0; });
+    });
+  </script>
+</div></main>
+</Site>

@@ -1,0 +1,42 @@
+---
+// Under every kb note: links, backlinks and a local graph. Under lessons: mark as done.
+// Under both: click-to-load comments, then Starlight's prev/next.
+import Pagination from "@astrojs/starlight/components/Pagination.astro";
+import Comments from "../Comments.astro";
+import Graph from "../Graph.astro";
+import { noteGraph, buildGraph, url, short, allDocs } from "../../lib/content";
+
+const route = Astro.locals.starlightRoute;
+const id = route.id ?? "";
+const data = route.entry.data as any;
+const real = (await allDocs()).some((d) => d.id === id);
+const isNote = real && id.startsWith("kb/");
+const isLesson = real && id.startsWith("courses/") && !data.course;
+let links: string[] = [], back: string[] = [], graph: Awaited<ReturnType<typeof buildGraph>> | null = null;
+if (isNote) {
+  const g = await noteGraph();
+  links = g.links.get(id) ?? [];
+  back = g.back.get(id) ?? [];
+  graph = await buildGraph({ center: id, w: 340, h: 230 });
+}
+---
+<footer class="kbx">
+  {isLesson && <div class="done-row"><button class="btn btn-p" type="button" data-done={id} aria-pressed="false">mark lesson as done</button></div>}
+  {isNote && graph && (
+    <div class="notefoot">
+      <div class="panel">
+        <h4>linked from</h4>
+        {back.length ? back.map((b) => <a class="lk" href={url(b)}>&lt;- {short(b)}</a>) : <span class="pill">nothing links here yet</span>}
+        <h4>links to</h4>
+        {links.length ? links.map((b) => <a class="lk" href={url(b)}>-&gt; {short(b)}</a>) : <span class="pill">no links yet</span>}
+      </div>
+      <div class="panel">
+        <h4>local graph</h4>
+        <div class="graphbox"><Graph nodes={graph.nodes} edges={graph.edges} w={340} h={230} label="Local graph of linked notes" /></div>
+        <a class="lk" href="/kb/graph/">full graph -&gt;</a>
+      </div>
+    </div>
+  )}
+  {(isNote || isLesson) && <Comments />}
+  <Pagination />
+</footer>

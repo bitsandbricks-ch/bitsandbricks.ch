@@ -1,0 +1,25 @@
+---
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import Graph from "../../components/Graph.astro";
+import { buildGraph, tagIndex } from "../../lib/content";
+const graph = await buildGraph({ w: 1000, h: 600, tags: true });
+const tags = [...(await tagIndex()).keys()];
+---
+<StarlightPage frontmatter={{ title: "Graph", description: "Every kb note and tag, and how they link.", tableOfContents: false, template: "splash" }} hasSidebar={false}>
+  <p class="prompt"><b>$</b> <i>show kb topology</i></p>
+  <p class="lede">Every note and tag. Orange dots are notes, bigger when more notes link to them. Hollow dots are tags. Pick a tag to light up its notes, click a dot to open it.</p>
+  <div class="tags" id="gtags">{tags.map((t) => <button class="tag" type="button" data-hl={t}>#{t}</button>)}<button class="tag" type="button" data-hl="">clear</button></div>
+  <div class="graphbox" id="fullgraph"><Graph nodes={graph.nodes} edges={graph.edges} w={1000} h={600} label="Graph of all notes and tags" /></div>
+  <script is:inline>
+    document.getElementById("gtags").addEventListener("click", function (e) {
+      var b = e.target.closest("[data-hl]"); if (!b) return;
+      var t = b.dataset.hl;
+      document.querySelectorAll("#fullgraph a.nd").forEach(function (a) {
+        var c = a.querySelector("circle");
+        if (c.classList.contains("tagn")) return;
+        c.classList.toggle("dim", !!t && (" " + a.dataset.tags + " ").indexOf(" " + t + " ") < 0);
+      });
+      document.querySelectorAll("#gtags [data-hl]").forEach(function (x) { x.style.textDecoration = x === b && t ? "underline" : ""; });
+    });
+  </script>
+</StarlightPage>

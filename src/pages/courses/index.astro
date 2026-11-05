@@ -1,0 +1,23 @@
+---
+import Site from "../../layouts/Site.astro";
+import CourseCard from "../../components/CourseCard.astro";
+import { courses, PATHS } from "../../lib/content";
+const all = await courses();
+const paths = [...new Set(all.map((c) => c.path))];
+---
+<Site title="Courses" description="Free courses on networking and the homelab: learning paths, courses and lessons." path="/courses/">
+<main id="main" class="view"><div class="wrap">
+  <div class="vhead">
+    <p class="prompt"><b>$</b> <i>show interfaces status | courses</i></p>
+    <h1>Courses</h1>
+    <p class="lede">Free to read. Learning paths hold courses, courses hold lessons. Each lesson is a port: green when you marked it done, blinking orange where you are. Progress stays in this browser.</p>
+  </div>
+  {paths.map((p) => (
+    <div class="chassis">
+      <div class="chassis-hd"><b>{PATHS[p]?.title ?? p}</b><span>{PATHS[p]?.summary}</span></div>
+      {all.filter((c) => c.path === p).map((c) => <CourseCard course={c} />)}
+    </div>
+  ))}
+  <div class="legend"><span class="d">done</span><span class="c">current lesson</span><span>not started</span><span>dashed port = quiz</span></div>
+</div></main>
+</Site>

@@ -1,0 +1,8 @@
+---
+import Site from "../layouts/Site.astro";
+import { pages } from "../lib/legacy";
+const p = pages.find((x) => x.path === "/404/")!;
+---
+<Site title={p.title} description={p.description} path="/404/" noindex>
+  <Fragment set:html={p.body} />
+</Site>
