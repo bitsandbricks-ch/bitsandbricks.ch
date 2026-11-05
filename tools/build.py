@@ -40,15 +40,9 @@ GITHUB = "https://github.com/reykimedev"
 LINKEDIN = "https://www.linkedin.com/in/mike-keller-181827253/"
 MAIL = "mike@cheller.dev"
 
-# The logo: a wall of bricks with the last one, the bit, dropping into place.
+# The logo: a lower-case b laid in bricks, with one lit brick, the bit.
 LOGO = (
-    '<svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="bbg" x1="0" y1="0" x2="1" y2="1">'
-    '<stop offset="0" stop-color="#9f7cf8"/><stop offset=".5" stop-color="#7441e0"/><stop offset="1" stop-color="#3a1e78"/>'
-    '</linearGradient></defs><rect width="64" height="64" rx="16" fill="url(#bbg)"/><g fill="#fff">'
-    '<rect x="11" y="39" width="20" height="12" rx="3"/><rect x="33" y="39" width="20" height="12" rx="3"/>'
-    '<rect x="11" y="25" width="9" height="12" rx="3" fill-opacity=".6"/><rect x="22" y="25" width="20" height="12" rx="3" fill-opacity=".85"/>'
-    '</g><rect x="44" y="13" width="9" height="12" rx="3" fill="#fece2b"/>'
-    '<path d="M48.5 28v5" stroke="#fece2b" stroke-width="2" stroke-linecap="round" stroke-opacity=".6" stroke-dasharray="1.5 2.5"/></svg>'
+    '<svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="bbg" gradientUnits="userSpaceOnUse" x1="8" y1="4" x2="56" y2="60"><stop offset="0" stop-color="#ffb08a"/><stop offset=".5" stop-color="#e5603a"/><stop offset="1" stop-color="#a8361b"/></linearGradient></defs><rect x="8.5" y="4.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="8.5" y="16.0" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="8.5" y="27.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="25.0" y="27.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="41.5" y="27.5" width="14" height="9" rx="2.5" fill="#2fe0c8"/><rect x="8.5" y="39.0" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="41.5" y="39.0" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="8.5" y="50.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="25.0" y="50.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="41.5" y="50.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/></svg>'
 )
 # The project marks, as on hubra.club and in the labdex docs.
 HUBRA = (
@@ -63,10 +57,10 @@ LABDEX = (
     '<rect x="14" y="14" width="4" height="4" rx="1" fill="#fff"/></svg>'
 )
 HOMELAB = (
-    '<svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="15" fill="#3a1e78"/>'
+    '<svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="15" fill="#2a1d17"/>'
     '<g fill="none" stroke="#fff" stroke-width="3.5" stroke-linejoin="round"><rect x="15" y="14" width="34" height="10" rx="3"/>'
     '<rect x="15" y="27" width="34" height="10" rx="3"/><rect x="15" y="40" width="34" height="10" rx="3"/></g>'
-    '<g fill="#fece2b"><circle cx="22" cy="19" r="2.2"/><circle cx="22" cy="32" r="2.2"/><circle cx="22" cy="45" r="2.2"/></g></svg>'
+    '<g fill="#2fe0c8"><circle cx="22" cy="19" r="2.2"/><circle cx="22" cy="32" r="2.2"/><circle cx="22" cy="45" r="2.2"/></g></svg>'
 )
 
 def icon(body: str) -> str:
@@ -102,10 +96,10 @@ HEAD = """<!doctype html>
 <meta property="og:description" content="{description}">
 <meta property="og:url" content="{url}">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#7441e0">
+<meta name="theme-color" content="#e5603a">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-<link rel="preload" href="/assets/fonts/bricolage-grotesque-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/unbounded-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/site.css">
 <script src="/assets/theme.js"></script>
 </head>
