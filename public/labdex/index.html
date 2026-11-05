@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Labdex · Bits &amp; Bricks</title>
+<meta name="description" content="Labdex is a lightweight homelab inventory that treats zones and names as first-class and generates DNS, OPNsense aliases and Ansible inventory.">
+<link rel="canonical" href="https://bitsandbricks.ch/labdex/">
+<meta property="og:title" content="Labdex · Bits &amp; Bricks">
+<meta property="og:description" content="Labdex is a lightweight homelab inventory that treats zones and names as first-class and generates DNS, OPNsense aliases and Ansible inventory.">
+<meta property="og:url" content="https://bitsandbricks.ch/labdex/">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#7441e0">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/assets/fonts/bricolage-grotesque-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/theme.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head">
+  <div class="wrap bar">
+    <a class="brand" href="/" aria-label="Bits and Bricks, home"><svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="bbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9f7cf8"/><stop offset=".5" stop-color="#7441e0"/><stop offset="1" stop-color="#3a1e78"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="url(#bbg)"/><g fill="#fff"><rect x="11" y="39" width="20" height="12" rx="3"/><rect x="33" y="39" width="20" height="12" rx="3"/><rect x="11" y="25" width="9" height="12" rx="3" fill-opacity=".6"/><rect x="22" y="25" width="20" height="12" rx="3" fill-opacity=".85"/></g><rect x="44" y="13" width="9" height="12" rx="3" fill="#fece2b"/><path d="M48.5 28v5" stroke="#fece2b" stroke-width="2" stroke-linecap="round" stroke-opacity=".6" stroke-dasharray="1.5 2.5"/></svg><span>bits<b>&amp;</b>bricks</span></a>
+    <nav class="nav" aria-label="Main"><a href="/hubra/">Hubra</a><a href="/labdex/" aria-current="page">Labdex</a><a href="/homelab/">Homelab</a><a href="/about/">About</a></nav>
+    <div class="head-tools">
+      <a class="icon-btn" href="https://github.com/reykimedev" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a>
+      <a class="icon-btn" href="https://www.linkedin.com/in/mike-keller-181827253/" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="4"/><path d="M7.5 10.5v6M7.5 7.5v.01M11.5 16.5v-6M11.5 13a2.5 2.5 0 0 1 5 0v3.5"/></svg></a>
+      <button class="icon-btn theme" type="button" aria-label="Switch colour scheme" data-theme-toggle><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="moon" d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/><g class="sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></g></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+<section class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow">Project</span>
+    <div class="project-title"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#7c3aed"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="2"/><rect x="10.5" y="10.5" width="11" height="11" rx="2.5" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="2"/><rect x="14" y="14" width="4" height="4" rx="1" fill="#fff"/></svg><div><h1>Labdex</h1></div></div>
+    <p class="lede">A small inventory for homelabs that treats zones and names as first-class. Describe networks, hosts, interfaces and services once, and Labdex checks them against your conventions and generates what the rest of the lab needs.</p>
+    <div class="btns"><a class="btn btn-p" href="https://labdex-app.github.io/labdex/">Read the docs <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a><a class="btn btn-s" href="https://github.com/labdex-app/labdex"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg> Source</a></div>
+    <div class="tags"><span class="tag">One container</span><span class="tag">SQLite or PostgreSQL</span><span class="tag">&lt; 100 MB RAM</span><span class="tag">YAML in git</span></div>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap">
+    <div class="section-head"><span class="eyebrow">What it does</span><h2>The middle ground between a spreadsheet and NetBox.</h2></div>
+    <div class="grid3">
+      <div class="feature"><h3>Inventory &amp; IPAM</h3><p>Networks with VLANs, prefixes and DHCP ranges, hosts with interfaces and services, and the next free address per network.</p></div>
+      <div class="feature"><h3>Zones</h3><p>Every network and host belongs to a zone such as <code>DC_TC</code>, and lint makes sure nothing sits above its trust level.</p></div>
+      <div class="feature"><h3>Naming rules</h3><p>Functional names like <code>srv-vm-dns-01</code> with the next number filled in, plus fun names as CNAMEs.</p></div>
+      <div class="feature"><h3>Firewall aliases</h3><p>Generated per network, zone, area and host, and synced to OPNsense.</p></div>
+      <div class="feature"><h3>DNS &amp; Ansible</h3><p>A, AAAA, CNAME, SRV and TXT records, and an Ansible inventory with groups, host vars and login banners.</p></div>
+      <div class="feature"><h3>Discovery</h3><p>nmap, the OPNsense ARP table and DHCP leases show what's really on the network.</p></div>
+      <div class="feature"><h3>Plugins</h3><p>Technitium, Proxmox, k3s, Docker, Traefik, UniFi, Tailscale, Prometheus and more from the <a href="https://github.com/labdex-app/labdex-plugins">marketplace</a>.</p></div>
+      <div class="feature"><h3>Vault &amp; backups</h3><p>A built-in vault for secrets and scheduled, encrypted backups to a folder, NFS or S3.</p></div>
+      <div class="feature"><h3>History</h3><p>Every change is recorded with a diff and can be reverted. Roles can be bound to zones, tags or names.</p></div>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap prose">
+    <span class="eyebrow">Try it</span>
+    <h2>Up in one command</h2>
+    <div class="terminal"><header><i></i><i></i><i></i></header><pre><span class="p">$</span> docker run -p 8080:8080 -e LABDEX_DEMO=1 ghcr.io/labdex-app/labdex:1
+<span class="c"># then open http://127.0.0.1:8080</span></pre></div>
+    <p>Labdex is built for home labs on a trusted network. Don't expose it to the internet or use it for business infrastructure.</p>
+  </div>
+</section>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="/"><svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="bbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9f7cf8"/><stop offset=".5" stop-color="#7441e0"/><stop offset="1" stop-color="#3a1e78"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="url(#bbg)"/><g fill="#fff"><rect x="11" y="39" width="20" height="12" rx="3"/><rect x="33" y="39" width="20" height="12" rx="3"/><rect x="11" y="25" width="9" height="12" rx="3" fill-opacity=".6"/><rect x="22" y="25" width="20" height="12" rx="3" fill-opacity=".85"/></g><rect x="44" y="13" width="9" height="12" rx="3" fill="#fece2b"/><path d="M48.5 28v5" stroke="#fece2b" stroke-width="2" stroke-linecap="round" stroke-opacity=".6" stroke-dasharray="1.5 2.5"/></svg><span>bits<b>&amp;</b>bricks</span></a>
+        <p>Side projects by Mike Keller: software for clubs, tools for homelabs, and the lab that runs them. Made in Switzerland.</p>
+      </div>
+      <div><h4>Projects</h4><ul>
+        <li><a href="/hubra/">Hubra</a></li><li><a href="/labdex/">Labdex</a></li><li><a href="/homelab/">Homelab</a></li>
+      </ul></div>
+      <div><h4>Elsewhere</h4><ul>
+        <li><a href="https://hubra.club">hubra.club</a></li><li><a href="https://labdex-app.github.io/labdex/">Labdex docs</a></li>
+        <li><a href="https://github.com/reykimedev">GitHub</a></li><li><a href="https://www.linkedin.com/in/mike-keller-181827253/">LinkedIn</a></li>
+      </ul></div>
+      <div><h4>Site</h4><ul>
+        <li><a href="/about/">About</a></li><li><a href="mailto:hi@mikekeller.ch">Contact</a></li>
+        <li><a href="/impressum/">Impressum</a></li><li><a href="/privacy/">Privacy</a></li>
+      </ul></div>
+    </div>
+    <div class="foot-base"><span>© 2026 Mike Keller</span><span>Plain HTML. No cookies, no tracking.</span></div>
+  </div>
+</footer>
+</body>
+</html>

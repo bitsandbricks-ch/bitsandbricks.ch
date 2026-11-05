@@ -1,0 +1,115 @@
+<!--
+path: /
+title: Bits & Bricks · Side projects by Mike Keller
+description: Side projects by Mike Keller, network engineer from Switzerland: Hubra club software, the Labdex homelab inventory, and the homelab they run on.
+-->
+<main id="main">
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-copy">
+      <span class="pill"><span class="dot"></span>Built and run in Switzerland</span>
+      <h1>Software and infrastructure, <span class="grad">one brick at a time.</span></h1>
+      <p class="lede">I'm Mike, a network engineer and CCIE. In my spare time I build software for clubs, tools for homelabs, and the lab that runs them. This is where they all live.</p>
+      <div class="btns">
+        <a class="btn btn-p" href="#projects">See the projects {{icon:arrow}}</a>
+        <a class="btn btn-s" href="{{linkedin}}">{{icon:linkedin}} LinkedIn</a>
+        <a class="btn btn-s" href="{{github}}">{{icon:github}} GitHub</a>
+      </div>
+    </div>
+    <div class="stack" aria-label="The three projects">
+      <a class="brick" href="/hubra/">{{hubra}}<div><strong>Hubra</strong><span>Club software for Swiss clubs</span></div><em class="layer">App</em></a>
+      <a class="brick" href="/labdex/">{{labdex}}<div><strong>Labdex</strong><span>Inventory and automation for homelabs</span></div><em class="layer">Tooling</em></a>
+      <a class="brick" href="/homelab/">{{homelab}}<div><strong>Homelab</strong><span>The network and servers underneath</span></div><em class="layer">Infra</em></a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="projects">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Projects</span>
+      <h2>Three projects, one stack.</h2>
+      <p>Each one started because I needed it myself. They're open source, and two of them are in daily use.</p>
+    </div>
+    <div class="projects">
+
+      <article class="project">
+        <div class="project-main">
+          <div class="project-title">{{hubra}}<div><h3>Hubra</h3><small>hubra.club · club management</small></div></div>
+          <p>Club software for Swiss clubs. Members, fees with Swiss QR bills, events and training sessions, votes and groups in one app. It's hosted in Europe, has no tracking, and works in German and English, in light and dark.</p>
+          <div class="tags"><span class="tag">Swiss QR bill</span><span class="tag">Plugins</span><span class="tag">Passkeys</span><span class="tag">Open source</span></div>
+          <div class="btns"><a class="btn btn-p" href="/hubra/">About Hubra {{icon:arrow}}</a><a class="btn btn-s" href="https://hubra.club">hubra.club {{icon:ext}}</a></div>
+        </div>
+        <div class="facts">
+          <div class="fact"><b>Members</b><span>Applications, membership tiers, offices and an opt-in directory.</span></div>
+          <div class="fact"><b>Finance</b><span>Fee schedules, QR bills, reminders and bank file import.</span></div>
+          <div class="fact"><b>Events</b><span>Recurring sessions, sign-ups, guests and attendance in one tap.</span></div>
+          <div class="fact"><b>Votes</b><span>Online votes, by proxy too, for everyone or one group.</span></div>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="project-main">
+          <div class="project-title">{{labdex}}<div><h3>Labdex</h3><small>homelab inventory · IPAM · automation</small></div></div>
+          <p>A small inventory for homelabs that treats zones and names as first-class. Describe networks, hosts and services once, and Labdex generates what the rest of the lab needs. It sits between a spreadsheet and NetBox: one container, SQLite, under 100 MB of RAM.</p>
+          <div class="tags"><span class="tag">OPNsense</span><span class="tag">DNS</span><span class="tag">Ansible</span><span class="tag">Proxmox</span><span class="tag">Python</span></div>
+          <div class="btns"><a class="btn btn-p" href="/labdex/">About Labdex {{icon:arrow}}</a><a class="btn btn-s" href="https://labdex-app.github.io/labdex/">Docs {{icon:ext}}</a></div>
+        </div>
+        <div class="facts">
+          <div class="fact"><b>Zones &amp; naming</b><span>Every host gets a zone and a functional name, checked against your rules.</span></div>
+          <div class="fact"><b>Firewall aliases</b><span>Generated per network, zone and host, synced to OPNsense.</span></div>
+          <div class="fact"><b>DNS &amp; Ansible</b><span>A/AAAA, CNAME and SRV records, plus a ready Ansible inventory.</span></div>
+          <div class="fact"><b>Plan, then apply</b><span>Changes to other systems are shown first and applied after review.</span></div>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="project-main">
+          <div class="project-title">{{homelab}}<div><h3>Homelab</h3><small>network · compute · observability</small></div></div>
+          <p>Where the bits meet the bricks. The network and servers at home that Labdex was built for, where my projects are tested before they ship, and where I try out ideas from my day job.</p>
+          <div class="btns"><a class="btn btn-p" href="/homelab/">Tour the lab {{icon:arrow}}</a></div>
+        </div>
+        <div class="facts">
+          <div class="fact"><b>Network</b><span>Zoned networks, firewalling and DNS, documented in Labdex.</span></div>
+          <div class="fact"><b>Compute</b><span>Virtual machines and containers for everything that runs at home.</span></div>
+          <div class="fact"><b>Observability</b><span>Metrics, uptime checks and alerts.</span></div>
+          <div class="fact"><b>Automation</b><span>Ansible playbooks driven by the inventory.</span></div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">How it fits together</span>
+      <h2>Each layer builds on the one below.</h2>
+    </div>
+    <div class="flow">
+      <div class="step"><h3>The lab runs it</h3><p>The homelab is the testbed: real networks, real failures, and real users at home.</p></div>
+      <div class="step"><h3>Labdex describes it</h3><p>One inventory is the source of truth for addresses, names, DNS, firewall aliases and Ansible.</p></div>
+      <div class="step"><h3>Hubra ships on it</h3><p>Software that clubs depend on, built with the same care for operations and security.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="about-card">
+      <div class="avatar">MK</div>
+      <div>
+        <h2>Hi, I'm Mike Keller.</h2>
+        <p>I'm a network engineer with a CCIE Enterprise Infrastructure. I care about network automation, DevOps and open source, and about tools that make infrastructure simpler to run.</p>
+      </div>
+      <div class="btns">
+        <a class="btn btn-p" href="{{linkedin}}">{{icon:linkedin}} LinkedIn</a>
+        <a class="btn btn-s" href="mailto:{{mail}}">{{icon:mail}} Mail</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
