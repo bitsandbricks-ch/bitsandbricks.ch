@@ -9,8 +9,9 @@ const tags = [...(await tagIndex()).keys()];
   <p class="prompt"><b>$</b> <i>show kb topology</i></p>
   <p class="lede">Every note and tag. Orange dots are notes, bigger when more notes link to them. Hollow dots are tags. Pick a tag to light up its notes, click a dot to open it.</p>
   <div class="tags" id="gtags">{tags.map((t) => <button class="tag" type="button" data-hl={t}>#{t}</button>)}<button class="tag" type="button" data-hl="">clear</button></div>
-  <div class="graphbox" id="fullgraph"><Graph nodes={graph.nodes} edges={graph.edges} w={1000} h={600} label="Graph of all notes and tags" /></div>
+  <div class="graphbox wide" id="fullgraph"><Graph nodes={graph.nodes} edges={graph.edges} w={1000} h={600} label="Graph of all notes and tags" /></div>
   <script is:inline>
+    var fg = document.getElementById("fullgraph"); fg.scrollLeft = (fg.scrollWidth - fg.clientWidth) / 2;
     document.getElementById("gtags").addEventListener("click", function (e) {
       var b = e.target.closest("[data-hl]"); if (!b) return;
       var t = b.dataset.hl;

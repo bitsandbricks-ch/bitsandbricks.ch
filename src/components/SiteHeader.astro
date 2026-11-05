@@ -11,8 +11,8 @@ const { path } = Astro.props;
     <div class="head-tools">
       <slot />
       <a class="icon-btn" href="/saved/" aria-label="Saved pages" title="Saved"><Fragment set:html={ICONS.star} /></a>
-      <a class="icon-btn" href={GITHUB} aria-label="GitHub"><Fragment set:html={ICONS.github} /></a>
-      <a class="icon-btn" href={LINKEDIN} aria-label="LinkedIn"><Fragment set:html={ICONS.linkedin} /></a>
+      <a class="icon-btn ext" href={GITHUB} aria-label="GitHub"><Fragment set:html={ICONS.github} /></a>
+      <a class="icon-btn ext" href={LINKEDIN} aria-label="LinkedIn"><Fragment set:html={ICONS.linkedin} /></a>
       <button class="icon-btn theme" type="button" aria-label="Switch colour scheme" data-theme-toggle><Fragment set:html={ICONS.moon} /></button>
     </div>
   </div>
