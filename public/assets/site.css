@@ -176,10 +176,13 @@ code { font-size: .86em; background: var(--surface-2); border: 1px solid var(--l
 .feature h3 { font: 600 .82rem/1.2 var(--mono); font-stretch: normal; letter-spacing: 0; margin-bottom: 8px; color: var(--text); }
 .feature h3::before { content: "# "; color: var(--brick); }
 .feature p { color: var(--text-2); font-size: .96rem; }
-.prose { max-width: 46rem; display: grid; gap: 16px; }
+.prose { display: grid; gap: 16px; justify-items: start; }
+.prose > * { max-width: 46rem; }
+.prose > .terminal, .prose > .console, .prose > .status { width: 100%; }
 .prose p, .prose li { color: var(--text-2); }
 .prose ul { margin: 0; padding-left: 1.2rem; display: grid; gap: 6px; }
-.prose h2 { font-size: 1.6rem; margin-top: 12px; }
+.prose h2 { margin-bottom: 12px; }
+.prose h2::after { content: ""; display: block; width: 44px; height: 12px; margin-top: 14px; background: var(--brick); border-radius: 2px; box-shadow: 50px 0 0 var(--core); }
 .terminal { border-radius: 8px; background: #0f1110; color: #ecefeb; border: 1px solid #2a2f2b; overflow: hidden; max-width: 46rem; }
 .terminal header { display: flex; gap: 6px; padding: 10px 14px; border-bottom: 1px solid #2a2f2b; }
 .terminal header i { width: 10px; height: 10px; border-radius: 50%; background: #3b423d; }
