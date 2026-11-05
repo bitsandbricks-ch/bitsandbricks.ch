@@ -3,17 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bits &amp; Bricks · Side projects by Mike Keller</title>
-<meta name="description" content="Side projects by Mike Keller, network engineer from Switzerland: Hubra club software, the Labdex homelab inventory, and the homelab they run on.">
+<title>Bits &amp; Bricks · Mike Keller, network engineer</title>
+<meta name="description" content="Side projects by Mike Keller (Reykime), network engineer and CCIE from Switzerland: Hubra club software, the Labdex homelab inventory, and the homelab they run on.">
 <link rel="canonical" href="https://bitsandbricks.ch/">
-<meta property="og:title" content="Bits &amp; Bricks · Side projects by Mike Keller">
-<meta property="og:description" content="Side projects by Mike Keller, network engineer from Switzerland: Hubra club software, the Labdex homelab inventory, and the homelab they run on.">
+<meta property="og:title" content="Bits &amp; Bricks · Mike Keller, network engineer">
+<meta property="og:description" content="Side projects by Mike Keller (Reykime), network engineer and CCIE from Switzerland: Hubra club software, the Labdex homelab inventory, and the homelab they run on.">
 <meta property="og:url" content="https://bitsandbricks.ch/">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#e5603a">
+<meta name="theme-color" content="#0f1110">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-<link rel="preload" href="/assets/fonts/unbounded-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/archivo-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/ibm-plex-mono-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/site.css">
 <script src="/assets/theme.js"></script>
 </head>
@@ -21,8 +21,8 @@
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-head">
   <div class="wrap bar">
-    <a class="brand" href="/" aria-label="Bits and Bricks, home"><svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="bbg" gradientUnits="userSpaceOnUse" x1="8" y1="4" x2="56" y2="60"><stop offset="0" stop-color="#ffb08a"/><stop offset=".5" stop-color="#e5603a"/><stop offset="1" stop-color="#a8361b"/></linearGradient></defs><rect x="8.5" y="4.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="8.5" y="16.0" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="8.5" y="27.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="25.0" y="27.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="41.5" y="27.5" width="14" height="9" rx="2.5" fill="#b28cff"/><rect x="8.5" y="39.0" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="41.5" y="39.0" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="8.5" y="50.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="25.0" y="50.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="41.5" y="50.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/></svg><span>bits<b>&amp;</b>bricks</span></a>
-    <nav class="nav" aria-label="Main"><a href="/hubra/">Hubra</a><a href="/labdex/">Labdex</a><a href="/homelab/">Homelab</a><a href="/about/">About</a></nav>
+    <a class="brand" href="/" aria-label="Bits and Bricks, home"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><rect x="5" y="12" width="17" height="10" rx="1.4" fill="var(--brick)"/><rect x="24.5" y="12" width="17.0" height="10" rx="1.4" fill="var(--brick)"/><rect x="44" y="12" width="17" height="10" rx="1.4" fill="var(--brick)"/><rect x="5" y="24.5" width="7.5" height="10" rx="1.4" fill="var(--brick)"/><rect x="15" y="24.5" width="17" height="10" rx="1.4" fill="var(--text)"/><path d="M19.0 26.7h9v4.4h-2.4v1.4h-4.2v-1.4h-2.4z" fill="var(--page)"/><rect x="16.8" y="26.9" width="2" height="1.6" rx=".4" fill="var(--led)"/><rect x="28.2" y="26.9" width="2" height="1.6" rx=".4" fill="#fb923c"/><rect x="34.5" y="24.5" width="17.0" height="10" rx="1.4" fill="var(--brick)"/><rect x="54" y="24.5" width="7" height="10" rx="1.4" fill="var(--brick)"/><rect x="5" y="37" width="17" height="10" rx="1.4" fill="var(--brick)"/><rect x="24.5" y="37" width="17.0" height="10" rx="1.4" fill="var(--brick)"/><rect x="44" y="37" width="17" height="10" rx="1.4" fill="var(--brick)"/></svg><span>Bits<b>&amp;</b>Bricks</span></a>
+    <nav class="nav" aria-label="Main"><a href="/#rack">projects</a><a href="/hubra/">hubra</a><a href="/labdex/">labdex</a><a href="/homelab/">homelab</a><a href="/about/">about</a></nav>
     <div class="head-tools">
       <a class="icon-btn" href="https://github.com/reykimedev" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a>
       <a class="icon-btn" href="https://www.linkedin.com/in/mike-keller-181827253/" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="4"/><path d="M7.5 10.5v6M7.5 7.5v.01M11.5 16.5v-6M11.5 13a2.5 2.5 0 0 1 5 0v3.5"/></svg></a>
@@ -35,106 +35,134 @@
 <section class="hero">
   <div class="wrap">
     <div class="hero-copy">
-      <span class="pill"><span class="dot"></span>Built and run in Switzerland</span>
-      <h1>Software and infrastructure, <span class="grad">one brick at a time.</span></h1>
-      <p class="lede">I'm Mike, a network engineer and CCIE. In my spare time I build software for clubs, tools for homelabs, and the lab that runs them. This is where they all live.</p>
+      <p class="prompt"><b>reykime@bitsandbricks</b>:~$ <i>whoami</i><span class="cursor"></span></p>
+      <h1>I build networks, and the software that runs on them.</h1>
+      <p class="lede">I'm Mike, a network engineer and CCIE from Switzerland, Reykime almost everywhere else. Bits &amp; Bricks is where my side projects live: software for clubs, tools for homelabs, and the lab underneath.</p>
       <div class="btns">
-        <a class="btn btn-p" href="#projects">See the projects <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn btn-p" href="#rack">show projects <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         <a class="btn btn-s" href="https://www.linkedin.com/in/mike-keller-181827253/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="4"/><path d="M7.5 10.5v6M7.5 7.5v.01M11.5 16.5v-6M11.5 13a2.5 2.5 0 0 1 5 0v3.5"/></svg> LinkedIn</a>
         <a class="btn btn-s" href="https://github.com/reykimedev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg> GitHub</a>
       </div>
     </div>
-    <div class="stack" aria-label="The three projects">
-      <a class="brick" href="/hubra/"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="15" fill="#7441e0"/><path d="M21 14V50M21 35a11 11 0 0 1 22 0V50" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="45" r="4" fill="#fece2b"/></svg><div><strong>Hubra</strong><span>Club software for Swiss clubs</span></div><em class="layer">App</em></a>
-      <a class="brick" href="/labdex/"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#7c3aed"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="2"/><rect x="10.5" y="10.5" width="11" height="11" rx="2.5" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="2"/><rect x="14" y="14" width="4" height="4" rx="1" fill="#fff"/></svg><div><strong>Labdex</strong><span>Inventory and automation for homelabs</span></div><em class="layer">Tooling</em></a>
-      <a class="brick" href="/homelab/"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="15" fill="#2a1d17"/><g fill="none" stroke="#fff" stroke-width="3.5" stroke-linejoin="round"><rect x="15" y="14" width="34" height="10" rx="3"/><rect x="15" y="27" width="34" height="10" rx="3"/><rect x="15" y="40" width="34" height="10" rx="3"/></g><g fill="#b28cff"><circle cx="22" cy="19" r="2.2"/><circle cx="22" cy="32" r="2.2"/><circle cx="22" cy="45" r="2.2"/></g></svg><div><strong>Homelab</strong><span>The network and servers underneath</span></div><em class="layer">Infra</em></a>
-    </div>
+    <svg class="map" viewBox="0 0 560 440" role="img" aria-labelledby="map-t"><title id="map-t">Network map: Reykime at the core, linked to GitHub, LinkedIn, Hubra, Labdex, the homelab and Lock and Load.</title>
+<path class="link" d="M126 72L250 186"/>
+<path class="link" d="M434 72L310 186"/>
+<path class="link" d="M235 242L70 372"/>
+<path class="link" d="M265 242L210 372"/>
+<path class="link" d="M295 242L350 372"/>
+<path class="link" d="M325 242L490 372"/>
+<path class="pkt" pathLength="200" d="M126 72L250 186"/>
+<path class="pkt" pathLength="200" d="M434 72L310 186"/>
+<path class="pkt" pathLength="200" d="M235 242L70 372"/>
+<path class="pkt" pathLength="200" d="M265 242L210 372"/>
+<path class="pkt" pathLength="200" d="M295 242L350 372"/>
+<path class="pkt" pathLength="200" d="M325 242L490 372"/>
+<text class="ifname" x="221" y="154">xe-0/0/0</text>
+<text class="ifname" x="351" y="154">xe-0/0/1</text>
+<text class="ifname" x="83" y="323">ge-0/1/0</text>
+<text class="ifname" x="181" y="323">ge-0/1/1</text>
+<text class="ifname" x="335" y="323">ge-0/1/2</text>
+<text class="ifname" x="433" y="323">ge-0/1/3</text>
+<a class="node" href="https://github.com/reykimedev"><rect x="60" y="24" width="132" height="48" rx="4"/><circle class="led" cx="72" cy="40" r="3.5"/><text x="82" y="44">github</text><text class="sub" x="72" y="61">uplink · code</text></a>
+<a class="node" href="https://www.linkedin.com/in/mike-keller-181827253/"><rect x="368" y="24" width="132" height="48" rx="4"/><circle class="led" cx="380" cy="40" r="3.5"/><text x="390" y="44">linkedin</text><text class="sub" x="380" y="61">uplink · work</text></a>
+<a class="node core" href="/about/"><rect x="200" y="186" width="160" height="56" rx="4"/><circle class="led" cx="212" cy="202" r="3.5"/><text x="222" y="206">reykime</text><text class="sub" x="212" y="223">core · Mike Keller</text></a>
+<a class="node" href="/hubra/"><rect x="6" y="372" width="132" height="48" rx="4"/><circle class="led" cx="18" cy="388" r="3.5"/><text x="28" y="392">hubra</text><text class="sub" x="18" y="409">app · clubs</text></a>
+<a class="node" href="/labdex/"><rect x="146" y="372" width="132" height="48" rx="4"/><circle class="led" cx="158" cy="388" r="3.5"/><text x="168" y="392">labdex</text><text class="sub" x="158" y="409">tool · inventory</text></a>
+<a class="node" href="/homelab/"><rect x="286" y="372" width="132" height="48" rx="4"/><circle class="led" cx="298" cy="388" r="3.5"/><text x="308" y="392">homelab</text><text class="sub" x="298" y="409">infra · the lab</text></a>
+<a class="node" href="/about/#community"><rect x="426" y="372" width="132" height="48" rx="4"/><circle class="led" cx="438" cy="388" r="3.5"/><text x="448" y="392">lock&amp;load</text><text class="sub" x="438" y="409">team · infra/net</text></a>
+</svg>
   </div>
 </section>
 
-<section class="section" id="projects">
+<section class="section" id="rack">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">Projects</span>
-      <h2>Three projects, one stack.</h2>
-      <p>Each one started because I needed it myself. They're open source, and two of them are in daily use.</p>
+      <p class="prompt"><b>$</b> <i>show chassis</i></p>
+      <h2>The rack</h2>
+      <p>One unit per project. Each started because I needed it myself, and they're all open source.</p>
     </div>
-    <div class="projects">
+    <div class="rack">
 
-      <article class="project">
-        <div class="project-main">
-          <div class="project-title"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="15" fill="#7441e0"/><path d="M21 14V50M21 35a11 11 0 0 1 22 0V50" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="45" r="4" fill="#fece2b"/></svg><div><h3>Hubra</h3><small>hubra.club · club management</small></div></div>
-          <p>Club software for Swiss clubs. Members, fees with Swiss QR bills, events and training sessions, votes and groups in one app. It's hosted in Europe, has no tracking, and works in German and English, in light and dark.</p>
-          <div class="tags"><span class="tag">Swiss QR bill</span><span class="tag">Plugins</span><span class="tag">Passkeys</span><span class="tag">Open source</span></div>
-          <div class="btns"><a class="btn btn-p" href="/hubra/">About Hubra <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn btn-s" href="https://hubra.club">hubra.club <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a></div>
+      <article class="unit">
+        <div class="ear"><i></i><i></i></div>
+        <div class="face">
+          <div class="leds"><span class="on">pwr</span><span class="on">link</span><span class="act">act</span></div>
+          <div class="unit-main">
+            <div class="unit-title"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="15" fill="#7441e0"/><path d="M21 14V50M21 35a11 11 0 0 1 22 0V50" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="45" r="4" fill="#fece2b"/></svg><h3>Hubra</h3><span class="mono">U1 · app · hubra.club</span></div>
+            <p>Club software for Swiss clubs: members, fees with Swiss QR bills, events and training sessions, and votes, all in one app. Hosted in Europe, no tracking, and in daily use at VollBuild Makerspace.</p>
+            <div class="ports">
+              <div class="port"><b>members</b><span>Applications, tiers, offices, opt-in directory</span></div>
+              <div class="port"><b>finance</b><span>QR bills, reminders, bank file import</span></div>
+              <div class="port"><b>events</b><span>Sessions, sign-ups, attendance in one tap</span></div>
+              <div class="port"><b>votes</b><span>Online and by proxy, per group</span></div>
+            </div>
+          </div>
+          <div class="unit-links"><a class="btn btn-p" href="/hubra/">details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn btn-s" href="https://hubra.club">hubra.club <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a></div>
         </div>
-        <div class="facts">
-          <div class="fact"><b>Members</b><span>Applications, membership tiers, offices and an opt-in directory.</span></div>
-          <div class="fact"><b>Finance</b><span>Fee schedules, QR bills, reminders and bank file import.</span></div>
-          <div class="fact"><b>Events</b><span>Recurring sessions, sign-ups, guests and attendance in one tap.</span></div>
-          <div class="fact"><b>Votes</b><span>Online votes, by proxy too, for everyone or one group.</span></div>
-        </div>
+        <div class="ear"><i></i><i></i></div>
       </article>
 
-      <article class="project">
-        <div class="project-main">
-          <div class="project-title"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#7c3aed"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="2"/><rect x="10.5" y="10.5" width="11" height="11" rx="2.5" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="2"/><rect x="14" y="14" width="4" height="4" rx="1" fill="#fff"/></svg><div><h3>Labdex</h3><small>homelab inventory · IPAM · automation</small></div></div>
-          <p>A small inventory for homelabs that treats zones and names as first-class. Describe networks, hosts and services once, and Labdex generates what the rest of the lab needs. It sits between a spreadsheet and NetBox: one container, SQLite, under 100 MB of RAM.</p>
-          <div class="tags"><span class="tag">OPNsense</span><span class="tag">DNS</span><span class="tag">Ansible</span><span class="tag">Proxmox</span><span class="tag">Python</span></div>
-          <div class="btns"><a class="btn btn-p" href="/labdex/">About Labdex <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn btn-s" href="https://labdex-app.github.io/labdex/">Docs <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a></div>
+      <article class="unit">
+        <div class="ear"><i></i><i></i></div>
+        <div class="face">
+          <div class="leds"><span class="on">pwr</span><span class="on">link</span><span class="act">act</span></div>
+          <div class="unit-main">
+            <div class="unit-title"><svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#7c3aed"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="2"/><rect x="10.5" y="10.5" width="11" height="11" rx="2.5" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="2"/><rect x="14" y="14" width="4" height="4" rx="1" fill="#fff"/></svg><h3>Labdex</h3><span class="mono">U2 · tool · homelab inventory</span></div>
+            <p>A small inventory for homelabs that treats zones and names as first-class. Describe the lab once and Labdex generates DNS, firewall aliases and an Ansible inventory. One container, SQLite, under 100 MB of RAM.</p>
+            <div class="ports">
+              <div class="port"><b>zones</b><span>Trust zones and naming rules, linted</span></div>
+              <div class="port"><b>opnsense</b><span>Firewall aliases, synced</span></div>
+              <div class="port"><b>dns</b><span>A, AAAA, CNAME and SRV records</span></div>
+              <div class="port"><b>ansible</b><span>Inventory, plan first, then apply</span></div>
+            </div>
+          </div>
+          <div class="unit-links"><a class="btn btn-p" href="/labdex/">details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn btn-s" href="https://labdex-app.github.io/labdex/">docs <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a></div>
         </div>
-        <div class="facts">
-          <div class="fact"><b>Zones &amp; naming</b><span>Every host gets a zone and a functional name, checked against your rules.</span></div>
-          <div class="fact"><b>Firewall aliases</b><span>Generated per network, zone and host, synced to OPNsense.</span></div>
-          <div class="fact"><b>DNS &amp; Ansible</b><span>A/AAAA, CNAME and SRV records, plus a ready Ansible inventory.</span></div>
-          <div class="fact"><b>Plan, then apply</b><span>Changes to other systems are shown first and applied after review.</span></div>
-        </div>
+        <div class="ear"><i></i><i></i></div>
       </article>
 
-      <article class="project">
-        <div class="project-main">
-          <div class="project-title"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="15" fill="#2a1d17"/><g fill="none" stroke="#fff" stroke-width="3.5" stroke-linejoin="round"><rect x="15" y="14" width="34" height="10" rx="3"/><rect x="15" y="27" width="34" height="10" rx="3"/><rect x="15" y="40" width="34" height="10" rx="3"/></g><g fill="#b28cff"><circle cx="22" cy="19" r="2.2"/><circle cx="22" cy="32" r="2.2"/><circle cx="22" cy="45" r="2.2"/></g></svg><div><h3>Homelab</h3><small>network · compute · observability</small></div></div>
-          <p>Where the bits meet the bricks. The network and servers at home that Labdex was built for, where my projects are tested before they ship, and where I try out ideas from my day job.</p>
-          <div class="btns"><a class="btn btn-p" href="/homelab/">Tour the lab <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      <article class="unit">
+        <div class="ear"><i></i><i></i></div>
+        <div class="face">
+          <div class="leds"><span class="on">pwr</span><span class="on">link</span><span class="act">act</span></div>
+          <div class="unit-main">
+            <div class="unit-title"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="15" fill="#b23b14"/><g fill="none" stroke="#fff" stroke-width="3.5" stroke-linejoin="round"><rect x="15" y="14" width="34" height="10" rx="3"/><rect x="15" y="27" width="34" height="10" rx="3"/><rect x="15" y="40" width="34" height="10" rx="3"/></g><g fill="#4ade80"><circle cx="22" cy="19" r="2.2"/><circle cx="22" cy="32" r="2.2"/><circle cx="22" cy="45" r="2.2"/></g></svg><h3>Homelab</h3><span class="mono">U3 · infra · the lab</span></div>
+            <p>The network and servers at home where Labdex was born and where everything gets tested before it ships. It's also where I try out ideas from my day job.</p>
+            <div class="ports">
+              <div class="port"><b>network</b><span>Zoned networks, firewalling, DNS</span></div>
+              <div class="port"><b>compute</b><span>VMs and containers</span></div>
+              <div class="port"><b>observe</b><span>Metrics, uptime checks, alerts</span></div>
+              <div class="port"><b>automate</b><span>Ansible, driven by the inventory</span></div>
+            </div>
+          </div>
+          <div class="unit-links"><a class="btn btn-p" href="/homelab/">tour <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
         </div>
-        <div class="facts">
-          <div class="fact"><b>Network</b><span>Zoned networks, firewalling and DNS, documented in Labdex.</span></div>
-          <div class="fact"><b>Compute</b><span>Virtual machines and containers for everything that runs at home.</span></div>
-          <div class="fact"><b>Observability</b><span>Metrics, uptime checks and alerts.</span></div>
-          <div class="fact"><b>Automation</b><span>Ansible playbooks driven by the inventory.</span></div>
-        </div>
+        <div class="ear"><i></i><i></i></div>
       </article>
 
     </div>
   </div>
 </section>
 
-<section class="section">
+<section class="section" id="about">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">How it fits together</span>
-      <h2>Each layer builds on the one below.</h2>
+      <p class="prompt"><b>$</b> <i>show version</i></p>
+      <h2>About the operator</h2>
     </div>
-    <div class="flow">
-      <div class="step"><h3>The lab runs it</h3><p>The homelab is the testbed: real networks, real failures, and real users at home.</p></div>
-      <div class="step"><h3>Labdex describes it</h3><p>One inventory is the source of truth for addresses, names, DNS, firewall aliases and Ansible.</p></div>
-      <div class="step"><h3>Hubra ships on it</h3><p>Software that clubs depend on, built with the same care for operations and security.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <div class="about-card">
-      <div class="avatar">MK</div>
-      <div>
-        <h2>Hi, I'm Mike Keller.</h2>
-        <p>I'm a network engineer with a CCIE Enterprise Infrastructure. I care about network automation, DevOps and open source, and about tools that make infrastructure simpler to run.</p>
-      </div>
-      <div class="btns">
-        <a class="btn btn-p" href="https://www.linkedin.com/in/mike-keller-181827253/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="4"/><path d="M7.5 10.5v6M7.5 7.5v.01M11.5 16.5v-6M11.5 13a2.5 2.5 0 0 1 5 0v3.5"/></svg> LinkedIn</a>
-        <a class="btn btn-s" href="mailto:mike@cheller.dev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg> Mail</a>
-      </div>
+    <div class="console">
+      <header><span>reykime&gt; show version</span><span>uptime: always on</span></header>
+<pre><span class="k">Hostname:</span>       reykime
+<span class="k">Operator:</span>       Mike Keller
+<span class="k">Role:</span>           Network engineer
+<span class="k">Certification:</span>  CCIE Enterprise Infrastructure
+<span class="k">Location:</span>       Switzerland
+<span class="k">Interests:</span>      network automation, infrastructure, DevOps, open source
+<span class="k">Community:</span>      Lock and Load, infrastructure and network team
+<span class="k">Interfaces:</span>
+  <span class="p">linkedin</span>      <a href="https://www.linkedin.com/in/mike-keller-181827253/">linkedin.com/in/mike-keller</a>
+  <span class="p">github</span>        <a href="https://github.com/reykimedev">github.com/reykimedev</a>
+  <span class="p">mail</span>          <a href="mailto:mike@cheller.dev">mike@cheller.dev</a></pre>
     </div>
   </div>
 </section>
@@ -144,22 +172,19 @@
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <a class="brand" href="/"><svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="bbg" gradientUnits="userSpaceOnUse" x1="8" y1="4" x2="56" y2="60"><stop offset="0" stop-color="#ffb08a"/><stop offset=".5" stop-color="#e5603a"/><stop offset="1" stop-color="#a8361b"/></linearGradient></defs><rect x="8.5" y="4.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="8.5" y="16.0" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="8.5" y="27.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="25.0" y="27.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="41.5" y="27.5" width="14" height="9" rx="2.5" fill="#b28cff"/><rect x="8.5" y="39.0" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="41.5" y="39.0" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="8.5" y="50.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="25.0" y="50.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="41.5" y="50.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/></svg><span>bits<b>&amp;</b>bricks</span></a>
-        <p>Side projects by Mike Keller: software for clubs, tools for homelabs, and the lab that runs them. Made in Switzerland.</p>
+        <a class="brand" href="/"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><rect x="5" y="12" width="17" height="10" rx="1.4" fill="var(--brick)"/><rect x="24.5" y="12" width="17.0" height="10" rx="1.4" fill="var(--brick)"/><rect x="44" y="12" width="17" height="10" rx="1.4" fill="var(--brick)"/><rect x="5" y="24.5" width="7.5" height="10" rx="1.4" fill="var(--brick)"/><rect x="15" y="24.5" width="17" height="10" rx="1.4" fill="var(--text)"/><path d="M19.0 26.7h9v4.4h-2.4v1.4h-4.2v-1.4h-2.4z" fill="var(--page)"/><rect x="16.8" y="26.9" width="2" height="1.6" rx=".4" fill="var(--led)"/><rect x="28.2" y="26.9" width="2" height="1.6" rx=".4" fill="#fb923c"/><rect x="34.5" y="24.5" width="17.0" height="10" rx="1.4" fill="var(--brick)"/><rect x="54" y="24.5" width="7" height="10" rx="1.4" fill="var(--brick)"/><rect x="5" y="37" width="17" height="10" rx="1.4" fill="var(--brick)"/><rect x="24.5" y="37" width="17.0" height="10" rx="1.4" fill="var(--brick)"/><rect x="44" y="37" width="17" height="10" rx="1.4" fill="var(--brick)"/></svg><span>Bits<b>&amp;</b>Bricks</span></a>
+        <p>Side projects by Mike Keller, alias Reykime: software for clubs, tools for homelabs, and the lab that runs them. Built in Switzerland.</p>
       </div>
-      <div><h4>Projects</h4><ul>
-        <li><a href="/hubra/">Hubra</a></li><li><a href="/labdex/">Labdex</a></li><li><a href="/homelab/">Homelab</a></li>
-      </ul></div>
-      <div><h4>Elsewhere</h4><ul>
-        <li><a href="https://hubra.club">hubra.club</a></li><li><a href="https://labdex-app.github.io/labdex/">Labdex docs</a></li>
-        <li><a href="https://github.com/reykimedev">GitHub</a></li><li><a href="https://www.linkedin.com/in/mike-keller-181827253/">LinkedIn</a></li>
-      </ul></div>
-      <div><h4>Site</h4><ul>
-        <li><a href="/about/">About</a></li><li><a href="mailto:mike@cheller.dev">Contact</a></li>
-        <li><a href="/impressum/">Impressum</a></li><li><a href="/privacy/">Privacy</a></li>
-      </ul></div>
+      <ol class="trace" aria-label="Links">
+        <li class="cmd"><b>$</b> traceroute elsewhere</li>
+        <li><span>1</span><a href="https://hubra.club">hubra.club</a><span>Hubra</span></li>
+        <li><span>2</span><a href="https://labdex-app.github.io/labdex/">labdex-app.github.io</a><span>Labdex docs</span></li>
+        <li><span>3</span><a href="https://github.com/reykimedev">github.com/reykimedev</a><span>code</span></li>
+        <li><span>4</span><a href="https://www.linkedin.com/in/mike-keller-181827253/">linkedin.com/in/mike-keller</a><span>work</span></li>
+        <li><span>5</span><a href="mailto:mike@cheller.dev">mike@cheller.dev</a><span>mail</span></li>
+      </ol>
     </div>
-    <div class="foot-base"><span>© 2026 Mike Keller</span><span>Plain HTML. No cookies, no tracking.</span></div>
+    <div class="foot-base"><span>© 2026 Mike Keller · plain HTML, no cookies, no tracking</span><span><a href="/brand/">Brand</a> · <a href="/impressum/">Impressum</a> · <a href="/privacy/">Privacy</a></span></div>
   </div>
 </footer>
 </body>

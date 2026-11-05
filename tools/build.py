@@ -34,15 +34,15 @@ OUT = ROOT / "public"
 SITE = "https://bitsandbricks.ch"
 NAME = "Bits & Bricks"
 
-NAV = [("/hubra/", "Hubra"), ("/labdex/", "Labdex"), ("/homelab/", "Homelab"), ("/about/", "About")]
+NAV = [("/#rack", "projects"), ("/hubra/", "hubra"), ("/labdex/", "labdex"), ("/homelab/", "homelab"), ("/about/", "about")]
 
 GITHUB = "https://github.com/reykimedev"
 LINKEDIN = "https://www.linkedin.com/in/mike-keller-181827253/"
 MAIL = "mike@cheller.dev"
 
-# The logo: a lower-case b laid in bricks, with one lit brick, the bit.
+# The logo: a brick wall (a firewall) with one RJ45 port in it, link and activity LEDs lit.
 LOGO = (
-    '<svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="bbg" gradientUnits="userSpaceOnUse" x1="8" y1="4" x2="56" y2="60"><stop offset="0" stop-color="#ffb08a"/><stop offset=".5" stop-color="#e5603a"/><stop offset="1" stop-color="#a8361b"/></linearGradient></defs><rect x="8.5" y="4.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="8.5" y="16.0" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="8.5" y="27.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="25.0" y="27.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="41.5" y="27.5" width="14" height="9" rx="2.5" fill="#b28cff"/><rect x="8.5" y="39.0" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="41.5" y="39.0" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="8.5" y="50.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="25.0" y="50.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="41.5" y="50.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/></svg>'
+    '<svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><rect x="5" y="12" width="17" height="10" rx="1.4" fill="var(--brick)"/><rect x="24.5" y="12" width="17.0" height="10" rx="1.4" fill="var(--brick)"/><rect x="44" y="12" width="17" height="10" rx="1.4" fill="var(--brick)"/><rect x="5" y="24.5" width="7.5" height="10" rx="1.4" fill="var(--brick)"/><rect x="15" y="24.5" width="17" height="10" rx="1.4" fill="var(--text)"/><path d="M19.0 26.7h9v4.4h-2.4v1.4h-4.2v-1.4h-2.4z" fill="var(--page)"/><rect x="16.8" y="26.9" width="2" height="1.6" rx=".4" fill="var(--led)"/><rect x="28.2" y="26.9" width="2" height="1.6" rx=".4" fill="#fb923c"/><rect x="34.5" y="24.5" width="17.0" height="10" rx="1.4" fill="var(--brick)"/><rect x="54" y="24.5" width="7" height="10" rx="1.4" fill="var(--brick)"/><rect x="5" y="37" width="17" height="10" rx="1.4" fill="var(--brick)"/><rect x="24.5" y="37" width="17.0" height="10" rx="1.4" fill="var(--brick)"/><rect x="44" y="37" width="17" height="10" rx="1.4" fill="var(--brick)"/></svg>'
 )
 # The project marks, as on hubra.club and in the labdex docs.
 HUBRA = (
@@ -57,10 +57,10 @@ LABDEX = (
     '<rect x="14" y="14" width="4" height="4" rx="1" fill="#fff"/></svg>'
 )
 HOMELAB = (
-    '<svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="15" fill="#2a1d17"/>'
+    '<svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="15" fill="#b23b14"/>'
     '<g fill="none" stroke="#fff" stroke-width="3.5" stroke-linejoin="round"><rect x="15" y="14" width="34" height="10" rx="3"/>'
     '<rect x="15" y="27" width="34" height="10" rx="3"/><rect x="15" y="40" width="34" height="10" rx="3"/></g>'
-    '<g fill="#b28cff"><circle cx="22" cy="19" r="2.2"/><circle cx="22" cy="32" r="2.2"/><circle cx="22" cy="45" r="2.2"/></g></svg>'
+    '<g fill="#4ade80"><circle cx="22" cy="19" r="2.2"/><circle cx="22" cy="32" r="2.2"/><circle cx="22" cy="45" r="2.2"/></g></svg>'
 )
 
 def icon(body: str) -> str:
@@ -96,10 +96,10 @@ HEAD = """<!doctype html>
 <meta property="og:description" content="{description}">
 <meta property="og:url" content="{url}">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#e5603a">
+<meta name="theme-color" content="#0f1110">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-<link rel="preload" href="/assets/fonts/unbounded-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/archivo-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/ibm-plex-mono-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/site.css">
 <script src="/assets/theme.js"></script>
 </head>
@@ -107,7 +107,7 @@ HEAD = """<!doctype html>
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-head">
   <div class="wrap bar">
-    <a class="brand" href="/" aria-label="Bits and Bricks, home">{{logo}}<span>bits<b>&amp;</b>bricks</span></a>
+    <a class="brand" href="/" aria-label="Bits and Bricks, home">{{logo}}<span>Bits<b>&amp;</b>Bricks</span></a>
     <nav class="nav" aria-label="Main">{nav}</nav>
     <div class="head-tools">
       <a class="icon-btn" href="{{github}}" aria-label="GitHub">{{icon:github}}</a>
@@ -122,22 +122,19 @@ FOOTER = """<footer class="site-foot">
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <a class="brand" href="/">{{logo}}<span>bits<b>&amp;</b>bricks</span></a>
-        <p>Side projects by Mike Keller: software for clubs, tools for homelabs, and the lab that runs them. Made in Switzerland.</p>
+        <a class="brand" href="/">{{logo}}<span>Bits<b>&amp;</b>Bricks</span></a>
+        <p>Side projects by Mike Keller, alias Reykime: software for clubs, tools for homelabs, and the lab that runs them. Built in Switzerland.</p>
       </div>
-      <div><h4>Projects</h4><ul>
-        <li><a href="/hubra/">Hubra</a></li><li><a href="/labdex/">Labdex</a></li><li><a href="/homelab/">Homelab</a></li>
-      </ul></div>
-      <div><h4>Elsewhere</h4><ul>
-        <li><a href="https://hubra.club">hubra.club</a></li><li><a href="https://labdex-app.github.io/labdex/">Labdex docs</a></li>
-        <li><a href="{{github}}">GitHub</a></li><li><a href="{{linkedin}}">LinkedIn</a></li>
-      </ul></div>
-      <div><h4>Site</h4><ul>
-        <li><a href="/about/">About</a></li><li><a href="mailto:{{mail}}">Contact</a></li>
-        <li><a href="/impressum/">Impressum</a></li><li><a href="/privacy/">Privacy</a></li>
-      </ul></div>
+      <ol class="trace" aria-label="Links">
+        <li class="cmd"><b>$</b> traceroute elsewhere</li>
+        <li><span>1</span><a href="https://hubra.club">hubra.club</a><span>Hubra</span></li>
+        <li><span>2</span><a href="https://labdex-app.github.io/labdex/">labdex-app.github.io</a><span>Labdex docs</span></li>
+        <li><span>3</span><a href="{{github}}">github.com/reykimedev</a><span>code</span></li>
+        <li><span>4</span><a href="{{linkedin}}">linkedin.com/in/mike-keller</a><span>work</span></li>
+        <li><span>5</span><a href="mailto:{{mail}}">{{mail}}</a><span>mail</span></li>
+      </ol>
     </div>
-    <div class="foot-base"><span>© 2026 Mike Keller</span><span>Plain HTML. No cookies, no tracking.</span></div>
+    <div class="foot-base"><span>© 2026 Mike Keller · plain HTML, no cookies, no tracking</span><span><a href="/brand/">Brand</a> · <a href="/impressum/">Impressum</a> · <a href="/privacy/">Privacy</a></span></div>
   </div>
 </footer>
 </body>

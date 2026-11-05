@@ -2,7 +2,7 @@
 
 The Bits & Bricks website: Mike Keller's personal projects (Hubra, Labdex, Homelab).
 Plain static files in `public/`, no external requests, light and dark mode.
-Same setup as hubra.club.
+Same setup as hubra.club. The brand guide is at `/brand/` (source: `src/pages/brand.html`), logo files in `public/brand/`.
 
 | Path | What it is |
 | --- | --- |
