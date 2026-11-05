@@ -209,3 +209,14 @@ div.quiz { display: grid; gap: 10px; border: 1px solid var(--line-2); border-rad
 #gtags { gap: 8px; }
 #gtags .tag { margin: 0; padding: 6px 9px; border: 1px solid var(--line-2); border-radius: 4px; background: var(--surface); cursor: pointer; }
 #gtags .tag:hover { border-color: var(--brick); text-decoration: none; }
+
+/* Phones: fewer boxes inside boxes */
+.phone-only { display: none; }
+@media (max-width: 640px) {
+  .phone-only { display: block; }
+  .notefoot .local-graph { display: none; }
+  .crumb > :last-child:not(a) { display: none; }
+  .crumb > i:nth-last-child(2) { display: none; }
+  .chassis { border: 0; background: none; padding: 0; }
+  .chassis-hd { padding: 0 0 4px; }
+}
