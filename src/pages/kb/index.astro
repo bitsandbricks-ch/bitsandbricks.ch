@@ -1,5 +1,5 @@
 ---
-import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import Site from "../../layouts/Site.astro";
 import Graph from "../../components/Graph.astro";
 import { noteGraph, buildGraph, tagIndex, url } from "../../lib/content";
 
@@ -16,8 +16,13 @@ for (const n of g.notes) {
 }
 const recent = [...g.notes].filter((n) => n.data.verified).sort((a, b) => (a.data.verified! < b.data.verified! ? 1 : -1)).slice(0, 5);
 ---
-<StarlightPage frontmatter={{ prompt: "show kb summary", title: "Knowledge base", description: "Notes on routing, switching, automation and the homelab, linked to each other.", tableOfContents: false }}>
-  <p class="lede">Notes on routing, switching and the homelab. Folders nest as deep as needed, notes link to each other, and every note shows what links back to it. Search is at the top.</p>
+<Site title="Knowledge base" description="Notes on routing, switching, automation and the homelab, linked to each other." path="/kb/">
+<main id="main" class="view"><div class="wrap">
+  <div class="vhead">
+    <p class="prompt"><b>$</b> <i>show kb summary</i></p>
+    <h1>Knowledge base</h1>
+    <p class="lede">Notes on routing, switching and the homelab. Folders nest as deep as needed, notes link to each other, and every note shows what links back to it. Search is at the top.</p>
+  </div>
   <div class="cats">
     {[...cats.entries()].sort().map(([name, c]) => <a class="cat" href={url(c.first)}><b>{name}/</b><span>{c.n} notes{c.subs.size ? " · " + [...c.subs].join(", ") : ""}</span></a>)}
   </div>
@@ -31,4 +36,5 @@ const recent = [...g.notes].filter((n) => n.data.verified).sort((a, b) => (a.dat
     <span class="tags">{[...tags.entries()].map(([t, v]) => <a class="tag" href={`/tags/${t}/`}>#{t} <span style="color:var(--text-3)">{v.docs.length + v.posts.length}</span></a>)}</span>
   </div>
   {recent.length > 0 && <div class="panel"><h4>recently verified</h4><div class="notelist">{recent.map((n) => <a href={url(n.id)}><b>{n.data.title}</b><span>{n.id.split("/").slice(1, -1).join("/")} · verified {n.data.verified}</span></a>)}</div></div>}
-</StarlightPage>
+</div></main>
+</Site>

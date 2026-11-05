@@ -1,0 +1,13 @@
+---
+// The folder tree beside kb notes and lessons, and inside the phone menu.
+import type { TreeItem } from "../../lib/content";
+interface Props { items: TreeItem[]; current: string }
+const { items, current } = Astro.props;
+---
+<ul>
+  {items.map((i) => i.kind === "dir" ? (
+    <li><details open><summary>{i.label}</summary><Astro.self items={i.items} current={current} /></details></li>
+  ) : (
+    <li><a href={i.href} aria-current={i.id === current ? "page" : undefined}>{i.label}</a></li>
+  ))}
+</ul>

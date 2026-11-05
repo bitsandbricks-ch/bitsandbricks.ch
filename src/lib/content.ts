@@ -8,6 +8,38 @@ export const url = (id: string) => "/" + id.replace(/\/index$/, "") + "/";
 let cache: Promise<Doc[]> | null = null;
 export const allDocs = () => (cache ??= getCollection("docs"));
 
+/* ---------- the tree beside kb notes and lessons ---------- */
+export interface TreeLink { kind: "link"; id: string; label: string; href: string }
+export interface TreeDir { kind: "dir"; name: string; label: string; items: TreeItem[] }
+export type TreeItem = TreeLink | TreeDir;
+
+const orderOf = (d: Doc) => d.data.sidebar.order ?? Infinity;
+
+/** Folders and notes under `prefix`, mixed and sorted like a file listing (order first, then name). */
+export function buildTree(docs: Doc[], prefix: string): TreeItem[] {
+  const root: TreeDir = { kind: "dir", name: "", label: "", items: [] };
+  const keys = new Map<TreeItem, [number, string]>();
+  for (const d of docs.filter((x) => x.id.startsWith(prefix + "/"))) {
+    const parts = d.id.slice(prefix.length + 1).split("/");
+    let dir = root;
+    for (const seg of parts.slice(0, -1)) {
+      let next = dir.items.find((i): i is TreeDir => i.kind === "dir" && i.name === seg);
+      if (!next) { next = { kind: "dir", name: seg, label: seg.replace(/^\d+-/, "") + "/", items: [] }; dir.items.push(next); keys.set(next, [Infinity, seg]); }
+      dir = next;
+    }
+    const link: TreeLink = { kind: "link", id: d.id, label: d.data.title, href: url(d.id) };
+    dir.items.push(link); keys.set(link, [orderOf(d), parts[parts.length - 1]]);
+  }
+  const sort = (items: TreeItem[]) => {
+    items.sort((a, b) => keys.get(a)![0] - keys.get(b)![0] || keys.get(a)![1].localeCompare(keys.get(b)![1]));
+    items.forEach((i) => i.kind === "dir" && sort(i.items));
+    return items;
+  };
+  return sort(root.items);
+}
+
+export const flatTree = (items: TreeItem[]): TreeLink[] => items.flatMap((i) => (i.kind === "dir" ? flatTree(i.items) : [i]));
+
 /** kb notes, without folder index pages */
 export async function kbNotes(): Promise<Doc[]> {
   return (await allDocs()).filter((d) => d.id.startsWith("kb/"));

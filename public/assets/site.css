@@ -81,13 +81,13 @@ code { font-size: .86em; background: var(--surface-2); border: 1px solid var(--l
 :root[data-theme="dark"] .theme .sun { display: block; } :root[data-theme="dark"] .theme .moon { display: none; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .theme .sun { display: block; } :root:not([data-theme="light"]) .theme .moon { display: none; } }
 .nav a { white-space: nowrap; }
-.menu-btn, .nav-ext { display: none; }
+.menu-btn, .nav .nav-ext { display: none; }
 .menu-btn .shut { display: none; }
 /* Phones: one row (logo, saved, theme, menu); the menu button drops the nav down as a list */
 @media (max-width: 760px) {
   .bar { flex-wrap: wrap; gap: 0 8px; min-height: 60px; }
   .head-tools { margin-left: auto; }
-  .head-tools .ext { display: none; }
+  .head-tools .ext, .head-tools .saved { display: none; }
   .menu-btn { display: inline-grid; }
   .open .menu-btn .open { display: none; } .open .menu-btn .shut { display: block; }
   .nav { display: none; order: 3; width: 100%; margin: 0; flex-direction: column; gap: 0; padding: 4px 0 12px; border-top: 1px solid var(--line); }
