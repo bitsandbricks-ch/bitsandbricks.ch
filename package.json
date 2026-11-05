@@ -4,13 +4,15 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node tools/check.mjs",
+    "build": "astro build && pagefind --site dist && node tools/check.mjs",
     "preview": "astro preview"
   },
   "dependencies": {
     "@astrojs/rss": "4.0.19",
     "@astrojs/sitemap": "3.7.4",
-    "@astrojs/starlight": "0.42.9",
     "astro": "7.4.7"
+  },
+  "devDependencies": {
+    "pagefind": "1.6.0"
   }
 }

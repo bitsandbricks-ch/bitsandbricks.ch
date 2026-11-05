@@ -1,0 +1,9 @@
+---
+import DocPage from "../../components/docs/DocPage.astro";
+import { allDocs, type Doc } from "../../lib/content";
+export async function getStaticPaths() {
+  return (await allDocs()).filter((d) => d.id.startsWith("courses/")).map((doc) => ({ params: { slug: doc.id.slice(8) }, props: { doc } }));
+}
+const { doc } = Astro.props as { doc: Doc };
+---
+<DocPage doc={doc} />

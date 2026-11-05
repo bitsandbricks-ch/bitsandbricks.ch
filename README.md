@@ -1,8 +1,8 @@
 # bitsandbricks.ch
 
 The Bits & Bricks website: Mike Keller's projects (Hubra, Labdex, Homelab), plus the blog,
-the knowledge base and courses. Built with [Astro](https://astro.build) and
-[Starlight](https://starlight.astro.build), published as static files on GitHub Pages.
+the knowledge base and courses. Built with [Astro](https://astro.build), with search by
+[Pagefind](https://pagefind.app), published as static files on GitHub Pages.
 No cookies, no tracking, no outside requests (comments load only when a reader clicks).
 The brand guide is at `/brand/` (source: `src/legacy/brand.html`), logo files in `public/brand/`.
 
@@ -14,7 +14,7 @@ The brand guide is at `/brand/` (source: `src/legacy/brand.html`), logo files in
 | `src/content/docs/courses/<course>/` | A course: `index.md` plus one folder per section (`1-basics/`, `2-vlsm/`) with lessons |
 | `src/lib/site.ts` | Logo, icons, nav, links, `{{placeholders}}`, comment settings |
 | `src/lib/content.ts` | Backlinks, graph layout, tags, course structure, learning paths |
-| `src/components/starlight/` | How kb and course pages differ from stock Starlight |
+| `src/components/docs/` | The kb note / lesson page: tree, text, on-this-page, backlinks, prev/next |
 | `public/assets/site.css` | All base styles, colour tokens at the top |
 | `public/assets/content.css` | Styles for blog, kb and courses |
 | `public/assets/reader.js` | Saved pages, course progress, quizzes, click-to-load comments (browser only) |
@@ -25,7 +25,8 @@ The brand guide is at `/brand/` (source: `src/legacy/brand.html`), logo files in
 ```
 npm ci            # once
 npm run dev       # local preview at http://localhost:4321
-npm run build     # build into dist/ and check every internal link
+npm run build     # build into dist/, build the search index, check every internal link
+npm run preview   # serve dist/ (search only works here, not in npm run dev)
 ```
 
 Pushing to `main` builds and publishes. Pull requests build too, so broken links fail the check.

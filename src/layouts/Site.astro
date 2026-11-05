@@ -1,5 +1,6 @@
 ---
-// Layout for every page outside Starlight: the old pages, the blog, courses overview, saved.
+// Layout for every page: header, footer and the shared head. kb notes and lessons add their tree
+// to the phone menu through the "menu" slot.
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import { NAME, SITE } from "../lib/site";
@@ -33,7 +34,7 @@ const url = SITE + path;
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<SiteHeader path={path} />
+<SiteHeader path={path}><slot name="menu" slot="menu" /></SiteHeader>
 <slot />
 <SiteFooter />
 </body>

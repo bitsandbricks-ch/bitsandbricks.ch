@@ -1,5 +1,6 @@
 ---
-// The site header, shared by the plain pages and the Starlight (kb, courses) pages.
+// The site header on every page. On phones the menu button drops the nav down, plus whatever a
+// page puts in the "menu" slot (the kb or course tree).
 import { NAV, LOGO, ICONS, GITHUB, LINKEDIN, isCurrent } from "../lib/site";
 interface Props { path: string }
 const { path } = Astro.props;
@@ -9,12 +10,14 @@ const { path } = Astro.props;
     <a class="brand" href="/" aria-label="Bits and Bricks, home"><Fragment set:html={LOGO} /><span>Bits<b>&amp;</b>Bricks</span></a>
     <nav class="nav" id="site-menu" aria-label="Main">
       {NAV.map(([href, label]) => <a href={href} aria-current={isCurrent(href, path) ? "page" : undefined}>{label}</a>)}
+      <a class="nav-ext" href="/saved/">saved</a>
       <a class="nav-ext" href={GITHUB}>github</a>
       <a class="nav-ext" href={LINKEDIN}>linkedin</a>
     </nav>
+    <div class="menu-extra"><slot name="menu" /></div>
     <div class="head-tools">
-      <slot />
-      <a class="icon-btn" href="/saved/" aria-label="Saved pages" title="Saved"><Fragment set:html={ICONS.star} /></a>
+      <button class="icon-btn" type="button" aria-label="Search" title="Search" data-search-open><Fragment set:html={ICONS.search} /></button>
+      <a class="icon-btn saved" href="/saved/" aria-label="Saved pages" title="Saved"><Fragment set:html={ICONS.star} /></a>
       <a class="icon-btn ext" href={GITHUB} aria-label="GitHub"><Fragment set:html={ICONS.github} /></a>
       <a class="icon-btn ext" href={LINKEDIN} aria-label="LinkedIn"><Fragment set:html={ICONS.linkedin} /></a>
       <button class="icon-btn theme" type="button" aria-label="Switch colour scheme" data-theme-toggle><Fragment set:html={ICONS.moon} /></button>
@@ -22,3 +25,8 @@ const { path } = Astro.props;
     </div>
   </div>
 </header>
+<dialog class="search-dlg" aria-label="Search">
+  <div class="search-hd"><span class="prompt"><b>$</b> <i>show search</i></span><button class="icon-btn" type="button" aria-label="Close search" data-search-close><Fragment set:html={ICONS.close} /></button></div>
+  <div id="search"></div>
+  <p class="search-note">Searches the blog, kb and courses. Press <kbd>/</kbd> to open it from anywhere.</p>
+</dialog>
