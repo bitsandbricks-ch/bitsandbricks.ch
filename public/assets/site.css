@@ -6,17 +6,17 @@
 @font-face { font-family: "Martian Mono"; font-style: normal; font-display: swap; font-weight: 100 800; src: url(fonts/martian-mono-latin-ext-wght-normal.woff2) format("woff2-variations"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
 @font-face { font-family: "Martian Mono"; font-style: normal; font-display: swap; font-weight: 100 800; src: url(fonts/martian-mono-latin-wght-normal.woff2) format("woff2-variations"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 
-/* Colour tokens: terracotta for the bricks, with a teal "bit" for highlights. */
+/* Colour tokens: terracotta for the bricks, with a violet "bit" for highlights. */
 :root {
   --u0: #fff3ee; --u1: #ffe2d6; --u2: #ffc4ab; --u3: #ffa07d; --u4: #f47e55;
   --u5: #e5603a; --u6: #c94a27; --u7: #a8361b; --u8: #7f2814; --u9: #521a0d;
-  --bit: #2fe0c8; --bit-text: #0b8576;
+  --bit: #b28cff; --bit-text: #6d3fd6;
   --page: #fbf7f4; --surface: #ffffff; --surface-2: #f6efea;
   --border: #ece2da; --border-2: #dccfc4;
   --text: #1f1612; --text-2: #66574d; --text-3: #94857a;
   --accent: var(--u6); --accent-hover: var(--u7); --accent-text: var(--u7); --on-accent: #fff;
   --tint: var(--u0); --tint-text: var(--u7);
-  --glow: rgba(229, 96, 58, .14); --glow-2: rgba(47, 224, 200, .14); --grid: rgba(82, 26, 13, .05);
+  --glow: rgba(229, 96, 58, .14); --glow-2: rgba(178, 140, 255, .18); --grid: rgba(82, 26, 13, .05);
   --shadow: 0 2px 4px rgba(27,18,38,.04), 0 16px 36px -16px rgba(82,26,13,.2);
   --brand-grad: linear-gradient(135deg, #e5603a 0%, #a8361b 55%, #521a0d 100%);
   --display: "Unbounded", system-ui, sans-serif;
@@ -32,7 +32,7 @@
     --accent: var(--u4); --accent-hover: var(--u3); --accent-text: var(--u3); --on-accent: #14100e;
     --tint: color-mix(in srgb, #e5603a 16%, #1d1714); --tint-text: var(--u2);
     --bit-text: var(--bit);
-    --glow: rgba(229, 96, 58, .24); --glow-2: rgba(47, 224, 200, .09); --grid: rgba(255, 196, 171, .045);
+    --glow: rgba(229, 96, 58, .24); --glow-2: rgba(178, 140, 255, .16); --grid: rgba(255, 196, 171, .045);
     --shadow: 0 0 0 1px var(--border), 0 18px 40px -18px rgba(0,0,0,.8);
     color-scheme: dark;
   }
@@ -44,7 +44,7 @@
   --accent: var(--u4); --accent-hover: var(--u3); --accent-text: var(--u3); --on-accent: #14100e;
   --tint: color-mix(in srgb, #e5603a 16%, #1d1714); --tint-text: var(--u2);
   --bit-text: var(--bit);
-  --glow: rgba(229, 96, 58, .24); --glow-2: rgba(47, 224, 200, .09); --grid: rgba(255, 196, 171, .045);
+  --glow: rgba(229, 96, 58, .24); --glow-2: rgba(178, 140, 255, .16); --grid: rgba(255, 196, 171, .045);
   --shadow: 0 0 0 1px var(--border), 0 18px 40px -18px rgba(0,0,0,.8);
   color-scheme: dark;
 }
@@ -110,7 +110,7 @@ code { font-family: var(--mono); font-size: .86em; background: var(--surface-2);
 /* Hero */
 .hero { position: relative; padding: clamp(48px, 9vw, 110px) 0 clamp(48px, 7vw, 90px); overflow: hidden; }
 .hero::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px); background-size: 44px 44px; mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, #000 30%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, #000 30%, transparent 75%); pointer-events: none; }
-.hero::after { content: ""; position: absolute; width: 800px; height: 800px; right: -220px; top: -280px; background: radial-gradient(circle at 40% 40%, var(--glow), transparent 58%), radial-gradient(circle at 62% 70%, var(--glow-2), transparent 40%); pointer-events: none; }
+.hero::after { content: ""; position: absolute; width: 800px; height: 800px; right: -220px; top: -280px; background: radial-gradient(circle 320px at 50% 45%, var(--glow), transparent), radial-gradient(circle 220px at 55% 70%, var(--glow-2), transparent); pointer-events: none; }
 .hero .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: 1.15fr .85fr; gap: 56px; align-items: center; }
 .hero-copy { display: grid; gap: 24px; justify-items: start; }
 @media (max-width: 900px) { .hero .wrap { grid-template-columns: 1fr; } }

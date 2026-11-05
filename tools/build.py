@@ -42,7 +42,7 @@ MAIL = "mike@cheller.dev"
 
 # The logo: a lower-case b laid in bricks, with one lit brick, the bit.
 LOGO = (
-    '<svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="bbg" gradientUnits="userSpaceOnUse" x1="8" y1="4" x2="56" y2="60"><stop offset="0" stop-color="#ffb08a"/><stop offset=".5" stop-color="#e5603a"/><stop offset="1" stop-color="#a8361b"/></linearGradient></defs><rect x="8.5" y="4.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="8.5" y="16.0" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="8.5" y="27.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="25.0" y="27.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="41.5" y="27.5" width="14" height="9" rx="2.5" fill="#2fe0c8"/><rect x="8.5" y="39.0" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="41.5" y="39.0" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="8.5" y="50.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="25.0" y="50.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="41.5" y="50.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/></svg>'
+    '<svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="bbg" gradientUnits="userSpaceOnUse" x1="8" y1="4" x2="56" y2="60"><stop offset="0" stop-color="#ffb08a"/><stop offset=".5" stop-color="#e5603a"/><stop offset="1" stop-color="#a8361b"/></linearGradient></defs><rect x="8.5" y="4.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="8.5" y="16.0" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="8.5" y="27.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="25.0" y="27.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="41.5" y="27.5" width="14" height="9" rx="2.5" fill="#b28cff"/><rect x="8.5" y="39.0" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="41.5" y="39.0" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="8.5" y="50.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="25.0" y="50.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/><rect x="41.5" y="50.5" width="14" height="9" rx="2.5" fill="url(#bbg)"/></svg>'
 )
 # The project marks, as on hubra.club and in the labdex docs.
 HUBRA = (
@@ -60,7 +60,7 @@ HOMELAB = (
     '<svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="15" fill="#2a1d17"/>'
     '<g fill="none" stroke="#fff" stroke-width="3.5" stroke-linejoin="round"><rect x="15" y="14" width="34" height="10" rx="3"/>'
     '<rect x="15" y="27" width="34" height="10" rx="3"/><rect x="15" y="40" width="34" height="10" rx="3"/></g>'
-    '<g fill="#2fe0c8"><circle cx="22" cy="19" r="2.2"/><circle cx="22" cy="32" r="2.2"/><circle cx="22" cy="45" r="2.2"/></g></svg>'
+    '<g fill="#b28cff"><circle cx="22" cy="19" r="2.2"/><circle cx="22" cy="32" r="2.2"/><circle cx="22" cy="45" r="2.2"/></g></svg>'
 )
 
 def icon(body: str) -> str:
