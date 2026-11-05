@@ -10,7 +10,7 @@ description: Labdex is a lightweight homelab inventory that treats zones and nam
     <div class="unit-title">{{labdex}}<div><h1>Labdex</h1></div></div>
     <p class="lede">A small inventory for homelabs that treats zones and names as first-class. Describe networks, hosts, interfaces and services once, and Labdex checks them against your conventions and generates what the rest of the lab needs.</p>
     <div class="btns"><a class="btn btn-p" href="https://labdex-app.github.io/labdex/">Read the docs {{icon:ext}}</a><a class="btn btn-s" href="https://github.com/labdex-app/labdex">{{icon:github}} Source</a></div>
-    <div class="chips"><span class="chip">One container</span><span class="chip">SQLite or PostgreSQL</span><span class="chip">&lt; 100 MB RAM</span><span class="chip">YAML in git</span></div>
+    <div class="chips"><span class="chip">One container</span><span class="chip">SQLite or PostgreSQL</span><span class="chip">&lt; 100 MB RAM</span><span class="chip">YAML in git</span><span class="chip">v1.24</span><span class="chip">AGPL-3.0</span></div>
   </div>
 </section>
 <section class="section">
@@ -37,10 +37,16 @@ description: Labdex is a lightweight homelab inventory that treats zones and nam
   </div>
 </section>
 <section class="section">
-  <div class="wrap prose">
-    <p class="label">Background</p>
-    <h2>Why I built it</h2>
-    <p>NetBox is great, but for a homelab it's steep to learn and heavy to run. I wanted something small and simple that fits in the lab itself, and I use it in my own.</p>
+  <div class="wrap">
+    <div class="section-head"><p class="prompt"><b>$</b> <i>show running-config | include safety</i></p><h2>Plan first, then apply.</h2><p>Nothing leaves Labdex unless you add an integration for it, and integrations that change another system show you a plan first.</p></div>
+    <div class="grid3">
+      <div class="feature"><h3>Change sets</h3><p>Write a batch of changes as YAML, preview what each one does to aliases, DNS and lint, then apply it all or nothing.</p></div>
+      <div class="feature"><h3>Lint in CI</h3><p><code>labdex lint</code> catches duplicate IPs and MACs, VLAN mismatches and DNS clashes, and exits non-zero so it can gate a pipeline.</p></div>
+      <div class="feature"><h3>Services page</h3><p>Every service with a link becomes a tile, so the homelab dashboard falls out of the inventory.</p></div>
+      <div class="feature"><h3>Locked-down container</h3><p>Runs as an unprivileged user with a read-only root filesystem. Only <code>/data</code> is writable.</p></div>
+      <div class="feature"><h3>Signed releases</h3><p>Releases are signed with cosign and ship with SBOMs. Unsigned plugins need an admin's OK.</p></div>
+      <div class="feature"><h3>Stable 1.x</h3><p>The plugin API, REST API, YAML and backup format stay compatible across 1.x.</p></div>
+    </div>
   </div>
 </section>
 <section class="section">
