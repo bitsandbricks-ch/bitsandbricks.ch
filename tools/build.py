@@ -40,9 +40,9 @@ GITHUB = "https://github.com/reykimedev"
 LINKEDIN = "https://www.linkedin.com/in/mike-keller-181827253/"
 MAIL = "mike@cheller.dev"
 
-# The logo: a brick wall (a firewall) with one RJ45 port in it, link and activity LEDs lit.
+# The logo: a brick wall (a firewall) with one green RJ45 port in it.
 LOGO = (
-    '<svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><rect x="5" y="12" width="17" height="10" rx="1.4" fill="var(--brick)"/><rect x="24.5" y="12" width="17.0" height="10" rx="1.4" fill="var(--brick)"/><rect x="44" y="12" width="17" height="10" rx="1.4" fill="var(--brick)"/><rect x="5" y="24.5" width="7.5" height="10" rx="1.4" fill="var(--brick)"/><rect x="15" y="24.5" width="17" height="10" rx="1.4" fill="var(--text)"/><path d="M19.0 26.7h9v4.4h-2.4v1.4h-4.2v-1.4h-2.4z" fill="var(--page)"/><rect x="16.8" y="26.9" width="2" height="1.6" rx=".4" fill="var(--led)"/><rect x="28.2" y="26.9" width="2" height="1.6" rx=".4" fill="#fb923c"/><rect x="34.5" y="24.5" width="17.0" height="10" rx="1.4" fill="var(--brick)"/><rect x="54" y="24.5" width="7" height="10" rx="1.4" fill="var(--brick)"/><rect x="5" y="37" width="17" height="10" rx="1.4" fill="var(--brick)"/><rect x="24.5" y="37" width="17.0" height="10" rx="1.4" fill="var(--brick)"/><rect x="44" y="37" width="17" height="10" rx="1.4" fill="var(--brick)"/></svg>'
+    '<svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><rect x="5" y="12" width="17" height="10" rx="1.4" fill="var(--brick)"/><rect x="24.5" y="12" width="17.0" height="10" rx="1.4" fill="var(--brick)"/><rect x="44" y="12" width="17" height="10" rx="1.4" fill="var(--brick)"/><rect x="5" y="24.5" width="7.5" height="10" rx="1.4" fill="var(--brick)"/><rect x="15" y="24.5" width="17" height="10" rx="1.4" fill="var(--core)"/><path d="M19.0 26.7h9v4.4h-2.4v1.4h-4.2v-1.4h-2.4z" fill="#111111"/><rect x="34.5" y="24.5" width="17.0" height="10" rx="1.4" fill="var(--brick)"/><rect x="54" y="24.5" width="7" height="10" rx="1.4" fill="var(--brick)"/><rect x="5" y="37" width="17" height="10" rx="1.4" fill="var(--brick)"/><rect x="24.5" y="37" width="17.0" height="10" rx="1.4" fill="var(--brick)"/><rect x="44" y="37" width="17" height="10" rx="1.4" fill="var(--brick)"/></svg>'
 )
 # The project marks, as on hubra.club and in the labdex docs.
 HUBRA = (
@@ -96,7 +96,7 @@ HEAD = """<!doctype html>
 <meta property="og:description" content="{description}">
 <meta property="og:url" content="{url}">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#0f1110">
+<meta name="theme-color" content="#111111">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/assets/fonts/archivo-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/ibm-plex-mono-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -123,7 +123,7 @@ FOOTER = """<footer class="site-foot">
     <div class="foot-grid">
       <div>
         <a class="brand" href="/">{{logo}}<span>Bits<b>&amp;</b>Bricks</span></a>
-        <p>Side projects by Mike Keller, alias Reykime: software for clubs, tools for homelabs, and the lab that runs them. Built in Switzerland.</p>
+        <p>Side projects by Mike Keller: software for clubs, tools for homelabs, and the lab that runs them. Built in Switzerland.</p>
       </div>
       <ol class="trace" aria-label="Links">
         <li class="cmd"><b>$</b> traceroute elsewhere</li>

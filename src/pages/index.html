@@ -1,23 +1,23 @@
 <!--
 path: /
 title: Bits & Bricks · Mike Keller, network engineer
-description: Side projects by Mike Keller (Reykime), network engineer and CCIE from Switzerland: Hubra club software, the Labdex homelab inventory, and the homelab they run on.
+description: Side projects by Mike Keller, network engineer and CCIE from Switzerland: Hubra club software, the Labdex homelab inventory, and the homelab they run on.
 -->
 <main id="main">
 
 <section class="hero">
   <div class="wrap">
     <div class="hero-copy">
-      <p class="prompt"><b>reykime@bitsandbricks</b>:~$ <i>whoami</i><span class="cursor"></span></p>
+      <p class="kicker">Network engineer · CCIE · Switzerland<span class="cursor"></span></p>
       <h1>I build networks, and the software that runs on them.</h1>
-      <p class="lede">I'm Mike, a network engineer and CCIE from Switzerland, Reykime almost everywhere else. Bits &amp; Bricks is where my side projects live: software for clubs, tools for homelabs, and the lab underneath.</p>
+      <p class="lede">I'm Mike Keller, a network engineer and CCIE from Switzerland. Bits &amp; Bricks is where my side projects live: software for clubs, tools for homelabs, and the lab underneath.</p>
       <div class="btns">
         <a class="btn btn-p" href="#rack">show projects {{icon:arrow}}</a>
         <a class="btn btn-s" href="{{linkedin}}">{{icon:linkedin}} LinkedIn</a>
         <a class="btn btn-s" href="{{github}}">{{icon:github}} GitHub</a>
       </div>
     </div>
-    <svg class="map" viewBox="0 0 560 440" role="img" aria-labelledby="map-t"><title id="map-t">Network map: Reykime at the core, linked to GitHub, LinkedIn, Hubra, Labdex, the homelab and Lock and Load.</title>
+    <svg class="map" viewBox="0 0 560 440" role="img" aria-labelledby="map-t"><title id="map-t">Network map: Mike Keller at the core, linked to GitHub, LinkedIn, Hubra, Labdex, the homelab and Lock and Load.</title>
 <path class="link" d="M126 72L250 186"/>
 <path class="link" d="M434 72L310 186"/>
 <path class="link" d="M235 242L70 372"/>
@@ -38,7 +38,7 @@ description: Side projects by Mike Keller (Reykime), network engineer and CCIE f
 <text class="ifname" x="433" y="323">ge-0/1/3</text>
 <a class="node" href="{{github}}"><rect x="60" y="24" width="132" height="48" rx="4"/><circle class="led" cx="72" cy="40" r="3.5"/><text x="82" y="44">github</text><text class="sub" x="72" y="61">uplink · code</text></a>
 <a class="node" href="{{linkedin}}"><rect x="368" y="24" width="132" height="48" rx="4"/><circle class="led" cx="380" cy="40" r="3.5"/><text x="390" y="44">linkedin</text><text class="sub" x="380" y="61">uplink · work</text></a>
-<a class="node core" href="/about/"><rect x="200" y="186" width="160" height="56" rx="4"/><circle class="led" cx="212" cy="202" r="3.5"/><text x="222" y="206">reykime</text><text class="sub" x="212" y="223">core · Mike Keller</text></a>
+<a class="node core" href="/about/"><rect x="200" y="186" width="160" height="56" rx="4"/><circle class="led" cx="212" cy="202" r="3.5"/><text x="222" y="206">Mike Keller</text><text class="sub" x="212" y="223">core · network engineer</text></a>
 <a class="node" href="/hubra/"><rect x="6" y="372" width="132" height="48" rx="4"/><circle class="led" cx="18" cy="388" r="3.5"/><text x="28" y="392">hubra</text><text class="sub" x="18" y="409">app · clubs</text></a>
 <a class="node" href="/labdex/"><rect x="146" y="372" width="132" height="48" rx="4"/><circle class="led" cx="158" cy="388" r="3.5"/><text x="168" y="392">labdex</text><text class="sub" x="158" y="409">tool · inventory</text></a>
 <a class="node" href="/homelab/"><rect x="286" y="372" width="132" height="48" rx="4"/><circle class="led" cx="298" cy="388" r="3.5"/><text x="308" y="392">homelab</text><text class="sub" x="298" y="409">infra · the lab</text></a>
@@ -52,7 +52,7 @@ description: Side projects by Mike Keller (Reykime), network engineer and CCIE f
     <div class="section-head">
       <p class="prompt"><b>$</b> <i>show chassis</i></p>
       <h2>The rack</h2>
-      <p>One unit per project. Each started because I needed it myself, and they're all open source.</p>
+      <p>One unit per project.</p>
     </div>
     <div class="rack">
 
@@ -100,13 +100,8 @@ description: Side projects by Mike Keller (Reykime), network engineer and CCIE f
           <div class="leds"><span class="on">pwr</span><span class="on">link</span><span class="act">act</span></div>
           <div class="unit-main">
             <div class="unit-title">{{homelab}}<h3>Homelab</h3><span class="mono">U3 · infra · the lab</span></div>
-            <p>The network and servers at home where Labdex was born and where everything gets tested before it ships. It's also where I try out ideas from my day job.</p>
-            <div class="ports">
-              <div class="port"><b>network</b><span>Zoned networks, firewalling, DNS</span></div>
-              <div class="port"><b>compute</b><span>VMs and containers</span></div>
-              <div class="port"><b>observe</b><span>Metrics, uptime checks, alerts</span></div>
-              <div class="port"><b>automate</b><span>Ansible, driven by the inventory</span></div>
-            </div>
+            <p>The network and servers at home.</p>
+            <p class="todo">What runs in the lab, and why you built it.</p>
           </div>
           <div class="unit-links"><a class="btn btn-p" href="/homelab/">tour {{icon:arrow}}</a></div>
         </div>
@@ -124,9 +119,8 @@ description: Side projects by Mike Keller (Reykime), network engineer and CCIE f
       <h2>About the operator</h2>
     </div>
     <div class="console">
-      <header><span>reykime&gt; show version</span><span>uptime: always on</span></header>
-<pre><span class="k">Hostname:</span>       reykime
-<span class="k">Operator:</span>       Mike Keller
+      <header><span>mike&gt; show version</span><span>uptime: always on</span></header>
+<pre><span class="k">Operator:</span>       Mike Keller
 <span class="k">Role:</span>           Network engineer
 <span class="k">Certification:</span>  CCIE Enterprise Infrastructure
 <span class="k">Location:</span>       Switzerland
