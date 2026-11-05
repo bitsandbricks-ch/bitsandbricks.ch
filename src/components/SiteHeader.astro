@@ -7,13 +7,18 @@ const { path } = Astro.props;
 <header class="site-head">
   <div class="wrap bar">
     <a class="brand" href="/" aria-label="Bits and Bricks, home"><Fragment set:html={LOGO} /><span>Bits<b>&amp;</b>Bricks</span></a>
-    <nav class="nav" aria-label="Main">{NAV.map(([href, label]) => <a href={href} aria-current={isCurrent(href, path) ? "page" : undefined}>{label}</a>)}</nav>
+    <nav class="nav" id="site-menu" aria-label="Main">
+      {NAV.map(([href, label]) => <a href={href} aria-current={isCurrent(href, path) ? "page" : undefined}>{label}</a>)}
+      <a class="nav-ext" href={GITHUB}>github</a>
+      <a class="nav-ext" href={LINKEDIN}>linkedin</a>
+    </nav>
     <div class="head-tools">
       <slot />
       <a class="icon-btn" href="/saved/" aria-label="Saved pages" title="Saved"><Fragment set:html={ICONS.star} /></a>
-      <a class="icon-btn" href={GITHUB} aria-label="GitHub"><Fragment set:html={ICONS.github} /></a>
-      <a class="icon-btn" href={LINKEDIN} aria-label="LinkedIn"><Fragment set:html={ICONS.linkedin} /></a>
+      <a class="icon-btn ext" href={GITHUB} aria-label="GitHub"><Fragment set:html={ICONS.github} /></a>
+      <a class="icon-btn ext" href={LINKEDIN} aria-label="LinkedIn"><Fragment set:html={ICONS.linkedin} /></a>
       <button class="icon-btn theme" type="button" aria-label="Switch colour scheme" data-theme-toggle><Fragment set:html={ICONS.moon} /></button>
+      <button class="icon-btn menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="site-menu" data-menu-toggle><Fragment set:html={ICONS.menu} /></button>
     </div>
   </div>
 </header>

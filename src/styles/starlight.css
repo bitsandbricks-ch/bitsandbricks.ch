@@ -43,12 +43,41 @@ body { font-size: 17px; }
 .sl-head .head-tools { display: flex; gap: 8px; align-items: center; margin-left: auto; }
 .sl-head site-search button[data-open-modal] { border-radius: 6px; border: 1px solid var(--line); background: var(--surface); }
 @media (max-width: 1100px) { .sl-head .head-tools .icon-btn.ext { display: none; } }
-@media (max-width: 760px) {
-  .sl-head .brand span { display: none; }
-  .sl-head .nav { margin: 0; }
-  .sl-head .nav a { padding: 9px 7px; }
+.sl-head site-search button[data-open-modal] svg { width: 18px; height: 18px; }
+
+/* Phones and tablets: one row. Pages with a sidebar use Starlight's menu button, which opens the
+   sidebar with the site links on top (Sidebar.astro); pages without one use the site's own menu. */
+@media (max-width: 50rem) {
+  :root { --sl-menu-button-size: 38px; }
+  .sl-head .bar { gap: 0 8px; }
+  .sl-head .head-tools { gap: 6px; }
+  [data-has-sidebar] .sl-head .head-tools { padding-right: 44px; }
+  [data-has-sidebar] .sl-head .menu-btn { display: none; }
+  .sl-head .open .nav { position: fixed; top: var(--sl-nav-height); left: 0; right: 0; padding: 4px 16px 12px; background: var(--page); border-bottom: 1px solid var(--line); }
+  .sl-head site-search button[data-open-modal] { width: 38px; height: 38px; padding: 0; justify-content: center; color: var(--text-2); }
+  .sl-menu-button { top: 11px; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); color: var(--text-2); box-shadow: none; padding: 9px; }
+  :root[data-theme] .sl-menu-button { background: var(--surface); color: var(--text-2); }
 }
-@media (max-width: 50rem) { .sl-head .head-tools .icon-btn.theme, .sl-head .head-tools a.icon-btn { display: none; } }
+@media (max-width: 420px) { .sl-head .brand span { display: none; } }
+.side-nav { display: none; }
+@media (max-width: 50rem) {
+  .side-nav { display: grid; font-family: var(--mono); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+  .side-nav a { padding: 11px 4px; color: var(--text); text-decoration: none; font-size: .95rem; border-bottom: 1px dashed var(--line-2); }
+  .side-nav a:last-child { border-bottom: 0; }
+  .side-nav a::before { content: "> "; color: var(--brick); visibility: hidden; }
+  .side-nav a[aria-current]::before { visibility: visible; }
+}
+/* site.css shows every svg as a block, which beat Starlight's rule that hides one of the two menu icons */
+.sl-menu-button svg { width: 18px; height: 18px; }
+.sl-menu-button .close-menu, .sl-menu-button:has(~ :popover-open) .open-menu { display: none; }
+.sl-menu-button:has(~ :popover-open) .close-menu { display: block; }
+
+/* Previous / next: flat cards like the rest of the site */
+.pagination-links a { box-shadow: none; border-color: var(--line-2); border-radius: 6px; background: var(--surface); padding: 12px 14px; }
+.pagination-links a:hover { border-color: var(--brick); }
+.pagination-links a span { font: 500 .74rem/1.3 var(--mono); color: var(--text-3); }
+.pagination-links .link-title { display: block; font: 700 1.05rem/1.25 var(--sans); font-stretch: 110%; color: var(--text); margin-top: 2px; }
+.pagination-links svg { color: var(--brick); }
 
 /* Sidebar: like the tree in the mock */
 .sidebar-content { font-family: var(--mono); font-size: .86rem; }
@@ -71,3 +100,5 @@ starlight-toc a[aria-current="true"] { color: var(--brick); }
 .sidebar-content a:not([aria-current="page"]) { color: var(--text-2); }
 .sidebar-content a:not([aria-current="page"]):hover { color: var(--brick); }
 .sidebar-content .large { color: var(--text); }
+.sidebar-content .side-nav a[aria-current="page"], .sidebar-content .side-nav a:hover { background: none; color: var(--text); font-weight: 500; }
+.sidebar-content .side-nav a:not([aria-current="page"]) { color: var(--text); }
