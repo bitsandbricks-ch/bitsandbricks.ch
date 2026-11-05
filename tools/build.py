@@ -38,7 +38,7 @@ NAV = [("/hubra/", "Hubra"), ("/labdex/", "Labdex"), ("/homelab/", "Homelab"), (
 
 GITHUB = "https://github.com/reykimedev"
 LINKEDIN = "https://www.linkedin.com/in/mike-keller-181827253/"
-MAIL = "hi@mikekeller.ch"
+MAIL = "mike@cheller.dev"
 
 # The logo: a wall of bricks with the last one, the bit, dropping into place.
 LOGO = (
