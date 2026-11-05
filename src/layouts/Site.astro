@@ -1,0 +1,40 @@
+---
+// Layout for every page outside Starlight: the old pages, the blog, courses overview, saved.
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import { NAME, SITE } from "../lib/site";
+interface Props { title: string; description: string; path: string; noindex?: boolean; fullTitle?: boolean; type?: string }
+const { title, description, path, noindex = false, fullTitle = false, type = "website" } = Astro.props;
+const pageTitle = fullTitle ? title : `${title} · ${NAME}`;
+const url = SITE + path;
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{pageTitle}</title>
+<meta name="description" content={description}>
+{noindex && <meta name="robots" content="noindex">}
+<link rel="canonical" href={url}>
+<meta property="og:title" content={pageTitle}>
+<meta property="og:description" content={description}>
+<meta property="og:url" content={url}>
+<meta property="og:type" content={type}>
+<meta name="theme-color" content="#111111">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="alternate" type="application/rss+xml" title="Bits & Bricks blog" href="/blog/rss.xml">
+<link rel="preload" href="/assets/fonts/archivo-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/ibm-plex-mono-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/content.css">
+<script is:inline src="/assets/theme.js"></script>
+<script is:inline src="/assets/reader.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<SiteHeader path={path} />
+<slot />
+<SiteFooter />
+</body>
+</html>

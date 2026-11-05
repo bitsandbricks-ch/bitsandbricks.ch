@@ -1,0 +1,14 @@
+---
+import Site from "../layouts/Site.astro";
+---
+<Site title="Saved" description="Posts, notes and lessons you saved." path="/saved/" noindex>
+<main id="main" class="view"><div class="wrap">
+  <div class="vhead">
+    <p class="prompt"><b>$</b> <i>show saved</i></p>
+    <h1>Saved</h1>
+    <p class="lede">Posts, notes and lessons you starred. They are kept in this browser only, nothing is sent anywhere.</p>
+  </div>
+  <div class="notelist saved-list" id="saved-list" hidden></div>
+  <div class="empty" id="saved-empty">Nothing saved yet. Use <b>save</b> on any post, note or lesson and it shows up here.</div>
+</div></main>
+</Site>

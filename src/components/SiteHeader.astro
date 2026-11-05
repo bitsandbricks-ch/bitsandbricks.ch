@@ -1,0 +1,19 @@
+---
+// The site header, shared by the plain pages and the Starlight (kb, courses) pages.
+import { NAV, LOGO, ICONS, GITHUB, LINKEDIN, isCurrent } from "../lib/site";
+interface Props { path: string }
+const { path } = Astro.props;
+---
+<header class="site-head">
+  <div class="wrap bar">
+    <a class="brand" href="/" aria-label="Bits and Bricks, home"><Fragment set:html={LOGO} /><span>Bits<b>&amp;</b>Bricks</span></a>
+    <nav class="nav" aria-label="Main">{NAV.map(([href, label]) => <a href={href} aria-current={isCurrent(href, path) ? "page" : undefined}>{label}</a>)}</nav>
+    <div class="head-tools">
+      <slot />
+      <a class="icon-btn" href="/saved/" aria-label="Saved pages" title="Saved"><Fragment set:html={ICONS.star} /></a>
+      <a class="icon-btn" href={GITHUB} aria-label="GitHub"><Fragment set:html={ICONS.github} /></a>
+      <a class="icon-btn" href={LINKEDIN} aria-label="LinkedIn"><Fragment set:html={ICONS.linkedin} /></a>
+      <button class="icon-btn theme" type="button" aria-label="Switch colour scheme" data-theme-toggle><Fragment set:html={ICONS.moon} /></button>
+    </div>
+  </div>
+</header>

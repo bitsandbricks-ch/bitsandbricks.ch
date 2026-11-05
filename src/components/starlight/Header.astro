@@ -1,0 +1,7 @@
+---
+// Starlight's top bar shows the normal site header, with search added.
+import Search from "virtual:starlight/components/Search";
+import SiteHeader from "../SiteHeader.astro";
+const path = Astro.url.pathname;
+---
+<div class="sl-head"><SiteHeader path={path}><Search /></SiteHeader></div>
