@@ -123,10 +123,10 @@ FOOTER = """<footer class="site-foot">
     <div class="foot-grid">
       <div>
         <a class="brand" href="/">{{logo}}<span>Bits<b>&amp;</b>Bricks</span></a>
-        <p>Side projects by Mike Keller: software for clubs, tools for homelabs, and the lab that runs them. Built in Switzerland.</p>
+        <p>Side projects by Mike Keller, network engineer in Switzerland.</p>
       </div>
       <ol class="trace" aria-label="Links">
-        <li class="cmd"><b>$</b> traceroute elsewhere</li>
+        <li class="cmd">Links</li>
         <li><span>1</span><a href="https://hubra.club">hubra.club</a><span>Hubra</span></li>
         <li><span>2</span><a href="https://labdex-app.github.io/labdex/">labdex-app.github.io</a><span>Labdex docs</span></li>
         <li><span>3</span><a href="{{github}}">github.com/reykimedev</a><span>code</span></li>
@@ -134,7 +134,7 @@ FOOTER = """<footer class="site-foot">
         <li><span>5</span><a href="mailto:{{mail}}">{{mail}}</a><span>mail</span></li>
       </ol>
     </div>
-    <div class="foot-base"><span>© 2026 Mike Keller · plain HTML, no cookies, no tracking</span><span><a href="/brand/">Brand</a> · <a href="/impressum/">Impressum</a> · <a href="/privacy/">Privacy</a></span></div>
+    <div class="foot-base"><span>© 2026 Mike Keller · no cookies, no tracking</span><span><a href="/brand/">Brand</a> · <a href="/impressum/">Impressum</a> · <a href="/privacy/">Privacy</a></span></div>
   </div>
 </footer>
 </body>

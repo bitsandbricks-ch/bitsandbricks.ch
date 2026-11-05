@@ -6,9 +6,8 @@ description: Labdex is a lightweight homelab inventory that treats zones and nam
 <main id="main">
 <section class="page-hero">
   <div class="wrap">
-    <p class="prompt"><b>$</b> <i>show project</i></p>
     <div class="unit-title">{{labdex}}<div><h1>Labdex</h1></div></div>
-    <p class="lede">A small inventory for homelabs that treats zones and names as first-class. Describe networks, hosts, interfaces and services once, and Labdex checks them against your conventions and generates what the rest of the lab needs.</p>
+    <p class="lede">A small inventory for homelabs. You describe networks, hosts, interfaces and services once. Labdex checks them against your zone and naming rules and generates DNS records, firewall aliases and an Ansible inventory.</p>
     <div class="btns"><a class="btn btn-p" href="https://labdex-app.github.io/labdex/">Read the docs {{icon:ext}}</a><a class="btn btn-s" href="https://github.com/labdex-app/labdex">{{icon:github}} Source</a></div>
     <div class="chips"><span class="chip">One container</span><span class="chip">SQLite or PostgreSQL</span><span class="chip">&lt; 100 MB RAM</span><span class="chip">YAML in git</span></div>
   </div>
@@ -17,12 +16,12 @@ description: Labdex is a lightweight homelab inventory that treats zones and nam
   <div class="wrap prose">
     <p class="label">Background</p>
     <h2>Why I built it</h2>
-    <p>NetBox is great, but for a homelab it's steep to learn and heavy to run. I wanted something small and simple that fits in the lab itself, and I use it in my own.</p>
+    <p>NetBox is great, but for a homelab it's a lot to learn and a lot to run. I wanted something small that fits in the lab itself. I use it in my own.</p>
   </div>
 </section>
 <section class="section">
   <div class="wrap">
-    <div class="section-head"><p class="label">What it does</p><h2>The middle ground between a spreadsheet and NetBox.</h2></div>
+    <div class="section-head"><h2>Features</h2></div>
     <div class="grid3">
       <div class="feature"><h3>Inventory &amp; IPAM</h3><p>Networks with VLANs, prefixes and DHCP ranges, hosts with interfaces and services, and the next free address per network.</p></div>
       <div class="feature"><h3>Zones</h3><p>Every network and host belongs to a zone such as <code>DC_TC</code>, and lint makes sure nothing sits above its trust level.</p></div>
@@ -38,15 +37,8 @@ description: Labdex is a lightweight homelab inventory that treats zones and nam
 </section>
 <section class="section">
   <div class="wrap prose">
-    <p class="label">Background</p>
-    <h2>Why I built it</h2>
-    <p>NetBox is great, but for a homelab it's steep to learn and heavy to run. I wanted something small and simple that fits in the lab itself, and I use it in my own.</p>
-  </div>
-</section>
-<section class="section">
-  <div class="wrap prose">
     <p class="label">Try it</p>
-    <h2>Up in one command</h2>
+    <h2>Run the demo</h2>
     <div class="terminal"><header><i></i><i></i><i></i></header><pre><span class="p">$</span> docker run -p 8080:8080 -e LABDEX_DEMO=1 ghcr.io/labdex-app/labdex:1
 <span class="c"># then open http://127.0.0.1:8080</span></pre></div>
     <p>Labdex is built for home labs on a trusted network. Don't expose it to the internet or use it for business infrastructure.</p>

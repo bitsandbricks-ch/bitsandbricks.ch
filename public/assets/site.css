@@ -140,7 +140,7 @@ code { font-size: .86em; background: var(--surface-2); border: 1px solid var(--l
 .leds span { display: flex; align-items: center; gap: 6px; font: 500 .62rem/1 var(--mono); color: var(--text-3); text-transform: uppercase; }
 .leds span::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--led-off); }
 .leds .on::before { background: var(--led); box-shadow: 0 0 0 2px color-mix(in srgb, var(--led) 25%, transparent); }
-.leds .act::before { background: var(--brick); animation: blink 1.6s steps(1) infinite; }
+.leds .act::before { background: var(--brick); }
 .unit-main { display: grid; gap: 10px; min-width: 0; }
 .unit-title { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .unit-title svg { width: 34px; height: 34px; flex: none; }
@@ -236,6 +236,7 @@ code { font-size: .86em; background: var(--surface-2); border: 1px solid var(--l
 
 /* Reserved rack units: planned projects */
 .slots-head { margin: 28px 0 12px; }
+.slots-head h3 { font: 600 .8rem/1 var(--mono); color: var(--text-3); text-transform: uppercase; letter-spacing: .06em; }
 .slots { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 .slot { display: grid; grid-template-columns: auto 1fr; align-items: start; gap: 16px; padding: 18px 20px; border: 1.5px dashed var(--line-2); border-radius: 6px; background: transparent; }
 .slot .mono { font-size: .74rem; color: var(--text-3); }
