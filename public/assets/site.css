@@ -277,3 +277,7 @@ code { font-size: .86em; background: var(--surface-2); border: 1px solid var(--l
 .status b { color: var(--text); font-weight: 600; }
 @media (max-width: 640px) { .status li { grid-template-columns: 1fr; gap: 4px; } }
 @media (prefers-reduced-motion: reduce) { .status .next .st::before { animation: none; } }
+.shot .dk { display: none; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .shot .lt { display: none; } :root:not([data-theme="light"]) .shot .dk { display: block; } }
+:root[data-theme="dark"] .shot .lt { display: none; }
+:root[data-theme="dark"] .shot .dk { display: block; }
