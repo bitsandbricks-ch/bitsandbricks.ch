@@ -320,9 +320,6 @@ code { font-size: .86em; background: var(--surface-2); border: 1px solid var(--l
   .guide section { padding: 32px 0; }
 }
 @media (max-width: 640px) {
-  .rack { border: 0; background: none; padding: 0; gap: 12px; }
-  .ports { gap: 0; border-top: 1px solid var(--line); }
-  .port { border: 0; border-bottom: 1px dashed var(--line-2); border-radius: 0; background: none; padding: 10px 0; }
   .section { padding: 44px 0; }
   .section-head { margin-bottom: 22px; }
 }

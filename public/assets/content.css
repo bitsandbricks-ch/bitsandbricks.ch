@@ -217,6 +217,4 @@ div.quiz { display: grid; gap: 10px; border: 1px solid var(--line-2); border-rad
   .notefoot .local-graph { display: none; }
   .crumb > :last-child:not(a) { display: none; }
   .crumb > i:nth-last-child(2) { display: none; }
-  .chassis { border: 0; background: none; padding: 0; }
-  .chassis-hd { padding: 0 0 4px; }
 }
