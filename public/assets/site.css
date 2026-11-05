@@ -13,7 +13,8 @@
   --page: #f7f7f4; --surface: #ffffff; --surface-2: #efefea;
   --line: #e1e1da; --line-2: #cbcbc2;
   --text: #151515; --text-2: #4a4a46; --text-3: #686862;
-  --accent: #15803d; --accent-hover: #116b33; --on-accent: #ffffff;
+  --accent: #15803d; --accent-hover: #116b33; --on-accent: #0f1110;
+  --btn: #22c55e; --btn-hover: #16a34a;
   --brick: #b23b14; --led: #16a34a; --led-off: #d9d9d1;
   --sans: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
@@ -25,6 +26,7 @@
   --line: #2a2f2b; --line-2: #3b423d;
   --text: #ecefeb; --text-2: #aab1ab; --text-3: #858c86;
   --accent: #4ade80; --accent-hover: #86efac; --on-accent: #0f1110;
+  --btn: #4ade80; --btn-hover: #86efac;
   --brick: #f0784e; --led: #4ade80; --led-off: #333a35;
   color-scheme: dark;
   }
@@ -34,6 +36,7 @@
   --line: #2a2f2b; --line-2: #3b423d;
   --text: #ecefeb; --text-2: #aab1ab; --text-3: #858c86;
   --accent: #4ade80; --accent-hover: #86efac; --on-accent: #0f1110;
+  --btn: #4ade80; --btn-hover: #86efac;
   --brick: #f0784e; --led: #4ade80; --led-off: #333a35;
   color-scheme: dark;
 }
@@ -87,8 +90,8 @@ code { font-size: .86em; background: var(--surface-2); border: 1px solid var(--l
 .lede { font-size: clamp(1.08rem, 1.8vw, 1.25rem); color: var(--text-2); max-width: 36rem; }
 .btn { display: inline-flex; align-items: center; gap: 8px; font: 600 .98rem/1 var(--sans); text-decoration: none; border-radius: 6px; padding: 13px 18px; border: 1px solid transparent; white-space: nowrap; }
 .btn svg { width: 18px; height: 18px; }
-.btn-p { background: var(--accent); color: var(--on-brick); }
-.btn-p:hover { background: var(--accent-hover); color: var(--on-brick); }
+.btn-p { background: var(--btn); color: var(--on-accent); }
+.btn-p:hover { background: var(--btn-hover); color: var(--on-accent); }
 .btn-s { background: var(--surface); color: var(--text); border-color: var(--line-2); }
 .btn-s:hover { color: var(--text); border-color: var(--text-3); }
 .btns { display: flex; flex-wrap: wrap; gap: 10px; }
@@ -111,9 +114,9 @@ code { font-size: .86em; background: var(--surface-2); border: 1px solid var(--l
 .map .node:hover rect, .map .node:focus-visible rect { stroke: var(--accent); }
 .map .node text { fill: var(--text); font-size: 13px; font-weight: 600; }
 .map .node .sub { fill: var(--text-3); font-size: 10px; font-weight: 500; }
-.map .core rect { fill: var(--accent); stroke: var(--accent); }
-.map .core text { fill: var(--on-brick); }
-.map .core .sub { fill: var(--on-brick); opacity: .8; }
+.map .core rect { fill: var(--btn); stroke: var(--btn); }
+.map .core text { fill: var(--on-accent); }
+.map .core .sub { fill: var(--on-accent); opacity: .8; }
 .map .ifname { fill: var(--text-3); font-size: 9.5px; }
 .map .led { fill: var(--led); }
 .map .core .led { fill: var(--on-accent); }
