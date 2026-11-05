@@ -1,14 +1,14 @@
 <!--
 path: /about/
 title: About
-description: Mike Keller, network engineer (CCIE Enterprise Infrastructure) from Switzerland, working on network automation, DevOps and open source.
+description: Mike Keller, network engineer and tech lead operations, CCIE Enterprise Infrastructure #70573, from Switzerland. Member of the Lock and Load LAN party infrastructure and network team.
 -->
 <main id="main">
 <section class="page-hero">
   <div class="wrap">
     <p class="prompt"><b>$</b> <i>whoami</i></p>
     <h1>Hi, I'm Mike Keller.</h1>
-    <p class="lede">Network engineer, CCIE Enterprise Infrastructure #70573. I'm into network automation, infrastructure, DevOps and open source, and I like building practical tools that make infrastructure and homelabs simpler to run.</p>
+    <p class="lede">Network engineer and tech lead operations, CCIE Enterprise Infrastructure #70573. I'm into network automation, infrastructure, DevOps and open source, and I like building practical tools that make infrastructure and homelabs simpler to run.</p>
     <div class="btns">
       <a class="btn btn-p" href="{{linkedin}}">{{icon:linkedin}} LinkedIn</a>
       <a class="btn btn-s" href="{{github}}">{{icon:github}} GitHub</a>
@@ -17,17 +17,52 @@ description: Mike Keller, network engineer (CCIE Enterprise Infrastructure) from
   </div>
 </section>
 <section class="section">
+  <div class="wrap">
+    <div class="section-head"><p class="prompt"><b>$</b> <i>show version</i></p><h2>At a glance</h2></div>
+    <div class="console">
+      <header><span>mike&gt; show version</span><span>uptime: always on</span></header>
+<pre><span class="k">Operator:</span>       Mike Keller
+<span class="k">Role:</span>           Network Engineer / Tech Lead Operations
+<span class="k">Certification:</span>  CCIE Enterprise Infrastructure #70573
+<span class="k">Location:</span>       Switzerland
+<span class="k">Interests:</span>      network automation, infrastructure, DevOps, open source
+<span class="k">Community:</span>      Lock and Load, infrastructure and network team
+<span class="k">Clubs:</span>          VollBuild makerspace</pre>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap">
+    <div class="section-head"><p class="prompt"><b>$</b> <i>show interfaces description</i></p><h2>What I work on</h2></div>
+    <div class="grid3">
+      <div class="feature"><h3>Networks</h3><p>Network engineering and operations, as Network Engineer and Tech Lead Operations. CCIE Enterprise Infrastructure #70573.</p></div>
+      <div class="feature"><h3>Automation</h3><p>Python and Ansible, and tools like <a href="/labdex/">Labdex</a> that turn an inventory into DNS, firewall aliases and Ansible.</p></div>
+      <div class="feature"><h3>Software</h3><p><a href="/hubra/">Hubra</a>, club software that started at VollBuild, our makerspace club.</p></div>
+      <div class="feature"><h3>The homelab</h3><p><a href="/homelab/">My homelab</a>, which is also my home network, and Cisco Modeling Labs for CCIE practice.</p></div>
+    </div>
+  </div>
+</section>
+<section class="section" id="community">
   <div class="wrap prose">
-    <h2>What I work on</h2>
-    <ul>
-      <li><a href="/hubra/">Hubra</a>, club software for Swiss clubs.</li>
-      <li><a href="/labdex/">Labdex</a>, a homelab inventory with automation.</li>
-      <li><a href="/homelab/">My homelab</a>, where both of them are tested.</li>
-    </ul>
-    <h2 id="community">Community</h2>
-    <p>I'm part of the infrastructure and network team at Lock and Load.</p>
-    <p class="todo">Link to Lock and Load and a sentence on what it is.</p>
-    <p class="todo">A short career summary, and anything else you'd like visitors to know.</p>
+    <p class="prompt"><b>$</b> <i>show lldp neighbors</i></p>
+    <h2>Lock and Load</h2>
+    <p>Lock and Load runs LAN parties. I'm part of the infrastructure and network team, the people who build and run the network the players plug into.</p>
+    <p class="todo">Link to Lock and Load, and any details you'd like here: how big the events are, how often they happen, and what the network looks like.</p>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap prose">
+    <p class="prompt"><b>$</b> <i>show history</i></p>
+    <h2>Career</h2>
+    <p class="todo">A short career summary: where you've worked and what you did there, or leave it to LinkedIn.</p>
+    <p>For the full picture, see <a href="{{linkedin}}">LinkedIn</a>.</p>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap prose">
+    <p class="prompt"><b>$</b> <i>show ip route 0.0.0.0</i></p>
+    <h2>Get in touch</h2>
+    <p>Mail is best: <a href="mailto:{{mail}}">{{mail}}</a>. I'm also looking for sponsors for <a href="/#rack">my own AS</a> one day, so if you can help with transit, IP space or hosting, I'd like to hear from you.</p>
   </div>
 </section>
 </main>
