@@ -21,6 +21,8 @@ const docs = defineCollection({
       quiz: z.boolean().default(false),
       // Placeholder pages written for the first version, to be replaced
       sample: z.boolean().default(false),
+      // The "$ command" line shown above the title, like on the other pages
+      prompt: z.string().optional(),
     }),
   }),
 });

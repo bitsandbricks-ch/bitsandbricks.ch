@@ -36,13 +36,12 @@
 body { font-size: 17px; }
 
 /* Header: the site header inside Starlight's fixed bar */
+.header:has(.sl-head) { padding: 0; }
 .sl-head .site-head { position: static; border: 0; background: transparent; }
-.sl-head .wrap { width: 100%; }
-.sl-head .bar { min-height: 60px; flex-wrap: nowrap; padding: 0; gap: 10px; }
-.sl-head .nav { overflow-x: auto; scrollbar-width: none; margin-left: 12px; order: 0; width: auto; }
-.sl-head .head-tools { display: flex; gap: 8px; align-items: center; margin-left: auto; }
-.sl-head site-search button[data-open-modal] { border-radius: 6px; border: 1px solid var(--line); background: var(--surface); }
-@media (max-width: 1100px) { .sl-head .head-tools .icon-btn.ext { display: none; } }
+.sl-head .bar { flex-wrap: nowrap; }
+.sl-head .head-tools { align-items: center; }
+.sl-head site-search button[data-open-modal] { height: 38px; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); color: var(--text-2); font: 500 .8rem/1 var(--mono); }
+@media (min-width: 50rem) { .sl-head site-search button[data-open-modal] { width: 170px; } }
 .sl-head site-search button[data-open-modal] svg { width: 18px; height: 18px; }
 
 /* Phones and tablets: one row. Pages with a sidebar use Starlight's menu button, which opens the
@@ -58,7 +57,14 @@ body { font-size: 17px; }
   .sl-menu-button { top: 11px; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); color: var(--text-2); box-shadow: none; padding: 9px; }
   :root[data-theme] .sl-menu-button { background: var(--surface); color: var(--text-2); }
 }
-@media (max-width: 420px) { .sl-head .brand span { display: none; } }
+@media (max-width: 420px) {
+  :root { --sl-menu-button-size: 36px; }
+  .sl-head .icon-btn, .sl-head site-search button[data-open-modal] { width: 36px; height: 36px; }
+  .sl-head .head-tools { gap: 4px; }
+  [data-has-sidebar] .sl-head .head-tools { padding-right: 40px; }
+  .sl-menu-button { top: 12px; }
+}
+@media (max-width: 369px) { .sl-head .brand span { display: none; } }
 .side-nav { display: none; }
 @media (max-width: 50rem) {
   .side-nav { display: grid; font-family: var(--mono); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
@@ -102,3 +108,11 @@ starlight-toc a[aria-current="true"] { color: var(--brick); }
 .sidebar-content .large { color: var(--text); }
 .sidebar-content .side-nav a[aria-current="page"], .sidebar-content .side-nav a:hover { background: none; color: var(--text); font-weight: 500; }
 .sidebar-content .side-nav a:not([aria-current="page"]) { color: var(--text); }
+
+/* Page heading like the other pages: "$ command" line above the title, no rule under it */
+.content-panel + .content-panel { border-top: 0; }
+.sl-prompt { margin-bottom: 10px; }
+.sl-head .site-foot, .main-frame > .site-foot { margin-top: 0; }
+/* The footer runs full width under the sidebar too, like on the other pages */
+.main-frame > .site-foot { position: relative; z-index: calc(var(--sl-z-index-menu) + 1); }
+@media (min-width: 50rem) { [data-has-sidebar] .main-frame > .site-foot { margin-inline-start: calc(-1 * var(--sl-sidebar-width)); } }

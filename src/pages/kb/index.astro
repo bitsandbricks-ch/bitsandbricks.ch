@@ -16,8 +16,7 @@ for (const n of g.notes) {
 }
 const recent = [...g.notes].filter((n) => n.data.verified).sort((a, b) => (a.data.verified! < b.data.verified! ? 1 : -1)).slice(0, 5);
 ---
-<StarlightPage frontmatter={{ title: "Knowledge base", description: "Notes on routing, switching, automation and the homelab, linked to each other.", tableOfContents: false }}>
-  <p class="prompt"><b>$</b> <i>show kb summary</i></p>
+<StarlightPage frontmatter={{ prompt: "show kb summary", title: "Knowledge base", description: "Notes on routing, switching, automation and the homelab, linked to each other.", tableOfContents: false }}>
   <p class="lede">Notes on routing, switching and the homelab. Folders nest as deep as needed, notes link to each other, and every note shows what links back to it. Search is at the top.</p>
   <div class="cats">
     {[...cats.entries()].sort().map(([name, c]) => <a class="cat" href={url(c.first)}><b>{name}/</b><span>{c.n} notes{c.subs.size ? " · " + [...c.subs].join(", ") : ""}</span></a>)}

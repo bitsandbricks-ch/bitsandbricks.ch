@@ -31,6 +31,7 @@ const kind = isKb ? "kb" : lesson ? "lesson" : course ? "course" : "page";
     {crumb.map(([label, href], i) => <>{i > 0 && <i>&gt;</i>}{href ? <a href={href}>{label}</a> : <span>{label}</span>}</>)}
   </nav>
 )}
+{data.prompt && <p class="prompt sl-prompt"><b>$</b> <i>{data.prompt}</i></p>}
 {lesson && <p class="lesson-no">lesson {lessonIdx + 1}/{course!.lessons.length} <span>· {lesson.section}</span></p>}
 <h1 id="_top">{title}</h1>
 {(isKb || isCourses) && (

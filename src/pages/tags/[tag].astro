@@ -8,8 +8,7 @@ export async function getStaticPaths() {
 const { tag, v } = Astro.props as any;
 const fmt = (d: Date) => d.toISOString().slice(0, 10);
 ---
-<StarlightPage frontmatter={{ title: `#${tag}`, description: `Notes, lessons and posts tagged ${tag}.`, tableOfContents: false }}>
-  <p class="prompt"><b>$</b> <i>show tag {tag}</i></p>
+<StarlightPage frontmatter={{ prompt: `show tag ${tag}`, title: `#${tag}`, description: `Notes, lessons and posts tagged ${tag}.`, tableOfContents: false }}>
   <p>{v.docs.length} notes and lessons, {v.posts.length} posts.</p>
   {v.docs.length > 0 && <div class="notelist">{v.docs.map((d: any) => <a href={url(d.id)}><b>{d.data.title}</b><span>{d.id.split("/").slice(0, -1).join("/")}</span></a>)}</div>}
   {v.posts.length > 0 && <div class="notelist">{v.posts.map((p: any) => <a href={`/blog/${p.id}/`}><b>{p.data.title}</b><span>blog · {fmt(p.data.date)}</span></a>)}</div>}
