@@ -6,11 +6,19 @@ description: Labdex is a lightweight homelab inventory that treats zones and nam
 <main id="main">
 <section class="page-hero">
   <div class="wrap">
+    <div class="ph-grid">
+      <div>
     <p class="prompt"><b>$</b> <i>show project</i></p>
     <div class="unit-title">{{labdex}}<div><h1>Labdex</h1></div></div>
     <p class="lede">A small inventory for homelabs that treats zones and names as first-class. Describe networks, hosts, interfaces and services once, and Labdex checks them against your conventions and generates what the rest of the lab needs.</p>
     <div class="btns"><a class="btn btn-p" href="https://labdex-app.github.io/labdex/">Read the docs {{icon:ext}}</a><a class="btn btn-s" href="https://github.com/labdex-app/labdex">{{icon:github}} Source</a></div>
     <div class="chips"><span class="chip">One container</span><span class="chip">SQLite or PostgreSQL</span><span class="chip">&lt; 100 MB RAM</span><span class="chip">YAML in git</span><span class="chip">v1.24</span><span class="chip">AGPL-3.0</span></div>
+      </div>
+    <figure class="shot">
+      <header><i></i><i></i><i></i><span>labdex · dashboard</span></header>
+      <img src="/assets/labdex/dashboard.png" width="1440" height="900" alt="The Labdex dashboard" loading="eager">
+    </figure>
+    </div>
   </div>
 </section>
 <section class="section">
@@ -33,6 +41,42 @@ description: Labdex is a lightweight homelab inventory that treats zones and nam
       <div class="feature"><h3>Plugins</h3><p>Technitium, Proxmox, k3s, Docker, Traefik, UniFi, Tailscale, Prometheus and more from the <a href="https://github.com/labdex-app/labdex-plugins">marketplace</a>.</p></div>
       <div class="feature"><h3>Vault &amp; backups</h3><p>A built-in vault for secrets and scheduled, encrypted backups to a folder, NFS or S3.</p></div>
       <div class="feature"><h3>History</h3><p>Every change is recorded with a diff and can be reverted. Roles can be bound to zones, tags or names.</p></div>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap">
+    <div class="section-head"><p class="prompt"><b>$</b> <i>show screenshots</i></p><h2>A look inside</h2><p>From the demo inventory: a two-person homelab with an OPNsense edge firewall, two Proxmox hosts, a k3s cluster and a DMZ.</p></div>
+    <div class="shots">
+      <figure class="shot"><header><i></i><i></i><i></i><span>network › topology</span></header><img src="/assets/labdex/topology.png" width="1440" height="900" alt="Physical topology with Proxmox hosts and their VMs" loading="lazy"><figcaption><b>#</b> Hypervisors, VMs and cables, with each host's fun name on top.</figcaption></figure>
+      <figure class="shot"><header><i></i><i></i><i></i><span>network › policy</span></header><img src="/assets/labdex/policy.png" width="1440" height="900" alt="Zone policy matrix" loading="lazy"><figcaption><b>#</b> Which zone may reach which, on which ports. OPNsense gets the pass rules.</figcaption></figure>
+      <figure class="shot"><header><i></i><i></i><i></i><span>inventory › hosts</span></header><img src="/assets/labdex/hosts.png" width="1440" height="900" alt="Host list" loading="lazy"><figcaption><b>#</b> Hosts with functional names like <code>srv-vm-dns-01</code> and live up/down dots.</figcaption></figure>
+      <figure class="shot"><header><i></i><i></i><i></i><span>audit › history</span></header><img src="/assets/labdex/history.png" width="1440" height="900" alt="Change history with diffs" loading="lazy"><figcaption><b>#</b> Every change with a diff, and a revert button.</figcaption></figure>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap">
+    <div class="section-head"><p class="prompt"><b>$</b> <i>cat inventory.yaml</i></p><h2>Your lab, in YAML.</h2><p>Import it, keep it in git, and lint it in CI. This is a piece of the example inventory.</p></div>
+    <div class="ph-grid">
+      <div class="terminal"><header><i></i><i></i><i></i></header><pre><span class="c"># examples/homelab.yaml</span>
+<span class="p">networks:</span>
+  - {name: mgmt, vlan: 3,   zone: DC_HT, prefix4: 10.10.3.0/24}
+  - {name: srv,  vlan: 100, zone: DC_TC, prefix4: 10.10.100.0/24}
+  - {name: k8s,  vlan: 128, zone: DC_TC, prefix4: 10.10.128.0/24}
+  - {name: dmz,  vlan: 150, zone: DMZ_TC, prefix4: 10.10.150.0/24}
+  - {name: iot,  vlan: 201, zone: CA_UT, prefix4: 10.10.201.0/24}
+<span class="p">hosts:</span>
+  - name: net-fw-edge-01
+    fun: arcanine
+    function: OPNsense edge firewall</pre></div>
+      <div class="terminal"><header><i></i><i></i><i></i></header><pre><span class="p">$</span> labdex import inventory.yaml
+<span class="p">$</span> labdex lint
+<span class="c"># exit 1 on errors, so it can gate CI</span>
+<span class="p">$</span> labdex action fw-main sync_aliases
+<span class="c"># shows the plan first</span>
+<span class="p">$</span> labdex action fw-main sync_aliases --apply
+<span class="p">$</span> labdex backup create -o lab.bak</pre></div>
     </div>
   </div>
 </section>
