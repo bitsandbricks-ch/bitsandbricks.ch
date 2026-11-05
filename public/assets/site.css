@@ -233,3 +233,15 @@ code { font-size: .86em; background: var(--surface-2); border: 1px solid var(--l
 @media (max-width: 640px) { .rules { grid-template-columns: 1fr; } }
 .clear { display: inline-grid; place-items: center; padding: 22px; border: 1.5px dashed var(--line-2); border-radius: 4px; background: var(--surface); }
 .clear svg { width: 96px; height: 96px; }
+
+/* Reserved rack units: planned projects */
+.slots-head { margin: 28px 0 12px; }
+.slots { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.slot { display: grid; grid-template-columns: auto 1fr; align-items: start; gap: 16px; padding: 18px 20px; border: 1.5px dashed var(--line-2); border-radius: 6px; background: transparent; }
+.slot .mono { font-size: .74rem; color: var(--text-3); }
+.slot h3 { font-size: 1.15rem; margin: 6px 0 6px; }
+.slot p { color: var(--text-2); font-size: .95rem; }
+.slot-as { border-color: var(--brick); }
+.slot-as .mono { color: var(--brick); }
+@media (max-width: 900px) { .slots { grid-template-columns: 1fr; } }
+.slot .leds { align-content: start; padding-top: 4px; }
