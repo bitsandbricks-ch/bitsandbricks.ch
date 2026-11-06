@@ -19,6 +19,9 @@ const docs = defineCollection({
     tags: z.array(z.string()).default([]),
     // KB: when the note was last checked against real gear, e.g. 2026-10
     verified: z.string().optional(),
+    // KB: how finished a note is (imported from Grav: draft, review, ...) and its version
+    status: z.string().optional(),
+    version: z.string().optional(),
     // Courses: who may read a lesson. Everything is free for now; account/paid need a server later.
     access: z.enum(["free", "account", "paid"]).default("free"),
     // Course index pages (courses/<course>/index.md)

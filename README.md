@@ -44,6 +44,14 @@ Pushing to `main` builds and publishes. Pull requests build too, so broken links
   quizzes). Learning paths are listed in `PATHS` in `src/lib/content.ts`. Every lesson has
   `access: free` for now; `account` and `paid` are reserved for when accounts exist.
 
+### Importing from Grav
+
+The first blog posts came from the old Grav site (gitlab.com/bitsandbricks/blog, private). With a
+checkout of that repo, `node tools/import-grav.mjs <checkout>/data/user/pages` rewrites
+`src/content/blog/` and, for kb notes that have `public: true` in their Grav frontmatter,
+`src/content/docs/kb/`. Notes that look like they contain passwords, tokens, private IPs or shell
+history are refused even when marked public. It prints a warning for everything it had to guess.
+
 Pages marked `sample: true` are placeholders from the first version and show a note saying so.
 
 ### Comments
