@@ -60,6 +60,7 @@ const kind = isKb ? "kb" : lesson ? "lesson" : "course";
         <h1>{data.title}</h1>
         <div class="title-meta" data-pagefind-ignore>
           {data.verified && <span class={"pill " + (old ? "cur" : "ok")}>verified {data.verified}{old ? " · check again" : ""}</span>}
+          {data.status && <span class="pill">{data.status}{data.version ? ` · v${data.version}` : ""}</span>}
           {!isKb && <span class="pill">access: {data.access}</span>}
           <Tags tags={data.tags} />
           <SaveButton url={path} title={data.title} kind={kind} />

@@ -6,4 +6,4 @@ tags: [switching, stp]
 sample: true
 ---
 
-Sample lesson. Root, designated and alternate ports. More in [STP variants](/kb/switching/l2/stp-variants/).
+Sample lesson. Root, designated and alternate ports. More in [the knowledge base](/kb/).
