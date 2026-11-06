@@ -1,6 +1,6 @@
 // Turns the Grav pages from gitlab.com/bitsandbricks/blog into the site's Markdown.
 //
-//   node tools/import-grav.mjs <grav>/data/user/pages
+//   node tools/import-grav.mjs <grav>/data/user/pages [--all-public]
 //
 // <pages>/NN.blog/<slug>/item.md      -> src/content/blog/<slug>.md
 // <pages>/NN.kb/<path>/item.md        -> src/content/docs/kb/<path>.md, only with `public: true`
@@ -14,7 +14,9 @@ import { join, relative, dirname, basename } from "node:path";
 import { execFileSync } from "node:child_process";
 import { parse, stringify } from "yaml";
 
-const SRC = process.argv[2];
+const args = process.argv.slice(2);
+const ALL_PUBLIC = args.includes("--all-public"); // treat every kb note as public: true
+const SRC = args.find((a) => !a.startsWith("--"));
 if (!SRC || !existsSync(SRC)) {
   console.error("usage: node tools/import-grav.mjs <grav>/data/user/pages");
   process.exit(2);
@@ -114,9 +116,9 @@ const published = (fm) => fm.published !== false;
  *  note says `private_ips_ok: true`, for lab examples. */
 function secrets(body, fm) {
   const found = [];
-  if (/\b-u\s+['"]?[^\s'"]+:[^\s'"<]+['"]?/.test(body)) found.push("a user:password after -u");
+  if (/\b-u\s+['"]?(?!\$)[^\s'"]+:(?![$<])[^\s'"<]+['"]?/.test(body)) found.push("a user:password after -u");
   if (/[a-z]+:\/\/[^\s/:@]+:[^\s/@<]+@/i.test(body)) found.push("a user:password inside a URL");
-  if (/\b(password|passwd|secret|token|api[_-]?key)\s*[:=]\s*['"]?(?!<)[^\s'"]{6,}/i.test(body)) found.push("a password, secret or token value");
+  if (/\b(password|passwd|secret|token|api[_-]?key)\s*[:=]\s*['"]?(?![<$`])[^\s'"]{6,}/i.test(body)) found.push("a password, secret or token value");
   if (/-----BEGIN [A-Z ]*PRIVATE KEY-----/.test(body)) found.push("a private key");
   if (fm.private_ips_ok !== true && /\b(10\.\d{1,3}|172\.(1[6-9]|2\d|3[01])|192\.168)\.\d{1,3}\.\d{1,3}\b/.test(body)) found.push("private IP addresses (set private_ips_ok: true if they are lab examples)");
   if (/^\s*\d+\s+\d{4}-\d\d-\d\d \d\d:\d\d:\d\d /m.test(body)) found.push("shell history with timestamps");
@@ -175,7 +177,7 @@ if (kbDir) (function walk(dir, path) {
       const { fm, body } = readPage(file);
       const folder = p.join("/");
       if (!published(fm)) warn(rel, "published: false, skipped");
-      else if (fm.public !== true) kbPrivate.push(folder);
+      else if (fm.public !== true && !ALL_PUBLIC) kbPrivate.push(folder);
       else {
         const found = secrets(body, fm);
         if (found.length) warn(rel, `marked public but NOT imported, it seems to contain: ${found.join("; ")}`);
