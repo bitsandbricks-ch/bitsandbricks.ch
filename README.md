@@ -1,6 +1,6 @@
 # bitsandbricks.ch
 
-The Bits & Bricks website: Mike Keller's projects (Hubra, Labdex, Homelab), plus the blog,
+The Bits & Bricks website: Mike's projects (Hubra, Labdex, Homelab), plus the blog,
 the knowledge base and courses. Built with [Astro](https://astro.build), with search by
 [Pagefind](https://pagefind.app), published as static files on GitHub Pages.
 No cookies, no tracking, no outside requests (comments load only when a reader clicks).
