@@ -1,0 +1,6 @@
+---
+import { ICONS } from "../lib/site";
+interface Props { url: string; title: string; kind: string }
+const { url, title, kind } = Astro.props;
+---
+<button class="star" type="button" data-save={url} data-title={title} data-kind={kind} aria-pressed="false"><Fragment set:html={ICONS.star} /><span>save</span></button>

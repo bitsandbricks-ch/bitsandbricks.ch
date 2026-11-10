@@ -4,6 +4,41 @@
   try { saved = localStorage.getItem("bb_theme"); } catch (e) {}
   if (saved === "light" || saved === "dark") root.dataset.theme = saved;
   document.addEventListener("DOMContentLoaded", function () {
+    // Phone menu: the nav drops down under the header
+    var menu = document.querySelector("[data-menu-toggle]"), head = document.querySelector(".site-head");
+    if (menu && head) {
+      var setOpen = function (open) { head.classList.toggle("open", open); menu.setAttribute("aria-expanded", open ? "true" : "false"); };
+      menu.addEventListener("click", function () { setOpen(!head.classList.contains("open")); });
+      head.querySelector(".nav").addEventListener("click", function (e) { if (e.target.closest("a")) setOpen(false); });
+      document.addEventListener("keydown", function (e) { if (e.key === "Escape" && head.classList.contains("open")) { setOpen(false); menu.focus(); } });
+    }
+    // Search: Pagefind's index and UI load the first time the search opens
+    var dlg = document.querySelector(".search-dlg"), loaded = false;
+    var openSearch = function () {
+      if (!dlg) return;
+      if (!loaded) {
+        loaded = true;
+        var css = document.createElement("link"); css.rel = "stylesheet"; css.href = "/pagefind/pagefind-ui.css"; document.head.appendChild(css);
+        var js = document.createElement("script"); js.src = "/pagefind/pagefind-ui.js";
+        js.onload = function () {
+          new PagefindUI({ element: "#search", showImages: false, showSubResults: true, resetStyles: false, autofocus: true });
+          var input = dlg.querySelector("input"); if (input) input.focus();
+        };
+        js.onerror = function () { document.getElementById("search").textContent = "Search works on the built site (npm run build), not in the dev server."; };
+        document.head.appendChild(js);
+      }
+      dlg.showModal();
+      var input = dlg.querySelector("input"); if (input) input.focus();
+    };
+    document.querySelectorAll("[data-search-open]").forEach(function (b) { b.addEventListener("click", openSearch); });
+    if (dlg) {
+      dlg.querySelector("[data-search-close]").addEventListener("click", function () { dlg.close(); });
+      dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); });
+    }
+    document.addEventListener("keydown", function (e) {
+      var t = e.target, typing = t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable);
+      if (e.key === "/" && !typing && dlg && !dlg.open) { e.preventDefault(); openSearch(); }
+    });
     var btn = document.querySelector("[data-theme-toggle]");
     if (!btn) return;
     btn.addEventListener("click", function () {

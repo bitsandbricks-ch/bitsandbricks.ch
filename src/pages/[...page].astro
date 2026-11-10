@@ -1,0 +1,14 @@
+---
+import Site from "../layouts/Site.astro";
+import { pages, type LegacyPage } from "../lib/legacy";
+
+export function getStaticPaths() {
+  return pages
+    .filter((p) => p.path !== "/404/")
+    .map((p) => ({ params: { page: p.path === "/" ? undefined : p.path.replace(/^\/|\/$/g, "") }, props: { p } }));
+}
+const { p } = Astro.props as { p: LegacyPage };
+---
+<Site title={p.title} description={p.description} path={p.path} noindex={!p.index} fullTitle={p.path === "/"}>
+  <Fragment set:html={p.body} />
+</Site>

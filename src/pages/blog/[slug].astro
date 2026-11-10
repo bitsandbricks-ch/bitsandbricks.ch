@@ -1,0 +1,42 @@
+---
+import { render } from "astro:content";
+import Site from "../../layouts/Site.astro";
+import SaveButton from "../../components/SaveButton.astro";
+import Tags from "../../components/Tags.astro";
+import Comments from "../../components/Comments.astro";
+import { posts, day, minutes, facility, type Post } from "../../lib/blog";
+export async function getStaticPaths() {
+  const all = await posts();
+  return all.map((p, i) => ({ params: { slug: p.id }, props: { p, older: all[i + 1], newer: all[i - 1] } }));
+}
+const { p, older, newer } = Astro.props as { p: Post; older?: Post; newer?: Post };
+const { Content, headings } = await render(p);
+const h2 = headings.filter((h) => h.depth === 2);
+const path = `/blog/${p.id}/`;
+---
+<Site title={p.data.title} description={p.data.summary} path={path} type="article">
+<main id="main" class="view"><div class="wrap">
+  <nav class="crumb" aria-label="Breadcrumb"><a href="/blog/">blog</a><i>&gt;</i><span>{p.data.title}</span></nav>
+  <div class="vhead">
+    <p class="prompt"><b>{day(p.data.date)}</b> <i>{facility(p)}</i></p>
+    <h1>{p.data.title}</h1>
+    <p class="lede">{p.data.summary}</p>
+    <div class="metarow"><Tags tags={p.data.tags} /><span class="pill">{minutes(p)} min read</span><SaveButton url={path} title={p.data.title} kind="blog" /></div>
+    {p.data.sample && <p class="sample-note">Sample post written for the first version. Replace it with a real one.</p>}
+  </div>
+  <div class="read">
+    <article class="prose-body" data-pagefind-body>
+      <Content />
+      <Comments />
+      <div class="pn">
+        {older && <a href={`/blog/${older.id}/`}><span>&lt;- older</span><b>{older.data.title}</b></a>}
+        {newer && <a class="next" href={`/blog/${newer.id}/`}><span>newer -&gt;</span><b>{newer.data.title}</b></a>}
+      </div>
+    </article>
+    <aside class="side">
+      {h2.length > 0 && <div class="blk"><h4>on this page</h4>{h2.map((h) => <a class="lk" href={`#${h.slug}`}>{h.text}</a>)}</div>}
+      {p.data.tags.length > 0 && <div class="blk"><h4>tags</h4><Tags tags={p.data.tags} /></div>}
+    </aside>
+  </div>
+</div></main>
+</Site>

@@ -1,0 +1,22 @@
+---
+// A course as a line card: each lesson is a port. Lit by /assets/reader.js from browser progress.
+import type { Course } from "../lib/content";
+interface Props { course: Course; link?: boolean }
+const { course: c, link = true } = Astro.props;
+let n = 0;
+---
+<div class="lc" data-course-card>
+  <div class="lear"><i></i><i></i></div>
+  <div class="lface">
+    <div class="top">
+      <span class="lslot">slot {c.slot}</span>
+      {link ? <a class="name" href={c.href}>{c.title}</a> : <span class="name">{c.title}</span>}
+      <span class="stat" data-upcount>0/{c.lessons.length} up</span>
+    </div>
+    {link && <p>{c.summary}</p>}
+    <div class="jacks">
+      {c.lessons.map((l) => <a class={"jk" + (l.quiz ? " quiz" : "")} href={l.href} title={l.title} data-lesson={l.id}><span class="jled"></span><span class="jack"></span>{l.quiz ? "quiz" : String(++n).padStart(2, "0")}</a>)}
+    </div>
+  </div>
+  <div class="lear"><i></i><i></i></div>
+</div>

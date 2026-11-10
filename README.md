@@ -1,24 +1,65 @@
 # bitsandbricks.ch
 
-The Bits & Bricks website: Mike Keller's personal projects (Hubra, Labdex, Homelab).
-Plain static files in `public/`, no external requests, light and dark mode.
-Same setup as hubra.club. The brand guide is at `/brand/` (source: `src/pages/brand.html`), logo files in `public/brand/`.
+The Bits & Bricks website: Mike's projects (Hubra, Labdex, Homelab), plus the blog,
+the knowledge base and courses. Built with [Astro](https://astro.build), with search by
+[Pagefind](https://pagefind.app), published as static files on GitHub Pages.
+No cookies, no tracking, no outside requests (comments load only when a reader clicks).
+The brand guide is at `/brand/` (source: `src/legacy/brand.html`), logo files in `public/brand/`.
 
 | Path | What it is |
 | --- | --- |
-| `src/pages/*.html` | Page sources, one per page, settings comment at the top |
-| `tools/build.py` | Wraps every page in the shared head, header and footer and writes `public/` |
-| `public/` | The built site, committed and published as it is |
-| `public/assets/site.css` | All styles, colour tokens at the top |
+| `src/legacy/*.html` | The hand-written pages (home, about, projects, brand, impressum, privacy), settings comment at the top |
+| `src/content/blog/*.md` | Blog posts, one Markdown file each |
+| `src/content/docs/kb/**.md` | Knowledge base notes, nested in folders as deep as needed |
+| `src/content/docs/courses/<course>/` | A course: `index.md` plus one folder per section (`1-basics/`, `2-vlsm/`) with lessons |
+| `src/lib/site.ts` | Logo, icons, nav, links, `{{placeholders}}`, comment settings |
+| `src/lib/content.ts` | Backlinks, graph layout, tags, course structure, learning paths |
+| `src/components/docs/` | The kb note / lesson page: tree, text, on-this-page, backlinks, prev/next |
+| `public/assets/site.css` | All base styles, colour tokens at the top |
+| `public/assets/content.css` | Styles for blog, kb and courses |
+| `public/assets/reader.js` | Saved pages, course progress, quizzes, click-to-load comments (browser only) |
 | `public/CNAME` | Custom domain for GitHub Pages |
 
 ## Editing
 
-1. Change a page in `src/pages/`, or the header and footer in `tools/build.py`.
-2. Run `python3 tools/build.py`, then `python3 tools/build.py --check`.
-3. Commit `src/` and `public/` together. Pushing to `main` publishes.
+```
+npm ci            # once
+npm run dev       # local preview at http://localhost:4321
+npm run build     # build into dist/, build the search index, check every internal link
+npm run preview   # serve dist/ (search only works here, not in npm run dev)
+```
 
-Boxes marked TODO on the pages are content still to write.
+Pushing to `main` builds and publishes. Pull requests build too, so broken links fail the check.
+
+### Writing
+
+- **Blog post:** add `src/content/blog/<slug>.md` with `title`, `summary`, `date`, `facility`
+  (shown as `%HOMELAB-5-POST`), `tags`. `severity: 6` makes it a short note, `draft: true` hides it.
+- **KB note:** add a `.md` file anywhere under `src/content/docs/kb/`. Folders become the sidebar
+  tree. Frontmatter: `title`, `description`, `tags`, `verified: "2026-11"`. Link other notes with
+  normal Markdown links (`/kb/routing/bgp/bgp-basics/` or `../lsa-types/`); backlinks and the graph
+  are built from those links.
+- **Course:** a folder under `src/content/docs/courses/` with an `index.md` (`course: { path, slot,
+  summary }`) and section folders with lessons (`sidebar.order` sets the order, `quiz: true` for
+  quizzes). Learning paths are listed in `PATHS` in `src/lib/content.ts`. Every lesson has
+  `access: free` for now; `account` and `paid` are reserved for when accounts exist.
+
+### Importing from Grav
+
+The first blog posts came from the old Grav site (gitlab.com/bitsandbricks/blog, private). With a
+checkout of that repo, `node tools/import-grav.mjs <checkout>/data/user/pages` rewrites
+`src/content/blog/` and, for kb notes that have `public: true` in their Grav frontmatter,
+`src/content/docs/kb/`. Notes that look like they contain passwords, tokens, private IPs or shell
+history are refused even when marked public. It prints a warning for everything it had to guess.
+
+Pages marked `sample: true` are placeholders from the first version and show a note saying so.
+
+### Comments
+
+Giscus, stored in GitHub Discussions on this repo. To switch on: enable Discussions, install the
+[giscus app](https://github.com/apps/giscus), pick the category on https://giscus.app and copy
+`repoId` and `categoryId` into `GISCUS` in `src/lib/site.ts`. Until then the button says comments
+are off.
 
 ## Going live on GitHub Pages
 

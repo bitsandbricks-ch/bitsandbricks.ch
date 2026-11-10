@@ -1,0 +1,15 @@
+---
+import type { GNode, GEdge } from "../lib/content";
+interface Props { nodes: GNode[]; edges: GEdge[]; w: number; h: number; label: string; highlight?: string }
+const { nodes, edges, w, h, label, highlight } = Astro.props;
+const at = new Map(nodes.map((n) => [n.id, n]));
+---
+<svg class="graph" viewBox={`0 0 ${w} ${h}`} role="img" aria-label={label}>
+  {edges.map((e) => <line x1={at.get(e.a)!.x.toFixed(1)} y1={at.get(e.a)!.y.toFixed(1)} x2={at.get(e.b)!.x.toFixed(1)} y2={at.get(e.b)!.y.toFixed(1)} />)}
+  {nodes.map((n) => (
+    <a class="nd" href={n.href} data-tags={n.tags.join(" ")}>
+      <circle class={n.kind === "tag" ? "tagn" : n.kind === "me" ? "me" : highlight && !n.tags.includes(highlight) ? "dim" : undefined} cx={n.x.toFixed(1)} cy={n.y.toFixed(1)} r={n.r} />
+      <text x={(n.x + n.r + 4).toFixed(1)} y={(n.y + 3.5).toFixed(1)}>{n.label}</text>
+    </a>
+  ))}
+</svg>

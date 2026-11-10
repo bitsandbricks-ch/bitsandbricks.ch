@@ -1,0 +1,40 @@
+---
+import Site from "../../layouts/Site.astro";
+import Graph from "../../components/Graph.astro";
+import { noteGraph, buildGraph, tagIndex, url } from "../../lib/content";
+
+const g = await noteGraph();
+const graph = await buildGraph({ w: 760, h: 380 });
+const tags = await tagIndex();
+// top-level folders with note counts and their sub-folders
+const cats = new Map<string, { n: number; subs: Set<string>; first: string }>();
+for (const n of g.notes) {
+  const p = n.id.split("/");
+  const c = cats.get(p[1]) ?? { n: 0, subs: new Set<string>(), first: n.id };
+  c.n++; if (p.length > 3) c.subs.add(p[2]);
+  cats.set(p[1], c);
+}
+const recent = [...g.notes].filter((n) => n.data.verified).sort((a, b) => (a.data.verified! < b.data.verified! ? 1 : -1)).slice(0, 5);
+---
+<Site title="Knowledge base" description="Notes on routing, switching, automation and the homelab, linked to each other." path="/kb/">
+<main id="main" class="view"><div class="wrap">
+  <div class="vhead">
+    <p class="prompt"><b>$</b> <i>show kb summary</i></p>
+    <h1>Knowledge base</h1>
+    <p class="lede">Notes on routing, switching and the homelab. Folders nest as deep as needed, notes link to each other, and every note shows what links back to it. Search is at the top.</p>
+  </div>
+  <div class="cats">
+    {[...cats.entries()].sort().map(([name, c]) => <a class="cat" href={url(c.first)}><b>{name}/</b><span>{c.n} notes{c.subs.size ? " · " + [...c.subs].join(", ") : ""}</span></a>)}
+  </div>
+  <div class="panel">
+    <h4>graph · all notes</h4>
+    <div class="graphbox"><Graph nodes={graph.nodes} edges={graph.edges} w={760} h={380} label="Graph of all notes" /></div>
+    <a class="lk" href="/kb/graph/">open the full graph with tags -&gt;</a>
+  </div>
+  <div class="panel">
+    <h4>tags</h4>
+    <span class="tags">{[...tags.entries()].map(([t, v]) => <a class="tag" href={`/tags/${t}/`}>#{t} <span style="color:var(--text-3)">{v.docs.length + v.posts.length}</span></a>)}</span>
+  </div>
+  {recent.length > 0 && <div class="panel"><h4>recently verified</h4><div class="notelist">{recent.map((n) => <a href={url(n.id)}><b>{n.data.title}</b><span>{n.id.split("/").slice(1, -1).join("/")} · verified {n.data.verified}</span></a>)}</div></div>}
+</div></main>
+</Site>

@@ -1,0 +1,91 @@
+<!--
+path: /homelab/
+title: Homelab
+description: Mike's homelab and home network: OPNsense, Proxmox, Synology, self-built servers, Kubernetes, Docker and Cisco Modeling Labs for CCIE practice.
+-->
+<main id="main">
+<section class="page-hero">
+  <div class="wrap">
+    <div class="ph-grid">
+      <div>
+        <p class="prompt"><b>$</b> <i>show project</i></p>
+        <div class="unit-title">{{homelab}}<div><h1>The homelab</h1></div></div>
+        <p class="lede">Not just a lab: it's also my home network. It's where I run Kubernetes and Docker, write code in Python, automate with Ansible and practise for the CCIE.</p>
+        <div class="chips"><span class="chip">Home network</span><span class="chip">Self-built servers</span><span class="chip">CCIE practice</span><span class="chip">Managed with Labdex</span></div>
+      </div>
+      <div class="console slim">
+        <header><span>lab&gt; show inventory</span><span>prod = home</span></header>
+<pre><span class="k">Firewall:</span>     OPNsense
+<span class="k">Compute:</span>      Proxmox, self-built servers
+<span class="k">Storage:</span>      Synology
+<span class="k">Containers:</span>   Kubernetes, Docker
+<span class="k">Apps:</span>         open-source homelab apps
+<span class="k">Lab:</span>          Cisco Modeling Labs
+<span class="k">Code:</span>         Python
+<span class="k">Automation:</span>   Ansible
+<span class="k">Inventory:</span>    <a href="/labdex/">Labdex</a></pre>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap">
+    <div class="section-head"><p class="prompt"><b>$</b> <i>show chassis</i></p><h2>The hardware</h2><p>The lab is also the home network.</p></div>
+    <div class="rack">
+      <article class="unit">
+        <div class="ear"><i></i><i></i></div>
+        <div class="face">
+          <div class="leds"><span class="on">pwr</span><span class="on">link</span><span class="act">act</span></div>
+          <div class="unit-main">
+            <div class="unit-title"><h3>OPNsense</h3><span class="mono">U1 · firewall · edge</span></div>
+            <p>The firewall for the lab and the home network.</p>
+            <div class="ports"><div class="port"><b>wan</b><span>Uplink</span></div><div class="port"><b>lan</b><span>Home network</span></div><div class="port"><b>lab</b><span>Lab networks</span></div><div class="port"><b>aliases</b><span>Firewall aliases</span></div></div>
+          </div>
+        </div>
+        <div class="ear"><i></i><i></i></div>
+      </article>
+      <article class="unit">
+        <div class="ear"><i></i><i></i></div>
+        <div class="face">
+          <div class="leds"><span class="on">pwr</span><span class="on">link</span><span class="act">act</span></div>
+          <div class="unit-main">
+            <div class="unit-title"><h3>Proxmox</h3><span class="mono">U2 · compute · self-built</span></div>
+            <p>Virtualisation on servers I built myself.</p>
+            <div class="ports"><div class="port"><b>vms</b><span>Virtual machines</span></div></div>
+          </div>
+        </div>
+        <div class="ear"><i></i><i></i></div>
+      </article>
+      <article class="unit">
+        <div class="ear"><i></i><i></i></div>
+        <div class="face">
+          <div class="leds"><span class="on">pwr</span><span class="on">link</span><span class="act">act</span></div>
+          <div class="unit-main">
+            <div class="unit-title"><h3>Synology</h3><span class="mono">U3 · storage</span></div>
+            <p>Storage for the lab and the home.</p>
+            <div class="ports"><div class="port"><b>nas</b><span>Storage</span></div></div>
+          </div>
+        </div>
+        <div class="ear"><i></i><i></i></div>
+      </article>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap">
+    <div class="section-head"><p class="prompt"><b>$</b> <i>show processes</i></p><h2>What runs on it</h2></div>
+    <div class="grid3">
+      <div class="feature"><h3>Kubernetes &amp; Docker</h3><p>Containers, plus plenty of open-source homelab apps.</p></div>
+      <div class="feature"><h3>Cisco Modeling Labs</h3><p>Practice, testing and CCIE training.</p></div>
+      <div class="feature"><h3>Python &amp; Ansible</h3><p>Code and automation for the lab.</p></div>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap prose">
+    <p class="prompt"><b>$</b> <i>show cdp neighbors</i></p>
+    <h2>Labdex</h2>
+    <p>The lab's source of truth is <a href="/labdex/">Labdex</a>, the inventory I built. It's where the lab's networks, hosts and names live.</p>
+  </div>
+</section>
+</main>

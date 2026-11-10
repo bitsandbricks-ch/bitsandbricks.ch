@@ -1,0 +1,110 @@
+---
+// One kb note, course page or lesson: the site layout with the tree on the left, the text in the
+// middle and "on this page" on the right. On phones the tree moves into the menu.
+import { render } from "astro:content";
+import Site from "../../layouts/Site.astro";
+import SaveButton from "../SaveButton.astro";
+import Tags from "../Tags.astro";
+import CourseCard from "../CourseCard.astro";
+import Comments from "../Comments.astro";
+import Graph from "../Graph.astro";
+import DocTree from "./DocTree.astro";
+import { allDocs, buildTree, flatTree, courses, noteGraph, buildGraph, url, short, type Doc, type TreeItem } from "../../lib/content";
+
+interface Props { doc: Doc }
+const { doc } = Astro.props;
+const { Content, headings } = await render(doc);
+const id = doc.id, data = doc.data, parts = id.split("/"), path = url(id);
+const docs = await allDocs();
+const isKb = id.startsWith("kb/");
+const course = isKb ? undefined : (await courses()).find((c) => c.slug === parts[1]);
+const isCourseIndex = !!data.course;
+const lessonIdx = course && !isCourseIndex ? course.lessons.findIndex((l) => l.id === id) : -1;
+const lesson = lessonIdx >= 0 ? course!.lessons[lessonIdx] : undefined;
+const old = typeof data.verified === "string" && data.verified < new Date(Date.now() - 1000 * 3600 * 24 * 182).toISOString().slice(0, 7);
+
+// tree: the whole kb, or the current course with its overview first
+let tree: TreeItem[] = [];
+let treeTitle = "kb/";
+if (isKb) tree = buildTree(docs, "kb");
+else if (course) { treeTitle = course.title; tree = [{ kind: "link", id: course.id, label: "overview", href: course.href }, ...buildTree(docs, course.id)]; }
+const order = flatTree(tree);
+const at = order.findIndex((l) => l.id === id);
+const prev = at > 0 ? order[at - 1] : undefined, next = at >= 0 ? order[at + 1] : undefined;
+
+let crumb: [string, string?][] = [];
+if (isKb) crumb = [["kb", "/kb/"], ...parts.slice(1, -1).map((p): [string] => [p]), [parts[parts.length - 1]]];
+if (course) crumb = [["courses", "/courses/"], [course.title, isCourseIndex ? undefined : course.href], ...(lesson ? [[lesson.section] as [string], [lesson.title] as [string]] : [])];
+
+const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
+let links: string[] = [], back: string[] = [], graph: Awaited<ReturnType<typeof buildGraph>> | null = null;
+if (isKb) {
+  const g = await noteGraph();
+  links = g.links.get(id) ?? []; back = g.back.get(id) ?? [];
+  graph = await buildGraph({ center: id, w: 340, h: 230 });
+}
+const kind = isKb ? "kb" : lesson ? "lesson" : "course";
+---
+<Site title={data.title} description={data.description ?? data.title} path={path} type="article">
+  <div slot="menu" class="menu-tree"><p class="label">{treeTitle}</p><DocTree items={tree} current={id} /></div>
+  <main id="main" class="view doc"><div class="wrap docgrid">
+    <nav class="doctree" aria-label={isKb ? "Knowledge base" : "Course"}>
+      {isKb ? <a class="label" href="/kb/">kb/</a> : <a class="label" href={course?.href}>{treeTitle}</a>}
+      <DocTree items={tree} current={id} />
+    </nav>
+    <article class="docmain" data-pagefind-body>
+      <div class="vhead">
+        {crumb.length > 0 && <nav class="crumb" aria-label="Breadcrumb">{crumb.map(([label, href], i) => <>{i > 0 && <i>&gt;</i>}{href ? <a href={href}>{label}</a> : <span>{label}</span>}</>)}</nav>}
+        {data.prompt && <p class="prompt"><b>$</b> <i>{data.prompt}</i></p>}
+        {lesson && <p class="lesson-no">lesson {lessonIdx + 1}/{course!.lessons.length} <span>· {lesson.section}</span></p>}
+        <h1>{data.title}</h1>
+        <div class="title-meta" data-pagefind-ignore>
+          {data.verified && <span class={"pill " + (old ? "cur" : "ok")}>verified {data.verified}{old ? " · check again" : ""}</span>}
+          {data.status && <span class="pill">{data.status}{data.version ? ` · v${data.version}` : ""}</span>}
+          {!isKb && <span class="pill">access: {data.access}</span>}
+          <Tags tags={data.tags} />
+          <SaveButton url={path} title={data.title} kind={kind} />
+        </div>
+        {data.sample && <p class="sample-note" data-pagefind-ignore>Sample page written for the first version. Replace it with real content.</p>}
+      </div>
+      {isCourseIndex && course && (
+        <div class="lc-wrap" data-pagefind-ignore>
+          <CourseCard course={course} link={false} />
+          <div class="btns" style="margin-top:14px">
+            <a class="btn btn-p" href={course.lessons[0]?.href} data-continue>start: {course.lessons[0]?.title}</a>
+            <button class="btn btn-s" type="button" data-reset={course.lessons.map((l) => l.id).join(" ")}>reset progress</button>
+          </div>
+        </div>
+      )}
+      {toc.length > 1 && <details class="toc-m" data-pagefind-ignore><summary>on this page</summary>{toc.map((h) => <a class={"lk d" + h.depth} href={`#${h.slug}`}>{h.text}</a>)}</details>}
+      <div class="prose-body"><Content /></div>
+      <footer class="kbx" data-pagefind-ignore>
+        {lesson && <div class="done-row"><button class="btn btn-p" type="button" data-done={id} aria-pressed="false">mark lesson as done</button></div>}
+        {isKb && graph && (
+          <div class="notefoot">
+            <div class="panel">
+              <h4>linked from</h4>
+              {back.length ? back.map((b) => <a class="lk" href={url(b)}>&lt;- {short(b)}</a>) : <span class="pill">nothing links here yet</span>}
+              <h4>links to</h4>
+              {links.length ? links.map((b) => <a class="lk" href={url(b)}>-&gt; {short(b)}</a>) : <span class="pill">no links yet</span>}
+              <a class="lk phone-only" href="/kb/graph/">full graph -&gt;</a>
+            </div>
+            <div class="panel local-graph">
+              <h4>local graph</h4>
+              <div class="graphbox"><Graph nodes={graph.nodes} edges={graph.edges} w={340} h={230} label="Local graph of linked notes" /></div>
+              <a class="lk" href="/kb/graph/">full graph -&gt;</a>
+            </div>
+          </div>
+        )}
+        {(isKb || lesson) && <Comments />}
+        <div class="pn">
+          {prev && <a href={prev.href}><span>&lt;- previous</span><b>{prev.label}</b></a>}
+          {next && <a class="next" href={next.href}><span>next -&gt;</span><b>{next.label}</b></a>}
+        </div>
+      </footer>
+    </article>
+    <aside class="doctoc">
+      {toc.length > 0 && <div class="blk"><h4>on this page</h4>{toc.map((h) => <a class={"lk d" + h.depth} href={`#${h.slug}`}>{h.text}</a>)}</div>}
+    </aside>
+  </div></main>
+</Site>
