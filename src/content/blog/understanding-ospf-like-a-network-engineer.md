@@ -1,11 +1,10 @@
 ---
 title: Understanding OSPF Like a Network Engineer 🌐
 summary: OSPF is one of those protocols everyone “knows” — until things break.
-date: 1970-01-01
+date: 2026-11-10
 tags:
   - ospf
   - deep-dive
-draft: true
 ---
 
 OSPF is one of those protocols everyone “knows” — until things break.
