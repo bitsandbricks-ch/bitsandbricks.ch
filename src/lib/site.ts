@@ -6,6 +6,7 @@ export const NAME = "Bits & Bricks";
 export const GITHUB = "https://github.com/reykimedev";
 export const LINKEDIN = "https://www.linkedin.com/in/mike-keller-181827253/";
 export const MAIL = "mike@cheller.dev";
+export const COFFEE = "https://buymeacoffee.com/bitsandbricks";
 
 export const NAV: [string, string][] = [
   ["/#rack", "projects"],
@@ -41,7 +42,7 @@ export const ICONS: Record<string, string> = {
 /** Replaces {{logo}}, {{hubra}}, {{icon:github}}, {{linkedin}} ... in page sources. */
 export function fill(text: string): string {
   text = text.replace(/\{\{icon:(\w+)\}\}/g, (_, name) => ICONS[name]);
-  const values: Record<string, string> = { logo: LOGO, hubra: HUBRA, labdex: LABDEX, homelab: HOMELAB, github: GITHUB, linkedin: LINKEDIN, mail: MAIL };
+  const values: Record<string, string> = { logo: LOGO, hubra: HUBRA, labdex: LABDEX, homelab: HOMELAB, github: GITHUB, linkedin: LINKEDIN, mail: MAIL, coffee: COFFEE };
   for (const [k, v] of Object.entries(values)) text = text.split("{{" + k + "}}").join(v);
   return text;
 }
