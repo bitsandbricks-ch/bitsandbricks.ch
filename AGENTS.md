@@ -13,7 +13,7 @@ The BitsAndBricks website: Mike's projects, the blog, the knowledge base and cou
 1. **Branch:** work on your own branch, never push to `main`. One topic per branch and pull request.
 2. **Before you push**, run what CI runs and make it pass locally:
    - `npm ci`
-   - `npm run build (builds, indexes search and checks every internal link)`
+   - `npm run build` (builds, indexes search and checks every internal link)
 3. **Pull request:** open it as a **draft** and fill in the template
    (`.github/pull_request_template.md`). Link the issue.
 4. **CI:** wait for the checks (the build runs on every pull request). Fix failures
