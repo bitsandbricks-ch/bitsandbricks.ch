@@ -1,5 +1,5 @@
 ---
-title: IPv6 - Neighbor Discovery Protocol
+title: IPv6 - Neighbor Discovery - Neighbor Discovery Protocol
 tags:
   - ipv6
 status: draft

@@ -1,5 +1,5 @@
 ---
-title: IPv6 - Neighbor Discovery - Messages
+title: IPv6 - Neighbor Discovery - Messages - Messages
 tags:
   - ipv6
 status: draft

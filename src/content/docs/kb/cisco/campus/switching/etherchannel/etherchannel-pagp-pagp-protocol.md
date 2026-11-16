@@ -1,5 +1,5 @@
 ---
-title: EtherChannel - PAgP Protocol
+title: EtherChannel - PAgp - PAgp Protocol
 tags:
   - etherchannel
   - pagp

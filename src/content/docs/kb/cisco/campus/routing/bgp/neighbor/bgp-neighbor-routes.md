@@ -2,7 +2,7 @@
 title: BGP Neighbor Routes
 tags:
   - bgp
-  - neighbors
+  - neighbor
 status: draft
 version: 0.0.1
 ---

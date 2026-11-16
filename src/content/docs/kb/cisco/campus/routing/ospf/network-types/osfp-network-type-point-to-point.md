@@ -1,5 +1,5 @@
 ---
-title: OSPF Network Type Point-to-Point
+title: OSFP Network Type Point-to-Point
 tags:
   - network-types
   - ospf

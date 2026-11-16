@@ -2,7 +2,7 @@
 title: OSPF Point-to-Multipoint Non-Broadcast
 tags:
   - ospf
-  - network-types
+  - network-type
 status: draft
 version: 0.0.1
 ---

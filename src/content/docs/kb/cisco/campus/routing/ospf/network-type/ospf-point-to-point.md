@@ -1,14 +1,14 @@
 ---
-title: OSPF Point-to-Multipoint
+title: OSPF Point-to-Point
 tags:
   - ospf
-  - network-types
+  - network-type
 status: draft
 version: 0.0.1
 ---
 
 Change the OSPF Link type to point-to-point
 ```
-interface Tun 123
- ip ospf network point-to-multipoint
+interface Gig 0/0
+ ip ospf network point-to-point
 ```

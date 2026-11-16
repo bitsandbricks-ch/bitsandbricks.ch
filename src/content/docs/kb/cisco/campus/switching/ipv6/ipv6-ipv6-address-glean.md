@@ -1,5 +1,5 @@
 ---
-title: IPv6 Address Glean
+title: IPv6 - IPv6 Address Glean
 tags:
   - ipv6
 status: draft
