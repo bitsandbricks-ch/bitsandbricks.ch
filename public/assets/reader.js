@@ -30,7 +30,7 @@
     document.querySelectorAll("[data-done]").forEach(function (b) {
       var on = !!done[b.dataset.done];
       b.setAttribute("aria-pressed", on);
-      b.textContent = on ? "done, mark as not done" : "mark lesson as done";
+      b.textContent = on ? "done ✓ (undo)" : "mark lesson as done";
     });
   }
   function renderSaved() {
@@ -43,6 +43,8 @@
   }
 
   document.addEventListener("click", function (e) {
+    var dn = e.target.closest("[data-done-next]");
+    if (dn) { done[dn.dataset.doneNext] = 1; store("bb_done", done); return; } // the link then navigates
     var t = e.target.closest("[data-save],[data-done],[data-reset],[data-comments]");
     if (!t) return;
     if (t.dataset.save) {
@@ -73,7 +75,21 @@
     e.target.parentNode.classList.add(ok ? "right" : "wrong");
     var res = q.querySelector('[data-result="' + group + '"]');
     if (res) res.textContent = ok ? (res.dataset.ok || "correct") : "not quite, try again";
+    score();
   });
+  // "2/3 right" under the last question of a quiz page
+  function score() {
+    var qs = document.querySelectorAll("[data-quiz]");
+    if (!qs.length) return;
+    var box = document.getElementById("quiz-score");
+    if (!box) {
+      box = document.createElement("p"); box.id = "quiz-score"; box.className = "quiz-score"; box.setAttribute("aria-live", "polite");
+      qs[qs.length - 1].after(box);
+    }
+    var right = 0, answered = 0;
+    qs.forEach(function (q) { if (q.querySelector("label.right")) { right++; answered++; } else if (q.querySelector("label.wrong")) answered++; });
+    box.textContent = "$ show quiz score: " + right + "/" + qs.length + " right" + (answered < qs.length ? ", " + (qs.length - answered) + " to go" : right === qs.length ? ". All green." : "");
+  }
 
   // Giscus follows the site's colour scheme, also when the toggle changes it later
   function giscusTheme() {
