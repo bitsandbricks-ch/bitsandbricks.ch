@@ -6,6 +6,9 @@
   function load(k) { try { return JSON.parse(localStorage.getItem(k) || "{}") || {}; } catch (e) { return {}; } }
   function store(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
   var saved = load("bb_saved"), done = load("bb_done");
+  // Re-read before every change: another tab may have saved something since this page loaded,
+  // and writing our old copy back would drop it.
+  function refresh() { saved = load("bb_saved"); done = load("bb_done"); }
   var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
 
   function paintSave(btn) {
@@ -42,7 +45,10 @@
     if (empty) empty.hidden = !!keys.length;
   }
 
+  function repaint() { renderSaved(); document.querySelectorAll("[data-save]").forEach(paintSave); paintProgress(); }
+
   document.addEventListener("click", function (e) {
+    if (e.target.closest("[data-done-next],[data-save],[data-done],[data-reset]")) refresh();
     var dn = e.target.closest("[data-done-next]");
     if (dn) { done[dn.dataset.doneNext] = 1; store("bb_done", done); return; } // the link then navigates
     var t = e.target.closest("[data-save],[data-done],[data-reset],[data-comments]");
@@ -198,6 +204,7 @@
       r.onload = function () {
         var data; try { data = JSON.parse(r.result); } catch (e) { data = null; }
         if (!data || data.app !== "bitsandbricks.ch") { msg.textContent = "% That file is not a backup from this site."; return; }
+        refresh();
         var n = 0, m = 0;
         Object.keys(data.saved || {}).forEach(function (u) {
           var s = data.saved[u];
@@ -212,6 +219,11 @@
       r.readAsText(f);
     });
   }
+
+  // Keep stars and progress current when another tab changes them, or when the back button
+  // shows this page from the browser's cache.
+  window.addEventListener("storage", function (e) { if (e.key === null || e.key === "bb_saved" || e.key === "bb_done") { refresh(); repaint(); } });
+  window.addEventListener("pageshow", function (e) { if (e.persisted) { refresh(); repaint(); } });
 
   function init() {
     document.querySelectorAll("[data-save]").forEach(paintSave);

@@ -1,7 +1,7 @@
 // The hand-written pages in src/legacy/*.html. Each starts with a settings comment:
 //   <!--
 //   path: /labdex/        where the page is served
-//   title: Labdex         <title>, " · Bits & Bricks" is added (not on the home page)
+//   title: Labdex         <title>, " · BitsAndBricks" is added (not on the home page)
 //   description: ...      meta description
 //   index: no             optional: keep the page out of search engines and the sitemap
 //   -->
