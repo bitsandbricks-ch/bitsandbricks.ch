@@ -31,7 +31,7 @@ const inKb = related({ id: "blog/" + p.id, data: { title: p.data.title, tags: p.
   <div class="read">
     <article class="prose-body" data-pagefind-body data-pagefind-filter="section:blog">
       <Content />
-      {inKb.length > 0 && <div class="panel" data-pagefind-ignore><h4>more on this in the kb</h4>{inKb.map((n) => <a class="lk" href={url(n.id)}>-&gt; {n.data.title}</a>)}</div>}
+      {inKb.length > 0 && <div class="panel" data-pagefind-ignore><h2 class="ph">more on this in the kb</h2>{inKb.map((n) => <a class="lk" href={url(n.id)}>-&gt; {n.data.title}</a>)}</div>}
       {p.filePath && <p class="editlink" data-pagefind-ignore><a href={`${REPO}/edit/main/${p.filePath}`}>edit this post on GitHub</a></p>}
       <Comments />
       <div class="pn">
@@ -40,8 +40,8 @@ const inKb = related({ id: "blog/" + p.id, data: { title: p.data.title, tags: p.
       </div>
     </article>
     <aside class="side">
-      {h2.length > 0 && <div class="blk"><h4>on this page</h4>{h2.map((h) => <a class="lk" href={`#${h.slug}`}>{h.text}</a>)}</div>}
-      {p.data.tags.length > 0 && <div class="blk"><h4>tags</h4><Tags tags={p.data.tags} /></div>}
+      {h2.length > 0 && <div class="blk"><h2 class="ph">on this page</h2>{h2.map((h) => <a class="lk" href={`#${h.slug}`}>{h.text}</a>)}</div>}
+      {p.data.tags.length > 0 && <div class="blk"><h2 class="ph">tags</h2><Tags tags={p.data.tags} /></div>}
     </aside>
   </div>
 </div></main>
