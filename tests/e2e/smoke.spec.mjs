@@ -110,3 +110,9 @@ test("search can be narrowed to the blog", async ({ page }) => {
   await expect(page.locator(".pagefind-ui__result-link").first()).toContainText("OSPF");
   await expect(page.locator('.pagefind-ui__result-link:not([href^="/blog/"])')).toHaveCount(0);
 });
+
+test("moved notes redirect to their new address", async ({ page }) => {
+  await page.goto("/kb/cisco/campus/routing/ospf/network-type/osfp-non-broadcast/");
+  await expect(page).toHaveURL(/\/network-types\/ospf-non-broadcast\/$/);
+  await expect(page.locator("h1")).toHaveText("OSPF Non-Broadcast");
+});

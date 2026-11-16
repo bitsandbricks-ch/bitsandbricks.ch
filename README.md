@@ -64,6 +64,10 @@ link, a leaked secret or a broken reader feature fails the check.
 - **Stubs:** a kb note with under 40 words shows a "stub" note and stays out of search and the
   sitemap until it is written up (`tools/lib/stubs.mjs`).
 
+- **Moving a note:** move the file, then add `"old path": "new path"` to `src/redirects.json` so
+  links from elsewhere keep working.
+- **Callouts:** `> [!note]`, `> [!warning]`, `> [!info]` as the first line of a quote in a kb note.
+
 ### Importing from Grav
 
 The first blog posts came from the old Grav site (gitlab.com/bitsandbricks/blog, private). With a

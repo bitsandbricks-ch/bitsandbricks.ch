@@ -48,10 +48,12 @@ for (const [file, text] of html) {
     if (!t) { err(file, `broken link ${href}`); continue; }
     if (u.hash && t.endsWith(".html") && !ids(t).has(decodeURIComponent(u.hash.slice(1)))) err(file, `missing anchor ${href}`);
   }
+  // redirect pages for moved notes (src/redirects.json) only need a working target
+  if (/http-equiv="refresh"/.test(text)) continue;
   if (!/<html[^>]*\slang="/.test(text)) err(file, "no lang on <html>");
   if (!/<title>[^<]+<\/title>/.test(text)) err(file, "no <title>");
   const h1 = (body.match(/<h1[\s>]/g) ?? []).length;
-  if (!file.endsWith("404.html") && h1 !== 1 && !/http-equiv="refresh"/.test(text)) err(file, `${h1} <h1> elements`);
+  if (!file.endsWith("404.html") && h1 !== 1) err(file, `${h1} <h1> elements`);
   const seen = new Set();
   for (const [, id] of body.matchAll(/\sid="([^"]+)"/g)) { if (seen.has(id)) err(file, `duplicate id "${id}"`); seen.add(id); }
   for (const [img] of body.matchAll(/<img\b[^>]*>/g)) if (!/\salt="/.test(img)) err(file, `image without alt: ${img.slice(0, 80)}`);

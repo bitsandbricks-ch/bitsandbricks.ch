@@ -1,5 +1,5 @@
 ---
-title: OSFP Network Type Non-Broadcast
+title: OSPF Network Type Non-Broadcast
 tags:
   - network-types
   - ospf
