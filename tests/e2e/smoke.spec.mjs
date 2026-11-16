@@ -143,3 +143,19 @@ test("] opens the next note", async ({ page, isMobile }) => {
   await page.keyboard.press("]");
   await expect(page).toHaveURL(new RegExp(next.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "$"));
 });
+
+test("home rack lists the live blog, kb and courses with counts", async ({ page }) => {
+  await page.goto("/");
+  for (const [href, unit] of [["/blog/", /\d+ posts?/], ["/kb/", /\d+ notes?/], ["/courses/", /\d+ courses?/]]) {
+    const slot = page.locator(".slot-on", { has: page.locator(`h3 a[href="${href}"]`) });
+    await expect(slot.locator(".mono")).toContainText(unit);
+  }
+  await page.locator('.slot-on h3 a[href="/kb/"]').click();
+  await expect(page).toHaveURL(/\/kb\/$/);
+});
+
+test("404 suggests pages with words from the address", async ({ page }) => {
+  await page.goto("/kb/ospf-authentification/");
+  await expect(page.locator("#lost-path")).toHaveText("/kb/ospf-authentification/");
+  await expect(page.locator('#lost-list a[href="/kb/cisco/campus/routing/ospf/ospf-authentication/"]')).toBeVisible();
+});

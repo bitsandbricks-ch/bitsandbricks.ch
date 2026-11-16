@@ -395,3 +395,6 @@ button.tag { background: var(--surface); border: 1px solid var(--line-2); border
 .prose-body pre.ios .c { color: var(--text-3); font-style: italic; }
 .prose-body pre.ios .k { color: var(--accent); font-weight: 600; }
 .prose-body pre.ios .v { color: var(--text-2); text-decoration: underline dotted; text-underline-offset: .2em; }
+
+/* [[wiki link]] to a note that does not exist (the content check fails the build on these) */
+.wiki-missing { font-style: normal; color: var(--text-3); text-decoration: underline wavy var(--brick); text-underline-offset: .25em; }
