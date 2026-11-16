@@ -69,6 +69,11 @@ link, a leaked secret or a broken reader feature fails the check.
 - **Cisco IOS code:** kb code blocks that look like IOS (or are fenced as ```` ```cisco ````) get
   prompts, `!` comments, show/debug/no and `<placeholders>` marked at build time
   (`src/lib/kb-ios.mjs`). Fence other output as ```` ```text ```` to keep it plain.
+- **Wiki links:** `[[ospf-packets]]` or `[[OSPF Packets]]` links to a kb note by its file name or
+  title, from notes, lessons and blog posts. `[[ospf-packets#Hello packet]]` jumps to a heading,
+  `[[ospf-packets|the packets]]` sets the text, `[[bgp/timers]]` picks one of two notes with the same
+  name. They count as links in the graph and in "linked from". A wiki link to no note fails the
+  build (`npm run check:content` says which).
 - **Moving a note:** move the file, then add `"old path": "new path"` to `src/redirects.json` so
   links from elsewhere keep working.
 - **Callouts:** `> [!note]`, `> [!warning]`, `> [!info]` as the first line of a quote in a kb note.
