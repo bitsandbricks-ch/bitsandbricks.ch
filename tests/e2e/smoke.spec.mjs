@@ -212,3 +212,19 @@ test("saved pages and progress survive a backup round trip", async ({ page, isMo
   await page.locator("[data-backup-load]").setInputFiles({ name: "x.json", mimeType: "application/json", buffer: Buffer.from('{"saved":{"javascript:alert(1)":{"title":"x"}}}') });
   await expect(page.locator("#backup-msg")).toContainText("not a backup");
 });
+
+test("saving in two tabs keeps both, and the other tab's star follows", async ({ page, context, isMobile }) => {
+  test.skip(isMobile, "same code on phone");
+  const a = "/kb/cisco/campus/routing/ospf/ospf-authentication/";
+  await page.goto(a);
+  const other = await context.newPage();
+  await other.goto("/blog/understanding-ospf-like-a-network-engineer/");
+  await page.locator(".title-meta [data-save]").click();
+  // the tab that loaded before the first save must not write its old list back
+  await other.locator("[data-save]").first().click();
+  await expect(page.locator(".title-meta [data-save]")).toHaveAttribute("aria-pressed", "true");
+  await other.goto("/saved/");
+  await expect(other.locator("#saved-list a")).toHaveCount(2);
+  await other.locator(`#saved-list [data-save="${a}"]`).click();
+  await expect(page.locator(".title-meta [data-save]")).toHaveAttribute("aria-pressed", "false");
+});
