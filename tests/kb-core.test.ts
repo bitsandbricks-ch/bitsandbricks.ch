@@ -70,3 +70,13 @@ test("related ranks shared tags first, then the nearest folder", () => {
   assert.deepEqual(related(me, notes).map((n) => n.id), ["kb/r/z", "kb/r/ospf/y", "kb/s/x"]);
   assert.deepEqual(related(doc("kb/none"), notes), []);
 });
+
+test("codeBlocks finds fenced code and skips diagrams", async () => {
+  const { codeBlocks } = await import("../src/lib/kb-core.ts");
+  const body = "text\n```\nshow ip ospf neighbor\n```\nmore\n```cisco\nrouter ospf 1\n network 0.0.0.0 255.255.255.255 area 0\n```\n```mermaid\ngraph TD\n```\n````\n```nested```\n````\n";
+  assert.deepEqual(codeBlocks(body), [
+    { lang: "", code: "show ip ospf neighbor" },
+    { lang: "cisco", code: "router ospf 1\n network 0.0.0.0 255.255.255.255 area 0" },
+    { lang: "", code: "```nested```" },
+  ]);
+});
