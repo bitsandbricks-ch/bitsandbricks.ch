@@ -56,6 +56,15 @@
     if (dlg) {
       dlg.querySelector("[data-search-close]").addEventListener("click", function () { dlg.close(); });
       dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); });
+      // Keyboard: arrows walk the results, Enter in the box opens the first one
+      dlg.addEventListener("keydown", function (e) {
+        var input = dlg.querySelector(".pagefind-ui__search-input");
+        var links = Array.prototype.slice.call(dlg.querySelectorAll("#search .pagefind-ui__result-link"));
+        var at = links.indexOf(document.activeElement);
+        if (e.key === "Enter" && e.target === input && links.length) { e.preventDefault(); location.href = links[0].href; }
+        else if (e.key === "ArrowDown" && links.length && (e.target === input || at >= 0)) { e.preventDefault(); links[Math.min(at + 1, links.length - 1)].focus(); }
+        else if (e.key === "ArrowUp" && at >= 0) { e.preventDefault(); if (at === 0 && input) input.focus(); else links[at - 1].focus(); }
+      });
     }
     document.addEventListener("keydown", function (e) {
       var t = e.target, typing = t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable);

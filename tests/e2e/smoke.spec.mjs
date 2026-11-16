@@ -178,3 +178,19 @@ test("nothing is blocked by the Content-Security-Policy", async ({ page, isMobil
   await expect(page.locator("#gstat")).toContainText("#ospf");
   expect(blocked).toEqual([]);
 });
+
+test("search results work from the keyboard", async ({ page, isMobile }) => {
+  test.skip(isMobile, "keyboard");
+  await page.goto("/kb/");
+  await page.keyboard.press("/");
+  await page.locator(".pagefind-ui__search-input").fill("ospf stub");
+  const first = page.locator(".pagefind-ui__result-link").first();
+  await expect(first).toBeVisible({ timeout: 10_000 });
+  await page.keyboard.press("ArrowDown");
+  await expect(first).toBeFocused();
+  await page.keyboard.press("ArrowUp");
+  await expect(page.locator(".pagefind-ui__search-input")).toBeFocused();
+  const href = await first.getAttribute("href");
+  await page.keyboard.press("Enter");
+  await expect(page).toHaveURL(new RegExp(href.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "$"));
+});
