@@ -6,11 +6,11 @@ status: draft
 version: 0.0.1
 ---
 
-# Hardware CEF
+## Hardware CEF
 
 The main advantage of the distributed forwarding is that the packet performance is greatly improved by offloading the packet switching to the line cards. Special ASIC Chips are used for those operations
 
-# Software CEF
+## Software CEF
 
 Software Based Routers, the CPU is in charge of all operations
 

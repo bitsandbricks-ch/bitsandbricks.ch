@@ -27,11 +27,22 @@ The brand guide is at `/brand/` (source: `src/legacy/brand.html`), logo files in
 ```
 npm ci            # once
 npm run dev       # local preview at http://localhost:4321
-npm run build     # build into dist/, build the search index, check every internal link
+npm run build     # check content, build into dist/, build the search index, check the site
 npm run preview   # serve dist/ (search only works here, not in npm run dev)
+npm test          # unit tests (kb helpers, secrets check), plain node --test
+npm run test:e2e  # browser smoke tests against dist/ (after npm run build)
+npm run check:content   # list content warnings: stubs, duplicate titles, #todo lines
 ```
 
-Pushing to `main` builds and publishes. Pull requests build too, so broken links fail the check.
+The build stops when a Markdown file looks like it holds a password, token, private key, shell
+history or private IP addresses (`tools/lib/safety.mjs`; lab examples with RFC 1918 addresses
+need `private_ips_ok: true` in the frontmatter), or has a `# ` heading (the title is the page's
+h1, start at `## `). After the build, `tools/check.mjs` fails on broken links or anchors, pages
+without a title or with more than one h1, duplicate ids, images without alt text, and anything
+loaded from another site.
+
+Pushing to `main` builds and publishes. Pull requests run the same build and tests, so a broken
+link, a leaked secret or a broken reader feature fails the check.
 
 ### Writing
 

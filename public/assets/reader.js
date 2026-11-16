@@ -22,7 +22,8 @@
       if (cur) cur.classList.add("cur");
       var c = card.querySelector("[data-upcount]");
       if (c) c.textContent = up + "/" + jacks.length + " up";
-      var go = card.querySelector("[data-continue]");
+      // the start/continue button sits next to the card on a course page, not inside it
+      var go = (card.closest(".lc-wrap") || card).querySelector("[data-continue]");
       if (go && cur) { go.href = cur.getAttribute("href"); go.textContent = (up ? "continue: " : "start: ") + cur.title; }
       else if (go) { go.textContent = "all lessons done"; }
     });

@@ -1,5 +1,6 @@
 ---
 title: Multicast IP Addresses and Ranges
+private_ips_ok: true
 tags:
   - multicast
 status: draft

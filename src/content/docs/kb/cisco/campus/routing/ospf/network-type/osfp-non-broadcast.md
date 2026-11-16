@@ -1,5 +1,6 @@
 ---
 title: OSFP Non-Broadcast
+private_ips_ok: true
 tags:
   - ospf
   - network-type

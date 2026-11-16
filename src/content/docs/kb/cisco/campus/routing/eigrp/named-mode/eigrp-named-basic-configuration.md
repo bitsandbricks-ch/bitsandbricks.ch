@@ -1,5 +1,6 @@
 ---
 title: EIGRP Named Basic Configuration
+private_ips_ok: true
 tags:
   - eigrp
   - named-mode

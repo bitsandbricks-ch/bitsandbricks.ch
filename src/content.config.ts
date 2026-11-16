@@ -28,6 +28,8 @@ const docs = defineCollection({
     course: z.object({ path: z.string(), slot: z.number(), summary: z.string() }).optional(),
     // Lessons that are a quiz get a dashed port on the course card
     quiz: z.boolean().default(false),
+    // The note holds RFC 1918 addresses on purpose (lab examples); see tools/lib/safety.mjs
+    private_ips_ok: z.boolean().default(false),
     // Placeholder pages written for the first version, to be replaced
     sample: z.boolean().default(false),
     // The "$ command" line shown above the title, like on the other pages
