@@ -248,3 +248,10 @@ test("the phone's browser bar follows the colour scheme toggle", async ({ page }
   await page.goto("/blog/");
   expect(new Set(await bar())).toEqual(new Set(["#111111"]));
 });
+
+test("the gaming handle is not shown as text on the site", async ({ page }) => {
+  for (const path of ["/", "/about/", "/kb/"]) {
+    await page.goto(path);
+    expect(await page.locator("body").innerText()).not.toMatch(/reykime/i);
+  }
+});
