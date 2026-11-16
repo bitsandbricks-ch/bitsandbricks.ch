@@ -60,6 +60,11 @@
     document.addEventListener("keydown", function (e) {
       var t = e.target, typing = t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable);
       if (e.key === "/" && !typing && dlg && !dlg.open) { e.preventDefault(); openSearch(); }
+      // [ and ] go to the previous and next note or lesson
+      if ((e.key === "[" || e.key === "]") && !typing && !e.ctrlKey && !e.metaKey && !e.altKey && !(dlg && dlg.open)) {
+        var to = document.querySelector('.pn a[rel="' + (e.key === "[" ? "prev" : "next") + '"]');
+        if (to) location.href = to.href;
+      }
     });
     var btn = document.querySelector("[data-theme-toggle]");
     if (!btn) return;

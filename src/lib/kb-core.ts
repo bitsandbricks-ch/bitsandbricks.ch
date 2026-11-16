@@ -189,3 +189,15 @@ export function related<D extends Doc>(doc: Doc, notes: D[], max = 6): D[] {
     .slice(0, max)
     .map((x) => x.n);
 }
+
+/** Fenced code blocks in a Markdown body, in order (```lang ... ```). Mermaid and maths are skipped. */
+export function codeBlocks(body: string): { lang: string; code: string }[] {
+  const out: { lang: string; code: string }[] = [];
+  for (const m of body.matchAll(/^(`{3,}|~{3,})[ \t]*([\w+-]*)[^\n]*\n([\s\S]*?)^\1[ \t]*$/gm)) {
+    const lang = m[2].toLowerCase();
+    if (lang === "mermaid" || lang === "math") continue;
+    const code = m[3].replace(/\s+$/, "");
+    if (code) out.push({ lang, code });
+  }
+  return out;
+}

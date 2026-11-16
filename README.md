@@ -64,6 +64,8 @@ link, a leaked secret or a broken reader feature fails the check.
 - **Stubs:** a kb note with under 40 words shows a "stub" note and stays out of search and the
   sitemap until it is written up (`tools/lib/stubs.mjs`).
 
+- **Cheat sheets:** folders whose notes have code blocks get `/kb/<folder>/commands/` with every
+  snippet on one page (made for printing).
 - **Moving a note:** move the file, then add `"old path": "new path"` to `src/redirects.json` so
   links from elsewhere keep working.
 - **Callouts:** `> [!note]`, `> [!warning]`, `> [!info]` as the first line of a quote in a kb note.

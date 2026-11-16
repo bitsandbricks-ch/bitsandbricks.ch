@@ -1,8 +1,10 @@
 ---
-// Every kb note, plus an overview page for every folder (/kb/a/b/ lists what is in a/b/).
+// Every kb note, plus an overview page for every folder (/kb/a/b/ lists what is in a/b/) and a
+// command cheat sheet for folders with code (/kb/a/b/commands/).
 import DocPage from "../../components/docs/DocPage.astro";
 import FolderPage from "../../components/docs/FolderPage.astro";
-import { allDocs, foldersOf, type Doc } from "../../lib/content";
+import CheatSheet from "../../components/docs/CheatSheet.astro";
+import { allDocs, foldersOf, codeBlocks, type Doc } from "../../lib/content";
 export async function getStaticPaths() {
   const notes = (await allDocs()).filter((d) => d.id.startsWith("kb/"));
   const ids = new Set(notes.map((n) => n.id));
@@ -11,8 +13,12 @@ export async function getStaticPaths() {
   return [
     ...notes.map((doc) => ({ params: { slug: doc.id.slice(3) }, props: { doc } })),
     ...folders.map((folder) => ({ params: { slug: folder.slice(3) }, props: { folder } })),
+    // /kb/a/b/commands/: every code block below a/b, for folders that have any
+    ...folders
+      .filter((f) => !ids.has(f + "/commands") && notes.some((n) => n.id.startsWith(f + "/") && codeBlocks(n.body ?? "").length))
+      .map((f) => ({ params: { slug: f.slice(3) + "/commands" }, props: { commands: f } })),
   ];
 }
-const { doc, folder } = Astro.props as { doc?: Doc; folder?: string };
+const { doc, folder, commands } = Astro.props as { doc?: Doc; folder?: string; commands?: string };
 ---
-{doc ? <DocPage doc={doc} /> : <FolderPage id={folder!} />}
+{doc ? <DocPage doc={doc} /> : commands ? <CheatSheet id={commands} /> : <FolderPage id={folder!} />}
