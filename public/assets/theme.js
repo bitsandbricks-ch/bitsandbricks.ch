@@ -2,7 +2,12 @@
 (function () {
   var root = document.documentElement, saved = null;
   try { saved = localStorage.getItem("bb_theme"); } catch (e) {}
-  if (saved === "light" || saved === "dark") root.dataset.theme = saved;
+  // a chosen scheme also recolours the phone's browser bar, whatever the system setting says
+  var bar = function () {
+    var c = getComputedStyle(root).getPropertyValue("--page").trim(); // site.css loads before this script
+    if (c) document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) { m.content = c; });
+  };
+  if (saved === "light" || saved === "dark") { root.dataset.theme = saved; bar(); }
   document.addEventListener("DOMContentLoaded", function () {
     // Phone menu: the nav drops down under the header
     var menu = document.querySelector("[data-menu-toggle]"), head = document.querySelector(".site-head");
@@ -81,6 +86,7 @@
       var dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
       root.dataset.theme = dark ? "light" : "dark";
       try { localStorage.setItem("bb_theme", root.dataset.theme); } catch (e) {}
+      bar();
     });
   });
 })();

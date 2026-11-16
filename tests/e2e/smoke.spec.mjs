@@ -238,3 +238,13 @@ test("404 page copes with a broken %-escape in the address", async ({ page }) =>
   await expect(page.locator("#lost-path")).toContainText("/kb/ospf");
   expect(errors).toEqual([]);
 });
+
+test("the phone's browser bar follows the colour scheme toggle", async ({ page }) => {
+  await page.emulateMedia({ colorScheme: "light" });
+  await page.goto("/kb/");
+  const bar = () => page.evaluate(() => [...document.querySelectorAll('meta[name="theme-color"]')].map((m) => m.content));
+  await page.locator("[data-theme-toggle]").click();
+  expect(new Set(await bar())).toEqual(new Set(["#111111"]));
+  await page.goto("/blog/");
+  expect(new Set(await bar())).toEqual(new Set(["#111111"]));
+});
