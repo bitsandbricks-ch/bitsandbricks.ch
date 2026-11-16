@@ -1,0 +1,31 @@
+---
+// Every command in a kb folder on one page: the code blocks of all notes below it, grouped by
+// note. Made for quick lookups and for printing.
+import Site from "../../layouts/Site.astro";
+import { kbNotes, codeBlocks, url, short } from "../../lib/content";
+
+interface Props { id: string }
+const { id } = Astro.props;
+const notes = (await kbNotes()).filter((n) => n.id.startsWith(id + "/")).sort((a, b) => a.id.localeCompare(b.id));
+const groups = notes.map((n) => ({ n, blocks: codeBlocks(n.body ?? "") })).filter((g) => g.blocks.length);
+const total = groups.reduce((s, g) => s + g.blocks.length, 0);
+const parts = id.split("/");
+const path = url(id) + "commands/";
+---
+<Site title={`Commands in ${short(id)}/`} description={`Every command and config snippet from the kb notes in ${id.slice(3)}/, on one page.`} path={path}>
+<main id="main" class="view cheats"><div class="wrap">
+  <nav class="crumb" aria-label="Breadcrumb"><a href="/kb/">kb</a>{parts.slice(1).map((p, i) => <><i>&gt;</i><a href={url(parts.slice(0, i + 2).join("/"))}>{p}</a></>)}<i>&gt;</i><span aria-current="page">commands</span></nav>
+  <div class="vhead">
+    <p class="prompt"><b>$</b> <i>show running-config | section {short(id)}</i></p>
+    <h1>Commands in {short(id)}/</h1>
+    <p class="lede">{total} {total === 1 ? "snippet" : "snippets"} from {groups.length} {groups.length === 1 ? "note" : "notes"}, in tree order. Each heading links to its note. <button class="linkbtn" type="button" onclick="print()">Print it</button> for a cheat sheet.</p>
+  </div>
+  {groups.length === 0 && <div class="empty">No code blocks in this folder yet.</div>}
+  {groups.map(({ n, blocks }) => (
+    <section class="cheat">
+      <h2><a href={url(n.id)}>{n.data.title}</a> <span>{n.id.split("/").slice(parts.length, -1).join("/")}</span></h2>
+      <div class="prose-body">{blocks.map((b) => <pre><code>{b.code}</code></pre>)}</div>
+    </section>
+  ))}
+</div></main>
+</Site>

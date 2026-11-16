@@ -120,8 +120,8 @@ const isStub = isKb && words(doc.body ?? "") < STUB_WORDS;
         {doc.filePath && <p class="editlink"><a href={`${REPO}/edit/main/${doc.filePath}`}>edit this page on GitHub</a> · spotted a mistake? a pull request or a comment helps.</p>}
         {(isKb || lesson) && <Comments />}
         <div class="pn">
-          {prev && <a href={prev.href}><span>&lt;- previous</span><b>{prev.label}</b></a>}
-          {next && <a class="next" href={next.href}><span>next -&gt;</span><b>{next.label}</b></a>}
+          {prev && <a href={prev.href} rel="prev" title="previous (press [)"><span>&lt;- previous</span><b>{prev.label}</b></a>}
+          {next && <a class="next" href={next.href} rel="next" title="next (press ])"><span>next -&gt;</span><b>{next.label}</b></a>}
         </div>
       </footer>
     </article>

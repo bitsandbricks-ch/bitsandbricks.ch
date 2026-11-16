@@ -368,3 +368,24 @@ button.tag { background: var(--surface); border: 1px solid var(--line-2); border
 .doctree a.dirlink:hover, .menu-tree a.dirlink:hover { color: var(--brick); }
 .doctree a.dirlink[aria-current]::before, .menu-tree a.dirlink[aria-current]::before { content: none; }
 .doctree a.dirlink[aria-current], .menu-tree a.dirlink[aria-current] { color: var(--brick); background: none; }
+
+/* command cheat sheet */
+.lk-cmd { font: 500 .86rem/1.4 var(--mono); color: var(--brick); }
+.linkbtn { font: inherit; color: var(--brick); background: none; border: 0; padding: 0; text-decoration: underline; cursor: pointer; }
+.cheat { display: grid; gap: 8px; }
+.cheat h2 { font: 700 1.05rem/1.3 var(--sans); font-stretch: 110%; letter-spacing: 0; display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; }
+.cheat h2 a { color: var(--text); text-decoration: none; }
+.cheat h2 a:hover { color: var(--brick); }
+.cheat h2 span { font: 400 .76rem/1.4 var(--mono); color: var(--text-3); }
+.cheat .prose-body { max-width: none; gap: 8px; }
+
+/* print: just the text, no chrome */
+@media print {
+  .site-head, .site-foot, .doctree, .doctoc, .toc-m, .kbx, .comments, .star, .copy, .hanchor, .skip, .search-dlg, .linkbtn, .side, .title-meta .star { display: none !important; }
+  body { background: #fff; color: #000; font-size: 11pt; }
+  .docgrid, .read { display: block; }
+  .view { padding: 0; }
+  .prose-body pre, .cheat pre { white-space: pre-wrap; break-inside: avoid; border-color: #999; }
+  .cheat { break-inside: avoid-page; }
+  a { color: #000; }
+}
