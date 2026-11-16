@@ -2,7 +2,10 @@
 // - Grav rendered every line break as a <br>, and the imported notes rely on it ("No type 3
 //   LSA\nNo type 5 LSA" are separate lines there). Plain Markdown joins them into one sentence.
 // - Callouts written Obsidian/GitHub style: "> [!note]" becomes a labelled callout box.
+// - A paragraph of nothing but Obsidian tags ("#todo/cleanup", "#certifications/cisco/...") is
+//   bookkeeping for the author, not text for readers: it is left out (check-content lists them).
 const CALLOUT = /^\[!(\w+)\][-+]?\s*/;
+export const TAG_LINE = /^\s*(#[\p{L}\p{N}_/-]+\s*)+$/u;
 
 export const kbLineBreaks = (ctx) =>
   ctx.fileURL && /\/content\/docs\/kb\//.test(ctx.fileURL.pathname) && {
@@ -10,6 +13,7 @@ export const kbLineBreaks = (ctx) =>
     text(node, v) {
       const para = v.parent(node);
       if (para?.type !== "paragraph") return;
+      if (para.children?.length === 1 && TAG_LINE.test(node.value)) return v.replaceNode(para, []);
       let value = node.value;
       const out = [];
       const quote = v.parent(para);
@@ -21,7 +25,10 @@ export const kbLineBreaks = (ctx) =>
         value = value.slice(m[0].length).replace(/^\n/, "");
       }
       if (!m && !value.includes("\n")) return;
-      value.split("\n").forEach((t, i) => { if (i) out.push({ type: "break" }); if (t) out.push({ type: "text", value: t }); });
+      const lines = value.split("\n");
+      // a tag-only line glued to the end of a paragraph goes too
+      while (lines.length > 1 && TAG_LINE.test(lines[lines.length - 1])) lines.pop();
+      lines.forEach((t, i) => { if (i) out.push({ type: "break" }); if (t) out.push({ type: "text", value: t }); });
       v.replaceNode(node, out);
     },
   };

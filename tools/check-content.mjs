@@ -2,7 +2,7 @@
 //   errors (fail the build): secrets, private addresses or shell history (see lib/safety.mjs),
 //                            broken frontmatter, a missing title, a "# " heading (h1),
 //                            a [[wiki link]] that names no kb note
-//   warnings (printed):      duplicate titles, stub notes, "#todo" lines, titles like "X - X"
+//   warnings (printed):      duplicate titles, stub notes, "#todo"-style tag lines, titles like "X - X"
 // node tools/check-content.mjs [--quiet]   (--quiet: only the warning count)
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
@@ -44,7 +44,8 @@ for (const file of files) {
     const segs = String(fm.title).split(" - ").map((x) => x.trim().toLowerCase());
     if (segs.length > 1 && new Set(segs).size < segs.length) warnings.push(`${rel}: title repeats itself ("${fm.title}")`);
   }
-  if (/^#todo\s*$/im.test(body)) warnings.push(`${rel}: has a #todo line`);
+  const tagLines = body.replace(/```[\s\S]*?```/g, "").match(/^[ \t]*(#[\p{L}\p{N}_/-]+[ \t]*)+$/gmu);
+  if (tagLines) warnings.push(`${rel}: Obsidian tag line, not shown on the site: ${tagLines.map((t) => t.trim()).join(", ")}`);
   if (rel.startsWith("docs/kb/") && words(body) < STUB_WORDS) warnings.push(`${rel}: stub (${words(body)} words)`);
 }
 for (const [t, list] of titles) if (list.length > 1) warnings.push(`duplicate title "${t}": ${list.join(", ")}`);
