@@ -1,5 +1,6 @@
 ---
 title: "Block sizes and the magic number"
+private_ips_ok: true
 sidebar:
   order: 2
 tags: [subnetting]

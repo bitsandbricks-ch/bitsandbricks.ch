@@ -7,6 +7,6 @@ status: draft
 version: 0.0.1
 ---
 
-# Multicast IGMPv2 Leave Group and Group-Specific Query Messages - TECH
+## Multicast IGMPv2 Leave Group and Group-Specific Query Messages - TECH
 
 #todo

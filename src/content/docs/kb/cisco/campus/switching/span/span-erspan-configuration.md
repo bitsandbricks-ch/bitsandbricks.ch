@@ -13,9 +13,9 @@ source interface GigabitEthernet 1/0/4 rx
 filter vlan 34  
 no shutdown  
 destination  
-ip address 10.123.1.100  
+ip address 192.0.2.100  
 erspan-id 2  
-origin ip address 10.34.1.4  
+origin ip address 198.51.100.4  
 exit  
 erspan ttl 32  
 end

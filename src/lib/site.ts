@@ -7,6 +7,8 @@ export const GITHUB = "https://github.com/reykimedev";
 export const LINKEDIN = "https://www.linkedin.com/in/mike-keller-181827253/";
 export const MAIL = "mike@cheller.dev";
 export const COFFEE = "https://buymeacoffee.com/bitsandbricks";
+// The site's source, for "edit this page" links
+export const REPO = "https://github.com/bitsandbricks-ch/bitsandbricks.ch";
 
 export const NAV: [string, string][] = [
   ["/#rack", "projects"],

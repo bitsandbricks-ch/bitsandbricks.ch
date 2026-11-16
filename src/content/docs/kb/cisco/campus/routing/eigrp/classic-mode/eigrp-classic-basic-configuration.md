@@ -1,5 +1,6 @@
 ---
 title: EIGRP Classic Basic Configuration
+private_ips_ok: true
 tags:
   - eigrp
   - classic-mode
