@@ -2,7 +2,7 @@
 
 [![Pages](https://github.com/bitsandbricks-ch/bitsandbricks.ch/actions/workflows/pages.yml/badge.svg?branch=main)](https://github.com/bitsandbricks-ch/bitsandbricks.ch/actions/workflows/pages.yml?query=branch%3Amain) [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-bitsandbricks-ffdd00?logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/bitsandbricks)
 
-The Bits & Bricks website: Mike's projects (Hubra, Labdex, Homelab), plus the blog,
+The BitsAndBricks website: Mike's projects (Hubra, Labdex, Homelab), plus the blog,
 the knowledge base and courses. Built with [Astro](https://astro.build), with search by
 [Pagefind](https://pagefind.app), published as static files on GitHub Pages.
 No cookies, no tracking, no outside requests (comments load only when a reader clicks).
