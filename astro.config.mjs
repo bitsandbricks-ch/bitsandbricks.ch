@@ -3,6 +3,7 @@ import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 import { satteri } from "@astrojs/markdown-satteri";
 import { kbLineBreaks } from "./src/lib/kb-line-breaks.mjs";
+import { kbIos } from "./src/lib/kb-ios.mjs";
 import { stubPaths } from "./tools/lib/stubs.mjs";
 import { readFileSync } from "node:fs";
 
@@ -17,6 +18,6 @@ export default defineConfig({
   trailingSlash: "always",
   build: { format: "directory" },
   redirects: REDIRECTS,
-  markdown: { syntaxHighlight: false, processor: satteri({ mdastPlugins: [kbLineBreaks], features: { math: { singleDollarTextMath: false } } }) },
+  markdown: { syntaxHighlight: false, processor: satteri({ mdastPlugins: [kbLineBreaks, kbIos], features: { math: { singleDollarTextMath: false } } }) },
   integrations: [sitemap({ filter: (page) => !NOINDEX.some((p) => page.endsWith(p)) })],
 });

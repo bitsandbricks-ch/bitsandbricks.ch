@@ -389,3 +389,9 @@ button.tag { background: var(--surface); border: 1px solid var(--line-2); border
   .cheat { break-inside: avoid-page; }
   a { color: #000; }
 }
+
+/* Cisco IOS blocks in kb notes (marked at build time by src/lib/kb-ios.mjs) */
+.prose-body pre.ios .p { color: var(--brick); font-weight: 600; }
+.prose-body pre.ios .c { color: var(--text-3); font-style: italic; }
+.prose-body pre.ios .k { color: var(--accent); font-weight: 600; }
+.prose-body pre.ios .v { color: var(--text-2); text-decoration: underline dotted; text-underline-offset: .2em; }
