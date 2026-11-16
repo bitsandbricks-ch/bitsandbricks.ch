@@ -407,3 +407,9 @@ button.tag { background: var(--surface); border: 1px solid var(--line-2); border
 .prose-body { overflow-wrap: break-word; }
 .prose-body a { overflow-wrap: anywhere; }
 .done-row .btn { white-space: normal; text-align: left; line-height: 1.3; }
+
+/* /saved/: backup to a file */
+.backup { margin-top: 40px; display: grid; gap: 10px; max-width: 48rem; }
+.backup h2 { font-size: .85rem; }
+.backup p { color: var(--text-2); }
+.backup-msg { font: 500 .85rem/1.4 var(--mono); }
