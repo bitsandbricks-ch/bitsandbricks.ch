@@ -16,34 +16,5 @@ const tags = [...(await tagIndex()).entries()].filter(([, v]) => v.docs.some((d)
   <div class="tags" id="gtags" role="group" aria-label="Highlight a tag">{tags.map(([t, n]) => <button class="tag" type="button" data-hl={t} aria-pressed="false">#{t} <span class="count">{n}</span></button>)}</div>
   <p class="gstat" id="gstat" aria-live="polite"></p>
   <div class="graphbox wide" id="fullgraph"><Graph nodes={graph.nodes} edges={graph.edges} w={1100} h={760} label="Graph of all notes, grouped by folder" labels="dirs" /></div>
-  <script is:inline>
-    (function () {
-      var fg = document.getElementById("fullgraph"), stat = document.getElementById("gstat"), cur = "";
-      fg.scrollLeft = (fg.scrollWidth - fg.clientWidth) / 2;
-      function pick(t) {
-        cur = t;
-        var n = 0;
-        fg.querySelectorAll("a.nd").forEach(function (a) {
-          if (a.classList.contains("dir")) { a.classList.toggle("dim", !!cur); return; }
-          var hit = !!cur && (" " + a.dataset.tags + " ").indexOf(" " + cur + " ") >= 0;
-          if (hit) n++;
-          a.classList.toggle("hl", hit);
-          a.classList.toggle("dim", !!cur && !hit);
-        });
-        document.querySelectorAll("#gtags [data-hl]").forEach(function (x) { x.setAttribute("aria-pressed", x.dataset.hl === cur ? "true" : "false"); });
-        stat.textContent = "";
-        if (cur) {
-          var a = document.createElement("a"); a.href = "/tags/" + encodeURIComponent(cur) + "/"; a.textContent = "List them";
-          stat.append(n + " notes tagged #" + cur + ", lit up below. ", a, " or click the tag again to clear.");
-        }
-      }
-      document.getElementById("gtags").addEventListener("click", function (e) {
-        var b = e.target.closest("[data-hl]"); if (b) pick(cur === b.dataset.hl ? "" : b.dataset.hl);
-      });
-      // /kb/graph/?tag=ospf opens with that tag lit
-      var t = new URLSearchParams(location.search).get("tag");
-      if (t && document.querySelector('#gtags [data-hl="' + CSS.escape(t) + '"]')) pick(t);
-    })();
-  </script>
 </div></main>
 </Site>

@@ -4,6 +4,8 @@
 //   - pages without <title>, without exactly one <h1>, without lang, or with duplicate ids
 //   - images without alt text, and requests to other sites (no outside requests: the only
 //     allowed one is giscus, loaded on click by reader.js)
+//   - inline scripts or on...= handlers, or a page without the Content-Security-Policy (it
+//     forbids inline code, so these would silently stop working)
 //   - a missing search index
 import { readdirSync, readFileSync, statSync, existsSync } from "node:fs";
 import { join, relative, dirname } from "node:path";
@@ -56,6 +58,9 @@ for (const [file, text] of html) {
   if (!file.endsWith("404.html") && h1 !== 1) err(file, `${h1} <h1> elements`);
   const seen = new Set();
   for (const [, id] of body.matchAll(/\sid="([^"]+)"/g)) { if (seen.has(id)) err(file, `duplicate id "${id}"`); seen.add(id); }
+  if (!/<meta http-equiv="Content-Security-Policy"/.test(text)) err(file, "no Content-Security-Policy");
+  for (const [tag] of text.matchAll(/<script\b[^>]*>/g)) if (!/\ssrc="/.test(tag)) err(file, "inline <script> (blocked by the CSP: move it to public/assets)");
+  for (const [m] of text.matchAll(/<[a-z][^>]*\son[a-z]+="[^"]*"/g)) err(file, `inline handler (blocked by the CSP): ${m.slice(0, 80)}`);
   for (const [img] of body.matchAll(/<img\b[^>]*>/g)) if (!/\salt="/.test(img)) err(file, `image without alt: ${img.slice(0, 80)}`);
 }
 if (!existsSync(join(DIST, "pagefind/pagefind-ui.js"))) errors.push("no search index (dist/pagefind)");

@@ -74,6 +74,9 @@ link, a leaked secret or a broken reader feature fails the check.
   `[[ospf-packets|the packets]]` sets the text, `[[bgp/timers]]` picks one of two notes with the same
   name. They count as links in the graph and in "linked from". A wiki link to no note fails the
   build (`npm run check:content` says which).
+- **Content-Security-Policy:** every page carries one (`src/layouts/Site.astro`): scripts only from
+  `/assets/` (and giscus.app once a reader loads comments), no inline `<script>` or `onclick=`.
+  Put page code in `public/assets/`; `npm run build` fails on inline scripts.
 - **Moving a note:** move the file, then add `"old path": "new path"` to `src/redirects.json` so
   links from elsewhere keep working.
 - **Callouts:** `> [!note]`, `> [!warning]`, `> [!info]` as the first line of a quote in a kb note.
