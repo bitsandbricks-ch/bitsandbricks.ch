@@ -21,7 +21,17 @@
         var css = document.createElement("link"); css.rel = "stylesheet"; css.href = "/pagefind/pagefind-ui.css"; document.head.appendChild(css);
         var js = document.createElement("script"); js.src = "/pagefind/pagefind-ui.js";
         js.onload = function () {
-          new PagefindUI({ element: "#search", showImages: false, showSubResults: true, resetStyles: false, autofocus: true });
+          var ui = new PagefindUI({ element: "#search", showImages: false, showSubResults: true, resetStyles: false, autofocus: true });
+          // our own "all / kb / blog / courses" chips instead of Pagefind's filter panel
+          dlg.querySelectorAll("[data-scope]").forEach(function (b) {
+            b.addEventListener("click", function () {
+              dlg.querySelectorAll("[data-scope]").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+              ui.triggerFilters(b.dataset.scope ? { section: [b.dataset.scope] } : {});
+            });
+          });
+          // on a kb page, start with the kb
+          var here = location.pathname.split("/")[1];
+          if (["kb", "blog", "courses"].indexOf(here) >= 0) { var s = dlg.querySelector('[data-scope="' + here + '"]'); if (s) s.click(); }
           var input = dlg.querySelector("input"); if (input) input.focus();
         };
         js.onerror = function () { document.getElementById("search").textContent = "Search works on the built site (npm run build), not in the dev server."; };

@@ -10,6 +10,7 @@ import Comments from "../Comments.astro";
 import Graph from "../Graph.astro";
 import DocTree from "./DocTree.astro";
 import { words, STUB_WORDS } from "../../../tools/lib/stubs.mjs";
+import { REPO } from "../../lib/site";
 import { allDocs, buildTree, flatTree, courses, noteGraph, buildGraph, related, parentOf, url, short, type Doc, type TreeItem } from "../../lib/content";
 
 interface Props { doc: Doc }
@@ -22,6 +23,7 @@ const course = isKb ? undefined : (await courses()).find((c) => c.slug === parts
 const isCourseIndex = !!data.course;
 const lessonIdx = course && !isCourseIndex ? course.lessons.findIndex((l) => l.id === id) : -1;
 const lesson = lessonIdx >= 0 ? course!.lessons[lessonIdx] : undefined;
+const nextLesson = lesson ? course!.lessons[lessonIdx + 1] : undefined;
 const old = typeof data.verified === "string" && data.verified < new Date(Date.now() - 1000 * 3600 * 24 * 182).toISOString().slice(0, 7);
 
 // tree: the whole kb, or the current course with its overview first
@@ -51,13 +53,13 @@ const kind = isKb ? "kb" : lesson ? "lesson" : "course";
 const isStub = isKb && words(doc.body ?? "") < STUB_WORDS;
 ---
 <Site title={data.title} description={data.description ?? data.title} path={path} type="article" noindex={isStub}>
-  <div slot="menu" class="menu-tree"><p class="label">{treeTitle}</p><DocTree items={tree} current={id} links={isKb} /></div>
+  <div slot="menu" class="menu-tree"><p class="label">{treeTitle}</p><DocTree items={tree} current={id} links={isKb} openAll={!isKb} /></div>
   <main id="main" class="view doc"><div class="wrap docgrid">
     <nav class="doctree" aria-label={isKb ? "Knowledge base" : "Course"}>
       {isKb ? <a class="label" href="/kb/">kb/</a> : <a class="label" href={course?.href}>{treeTitle}</a>}
-      <DocTree items={tree} current={id} links={isKb} />
+      <DocTree items={tree} current={id} links={isKb} openAll={!isKb} />
     </nav>
-    <article class="docmain" data-pagefind-body={isStub ? undefined : ""}>
+    <article class="docmain" data-pagefind-body={isStub ? undefined : ""} data-pagefind-filter={isKb ? "section:kb" : "section:courses"}>
       <div class="vhead">
         {crumb.length > 0 && <nav class="crumb" aria-label="Breadcrumb">{crumb.map(([label, href], i) => <>{i > 0 && <i>&gt;</i>}{href ? <a href={href}>{label}</a> : <span>{label}</span>}</>)}</nav>}
         {data.prompt && <p class="prompt"><b>$</b> <i>{data.prompt}</i></p>}
@@ -80,12 +82,24 @@ const isStub = isKb && words(doc.body ?? "") < STUB_WORDS;
             <a class="btn btn-p" href={course.lessons[0]?.href} data-continue>start: {course.lessons[0]?.title}</a>
             <button class="btn btn-s" type="button" data-reset={course.lessons.map((l) => l.id).join(" ")}>reset progress</button>
           </div>
+          <ol class="syllabus">
+            {course.sections.map((sec) => (
+              <li><span class="sec">{sec.label}/</span>
+                <ol>{sec.lessons.map((l) => <li><a href={l.href} data-lesson={l.id}><span class="tick" aria-hidden="true"></span>{l.title}{l.quiz && <em class="stub-tag">quiz</em>}</a></li>)}</ol>
+              </li>
+            ))}
+          </ol>
         </div>
       )}
       {toc.length > 1 && <details class="toc-m" data-pagefind-ignore><summary>on this page</summary>{toc.map((h) => <a class={"lk d" + h.depth} href={`#${h.slug}`}>{h.text}</a>)}</details>}
       <div class="prose-body"><Content /></div>
       <footer class="kbx" data-pagefind-ignore>
-        {lesson && <div class="done-row"><button class="btn btn-p" type="button" data-done={id} aria-pressed="false">mark lesson as done</button></div>}
+        {lesson && (
+          <div class="done-row">
+            <a class="btn btn-p" href={nextLesson ? nextLesson.href : course!.href} data-done-next={id}>{nextLesson ? `done, next: ${nextLesson.title}` : "done, back to the course"}</a>
+            <button class="btn btn-s" type="button" data-done={id} aria-pressed="false">mark lesson as done</button>
+          </div>
+        )}
         {isKb && graph && (
           <div class="notefoot">
             <div class="panel">
@@ -103,6 +117,7 @@ const isStub = isKb && words(doc.body ?? "") < STUB_WORDS;
             </div>
           </div>
         )}
+        {doc.filePath && <p class="editlink"><a href={`${REPO}/edit/main/${doc.filePath}`}>edit this page on GitHub</a> · spotted a mistake? a pull request or a comment helps.</p>}
         {(isKb || lesson) && <Comments />}
         <div class="pn">
           {prev && <a href={prev.href}><span>&lt;- previous</span><b>{prev.label}</b></a>}
