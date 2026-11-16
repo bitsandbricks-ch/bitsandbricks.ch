@@ -3,7 +3,7 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
-const PAGES = ["/kb/", "/kb/cisco/campus/routing/", "/kb/cisco/campus/routing/ospf/ospf-authentication/", "/kb/graph/", "/tags/", "/tags/ospf/", "/courses/", "/courses/subnetting/", "/courses/subnetting/3-check/quiz/", "/blog/", "/blog/understanding-ospf-like-a-network-engineer/", "/saved/"];
+const PAGES = ["/", "/about/", "/hubra/", "/labdex/", "/homelab/", "/brand/", "/impressum/", "/privacy/", "/404/", "/kb/", "/kb/cisco/campus/routing/", "/kb/cisco/campus/routing/ospf/ospf-authentication/", "/kb/graph/", "/tags/", "/tags/ospf/", "/courses/", "/courses/subnetting/", "/courses/subnetting/3-check/quiz/", "/blog/", "/blog/understanding-ospf-like-a-network-engineer/", "/saved/"];
 
 for (const scheme of ["light", "dark"]) {
   for (const path of PAGES) {
