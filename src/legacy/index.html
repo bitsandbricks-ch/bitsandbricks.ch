@@ -17,7 +17,7 @@ description: Side projects by Mike, network engineer and CCIE from Switzerland: 
         <a class="btn btn-s" href="{{github}}">{{icon:github}} GitHub</a>
       </div>
     </div>
-    <svg class="map map-d" viewBox="0 0 560 440" role="img" aria-labelledby="map-t"><title id="map-t">Network map: Mike at the core, linked to GitHub, LinkedIn, Hubra, Labdex, the homelab and Lock and Load.</title>
+    <svg class="map map-d" viewBox="0 0 560 440" role="group" aria-labelledby="map-t"><title id="map-t">Network map: Mike at the core, linked to GitHub, LinkedIn, Hubra, Labdex, the homelab and Lock and Load.</title>
 <path class="link" d="M126 72L250 186"/>
 <path class="link" d="M434 72L310 186"/>
 <path class="link" d="M235 242L70 372"/>
@@ -44,7 +44,7 @@ description: Side projects by Mike, network engineer and CCIE from Switzerland: 
 <a class="node" href="/homelab/"><rect x="286" y="372" width="132" height="48" rx="4"/><circle class="led" cx="298" cy="388" r="3.5"/><text x="308" y="392">homelab</text><text class="sub" x="298" y="409">infra · the lab</text></a>
 <a class="node" href="/about/#community"><rect x="426" y="372" width="132" height="48" rx="4"/><circle class="led" cx="438" cy="388" r="3.5"/><text x="448" y="392">lock&amp;load</text><text class="sub" x="438" y="409">lan · infra/net</text></a>
 </svg>
-    <svg class="map map-m" viewBox="0 0 340 428" role="img" aria-labelledby="map-tm"><title id="map-tm">Network map: Mike at the core, linked to GitHub, LinkedIn, Hubra, Labdex, the homelab and Lock and Load.</title>
+    <svg class="map map-m" viewBox="0 0 340 428" role="group" aria-labelledby="map-tm"><title id="map-tm">Network map: Mike at the core, linked to GitHub, LinkedIn, Hubra, Labdex, the homelab and Lock and Load.</title>
 <path class="link" d="M85 58L130 140"/>
 <path class="link" d="M255 58L210 140"/>
 <path class="link" d="M120 196L82 290"/>
@@ -140,19 +140,23 @@ description: Side projects by Mike, network engineer and CCIE from Switzerland: 
         <div class="ear"><i></i><i></i></div>
       </article>
 
-      <div class="slots-head"><p class="prompt"><b>$</b> <i>show chassis reserved</i></p></div>
+      <div class="slots-head"><p class="prompt"><b>$</b> <i>show chassis slots</i></p></div>
       <div class="slots">
-        <article class="slot">
-          <div class="leds"><span>pwr</span><span>link</span></div>
-          <div><span class="mono">U4 · reserved</span><h3>Blog</h3><p>Public write-ups from the lab and the projects.</p></div>
+        <article class="slot slot-on">
+          <div class="leds"><span class="on">pwr</span><span class="on">link</span></div>
+          <div><span class="mono">U4 · online · {{count:blog}}</span><h3><a href="/blog/">Blog</a></h3><p>Public write-ups from the lab and the projects.</p></div>
         </article>
-        <article class="slot">
-          <div class="leds"><span>pwr</span><span>link</span></div>
-          <div><span class="mono">U5 · reserved</span><h3>Notes</h3><p>A public knowledge base for notes, configs and how-tos.</p></div>
+        <article class="slot slot-on">
+          <div class="leds"><span class="on">pwr</span><span class="on">link</span></div>
+          <div><span class="mono">U5 · online · {{count:kb}}</span><h3><a href="/kb/">Knowledge base</a></h3><p>A public knowledge base for notes, configs and how-tos.</p></div>
+        </article>
+        <article class="slot slot-on">
+          <div class="leds"><span class="on">pwr</span><span class="on">link</span></div>
+          <div><span class="mono">U6 · online · {{count:courses}}</span><h3><a href="/courses/">Courses</a></h3><p>Free courses on networking and the homelab, in lessons with quizzes.</p></div>
         </article>
         <article class="slot slot-as">
           <div class="leds"><span class="act">pwr</span><span>link</span></div>
-          <div><span class="mono">U6 · reserved · looking for sponsors</span><h3>My own AS</h3><p>One day I want to run my own autonomous system: my own ASN, my own IP space, and BGP sessions with real peers. If you can help with transit, IP space or hosting, <a href="mailto:{{mail}}">get in touch</a>.</p></div>
+          <div><span class="mono">U7 · reserved · looking for sponsors</span><h3>My own AS</h3><p>One day I want to run my own autonomous system: my own ASN, my own IP space, and BGP sessions with real peers. If you can help with transit, IP space or hosting, <a href="mailto:{{mail}}">get in touch</a>.</p></div>
         </article>
       </div>
     </div>

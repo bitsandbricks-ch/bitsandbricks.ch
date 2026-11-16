@@ -259,14 +259,15 @@ code { font-size: .86em; background: var(--surface-2); border: 1px solid var(--l
 
 /* Reserved rack units: planned projects */
 .slots-head { margin: 28px 0 12px; }
-.slots { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.slots { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
 .slot { display: grid; grid-template-columns: auto 1fr; align-items: start; gap: 16px; padding: 18px 20px; border: 1.5px dashed var(--line-2); border-radius: 6px; background: transparent; }
 .slot .mono { font-size: .74rem; color: var(--text-3); }
 .slot h3 { font-size: 1.15rem; margin: 6px 0 6px; }
 .slot p { color: var(--text-2); font-size: .95rem; }
 .slot-as { border-color: var(--brick); }
 .slot-as .mono { color: var(--brick); }
-@media (max-width: 900px) { .slots { grid-template-columns: 1fr; } }
+@media (max-width: 1100px) { .slots { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .slots { grid-template-columns: 1fr; } }
 .slot .leds { align-content: start; padding-top: 4px; }
 
 /* project pages: hero with a side console, screenshots, status lists */
@@ -328,3 +329,11 @@ code { font-size: .86em; background: var(--surface-2); border: 1px solid var(--l
   .chip { border: 0; padding: 3px 0; color: var(--text-3); }
   .chip:not(:last-child)::after { content: "·"; margin-inline: 8px; color: var(--line-2); }
 }
+/* Slots that are live (blog, kb, courses): solid frame, the title is the link */
+.slot-on { border-style: solid; border-color: var(--line); background: var(--surface); }
+.slot-on h3 a { color: var(--text); text-decoration: none; }
+.slot-on h3 a::after { content: " →"; color: var(--brick); }
+.slot-on:hover { border-color: var(--brick); }
+.slot-on h3 a:hover { color: var(--brick); }
+.slot-on { position: relative; }
+.slot-on h3 a::before { content: ""; position: absolute; inset: 0; }
