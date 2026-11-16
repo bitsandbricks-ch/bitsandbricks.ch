@@ -7,7 +7,7 @@ const { path } = Astro.props;
 ---
 <header class="site-head">
   <div class="wrap bar">
-    <a class="brand" href="/" aria-label="Bits and Bricks, home"><Fragment set:html={LOGO} /><span>Bits<b>&amp;</b>Bricks</span></a>
+    <a class="brand" href="/" aria-label="BitsAndBricks, home"><Fragment set:html={LOGO} /><span>Bits<b>&amp;</b>Bricks</span></a>
     <nav class="nav" id="site-menu" aria-label="Main">
       {NAV.map(([href, label]) => <a href={href} aria-current={isCurrent(href, path) ? "page" : undefined}>{label}</a>)}
       <a class="nav-ext" href="/saved/">saved</a>

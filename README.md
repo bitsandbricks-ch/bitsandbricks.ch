@@ -2,7 +2,7 @@
 
 [![Pages](https://github.com/bitsandbricks-ch/bitsandbricks.ch/actions/workflows/pages.yml/badge.svg?branch=main)](https://github.com/bitsandbricks-ch/bitsandbricks.ch/actions/workflows/pages.yml?query=branch%3Amain) [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-bitsandbricks-ffdd00?logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/bitsandbricks)
 
-The Bits & Bricks website: Mike's projects (Hubra, Labdex, Homelab), plus the blog,
+The BitsAndBricks website: Mike's projects (Hubra, Labdex, Homelab), plus the blog,
 the knowledge base and courses. Built with [Astro](https://astro.build), with search by
 [Pagefind](https://pagefind.app), published as static files on GitHub Pages.
 No cookies, no tracking, no outside requests (comments load only when a reader clicks).
@@ -32,6 +32,8 @@ npm run preview   # serve dist/ (search only works here, not in npm run dev)
 npm test          # unit tests (kb helpers, secrets check), plain node --test
 npm run test:e2e  # browser smoke tests against dist/ (after npm run build)
 npm run check:content   # list content warnings: stubs, duplicate titles, #todo-style tag lines
+npm run new -- note cisco/campus/routing/ospf "OSPF LSA Types"   # new kb note, frontmatter filled in
+npm run new -- post "Title of the post" --tags homelab,opnsense   # new blog post (starts as draft: true)
 ```
 
 The build stops when a Markdown file looks like it holds a password, token, private key, shell

@@ -1,7 +1,8 @@
 // 404 page: show the address that was asked for, and pages whose words match it (from the
 // Pagefind index that is already on this site; nothing leaves the site).
 (function () {
-  var path = decodeURIComponent(location.pathname);
+  var path = location.pathname;
+  try { path = decodeURIComponent(path); } catch (e) {} // a broken %-escape must not stop the page
   var out = document.getElementById("lost-path");
   if (out) out.textContent = path;
   var SKIP = { kb: 1, blog: 1, courses: 1, cisco: 1, campus: 1, index: 1, html: 1, www: 1, the: 1, and: 1 };
