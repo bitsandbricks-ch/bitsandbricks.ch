@@ -59,6 +59,11 @@ link, a leaked secret or a broken reader feature fails the check.
   quizzes). Learning paths are listed in `PATHS` in `src/lib/content.ts`. Every lesson has
   `access: free` for now; `account` and `paid` are reserved for when accounts exist.
 
+- **Line breaks in kb notes** work like they did in Grav: a single line break inside a paragraph
+  is kept (`src/lib/kb-line-breaks.mjs`). Blog posts and lessons use plain Markdown.
+- **Stubs:** a kb note with under 40 words shows a "stub" note and stays out of search and the
+  sitemap until it is written up (`tools/lib/stubs.mjs`).
+
 ### Importing from Grav
 
 The first blog posts came from the old Grav site (gitlab.com/bitsandbricks/blog, private). With a

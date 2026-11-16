@@ -86,3 +86,27 @@ test("colour scheme toggle sticks across pages", async ({ page }) => {
   await page.goto("/blog/");
   expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe(after);
 });
+
+test("'done, next' marks the lesson and opens the next one", async ({ page }) => {
+  await page.goto("/courses/subnetting/1-basics/prefix-length/");
+  await page.locator("[data-done-next]").click();
+  await expect(page).toHaveURL(/block-sizes\/$/);
+  await page.goto("/courses/subnetting/");
+  await expect(page.locator('.syllabus a.done')).toHaveCount(1);
+});
+
+test("quiz shows a score", async ({ page }) => {
+  await page.goto("/courses/subnetting/3-check/quiz/");
+  await page.locator('input[name="q1"][value="1"]').check();
+  await expect(page.locator("#quiz-score")).toContainText("1/");
+});
+
+test("search can be narrowed to the blog", async ({ page }) => {
+  await page.goto("/kb/");
+  await page.getByRole("button", { name: "Search" }).click();
+  await expect(page.locator('[data-scope="kb"]')).toHaveAttribute("aria-pressed", "true");
+  await page.locator(".search-dlg input").fill("ospf");
+  await page.locator('[data-scope="blog"]').click();
+  await expect(page.locator(".pagefind-ui__result-link").first()).toContainText("OSPF");
+  await expect(page.locator('.pagefind-ui__result-link:not([href^="/blog/"])')).toHaveCount(0);
+});
