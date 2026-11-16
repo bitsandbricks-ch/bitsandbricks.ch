@@ -36,7 +36,7 @@
   function renderSaved() {
     var box = document.getElementById("saved-list"), empty = document.getElementById("saved-empty");
     if (!box) return;
-    var keys = Object.keys(saved);
+    var keys = Object.keys(saved).filter(function (u) { return /^\/[^/]/.test(u); }); // site paths only
     box.innerHTML = keys.map(function (u) { var s = saved[u]; return '<div class="saved-row"><a href="' + esc(u) + '"><b>' + esc(s.title) + "</b><span>" + esc(s.kind) + " · " + esc(u) + '</span></a><button class="star" type="button" aria-pressed="true" data-save="' + esc(u) + '" data-title="' + esc(s.title) + '" data-kind="' + esc(s.kind) + '" aria-label="Remove ' + esc(s.title) + ' from saved"><span>remove</span></button></div>'; }).join("");
     box.hidden = !keys.length;
     if (empty) empty.hidden = !!keys.length;
@@ -180,10 +180,43 @@
     if (t && tags.querySelector('[data-hl="' + CSS.escape(t) + '"]')) pick(t);
   }
 
+  // Backup of saved pages and lesson progress as a JSON file, to move them to another browser
+  function backup() {
+    var dl = document.querySelector("[data-backup-save]"), up = document.querySelector("[data-backup-load]"), msg = document.getElementById("backup-msg");
+    if (!dl || !up) return;
+    document.querySelector("[data-backup-pick]").addEventListener("click", function () { up.click(); });
+    dl.addEventListener("click", function () {
+      var blob = new Blob([JSON.stringify({ app: "bitsandbricks.ch", version: 1, saved: saved, done: done }, null, 2)], { type: "application/json" });
+      var a = document.createElement("a");
+      a.href = URL.createObjectURL(blob); a.download = "bitsandbricks-saved.json";
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+    });
+    up.addEventListener("change", function () {
+      var f = up.files && up.files[0]; if (!f) return;
+      var r = new FileReader();
+      r.onload = function () {
+        var data; try { data = JSON.parse(r.result); } catch (e) { data = null; }
+        if (!data || data.app !== "bitsandbricks.ch") { msg.textContent = "% That file is not a backup from this site."; return; }
+        var n = 0, m = 0;
+        Object.keys(data.saved || {}).forEach(function (u) {
+          var s = data.saved[u];
+          if (/^\/[^/]/.test(u) && s && typeof s.title === "string") { if (!saved[u]) n++; saved[u] = { title: s.title.slice(0, 200), kind: String(s.kind || "").slice(0, 20) }; }
+        });
+        Object.keys(data.done || {}).forEach(function (id) { if (/^[\w\/.-]+$/.test(id)) { if (!done[id]) m++; done[id] = 1; } });
+        store("bb_saved", saved); store("bb_done", done);
+        renderSaved(); paintProgress();
+        msg.textContent = "Loaded: " + n + " new saved " + (n === 1 ? "page" : "pages") + ", " + m + " new finished " + (m === 1 ? "lesson" : "lessons") + ".";
+        up.value = "";
+      };
+      r.readAsText(f);
+    });
+  }
+
   function init() {
     document.querySelectorAll("[data-save]").forEach(paintSave);
     paintProgress(); renderSaved(); anchors(); copyButtons(); quizzes();
-    filter("q", "#loglist .row", "s"); filter("tq", "#taglist a", "t"); graph();
+    backup(); filter("q", "#loglist .row", "s"); filter("tq", "#taglist a", "t"); graph();
     document.querySelectorAll("[data-print]").forEach(function (b) { b.addEventListener("click", function () { window.print(); }); });
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
