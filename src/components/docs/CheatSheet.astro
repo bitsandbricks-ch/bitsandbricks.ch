@@ -3,6 +3,7 @@
 // note. Made for quick lookups and for printing.
 import Site from "../../layouts/Site.astro";
 import { kbNotes, codeBlocks, url, short } from "../../lib/content";
+import { isIos, iosHtml } from "../../lib/kb-ios.mjs";
 
 interface Props { id: string }
 const { id } = Astro.props;
@@ -24,7 +25,7 @@ const path = url(id) + "commands/";
   {groups.map(({ n, blocks }) => (
     <section class="cheat">
       <h2><a href={url(n.id)}>{n.data.title}</a> <span>{n.id.split("/").slice(parts.length, -1).join("/")}</span></h2>
-      <div class="prose-body">{blocks.map((b) => <pre><code>{b.code}</code></pre>)}</div>
+      <div class="prose-body">{blocks.map((b) => (isIos(b.lang, b.code) ? <Fragment set:html={iosHtml(b.code)} /> : <pre><code>{b.code}</code></pre>))}</div>
     </section>
   ))}
 </div></main>

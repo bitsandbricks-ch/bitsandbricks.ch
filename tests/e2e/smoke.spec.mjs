@@ -212,3 +212,68 @@ test("saved pages and progress survive a backup round trip", async ({ page, isMo
   await page.locator("[data-backup-load]").setInputFiles({ name: "x.json", mimeType: "application/json", buffer: Buffer.from('{"saved":{"javascript:alert(1)":{"title":"x"}}}') });
   await expect(page.locator("#backup-msg")).toContainText("not a backup");
 });
+
+test("saving in two tabs keeps both, and the other tab's star follows", async ({ page, context, isMobile }) => {
+  test.skip(isMobile, "same code on phone");
+  const a = "/kb/cisco/campus/routing/ospf/ospf-authentication/";
+  await page.goto(a);
+  const other = await context.newPage();
+  await other.goto("/blog/understanding-ospf-like-a-network-engineer/");
+  await page.locator(".title-meta [data-save]").click();
+  // the tab that loaded before the first save must not write its old list back
+  await other.locator("[data-save]").first().click();
+  await expect(page.locator(".title-meta [data-save]")).toHaveAttribute("aria-pressed", "true");
+  await other.goto("/saved/");
+  await expect(other.locator("#saved-list a")).toHaveCount(2);
+  await other.locator(`#saved-list [data-save="${a}"]`).click();
+  await expect(page.locator(".title-meta [data-save]")).toHaveAttribute("aria-pressed", "false");
+});
+
+test("404 page copes with a broken %-escape in the address", async ({ page }) => {
+  const errors = [];
+  page.on("pageerror", (e) => errors.push(String(e)));
+  // the preview server itself fails on this address (GitHub Pages serves 404.html), so hand the page over directly
+  await page.route("**/kb/ospf%E0%A4%A/", (r) => r.fulfill({ status: 404, path: "dist/404.html", contentType: "text/html" }));
+  await page.goto("/kb/ospf%E0%A4%A/");
+  await expect(page.locator("#lost-path")).toContainText("/kb/ospf");
+  expect(errors).toEqual([]);
+});
+
+test("the phone's browser bar follows the colour scheme toggle", async ({ page }) => {
+  await page.emulateMedia({ colorScheme: "light" });
+  await page.goto("/kb/");
+  const bar = () => page.evaluate(() => [...document.querySelectorAll('meta[name="theme-color"]')].map((m) => m.content));
+  await page.locator("[data-theme-toggle]").click();
+  expect(new Set(await bar())).toEqual(new Set(["#111111"]));
+  await page.goto("/blog/");
+  expect(new Set(await bar())).toEqual(new Set(["#111111"]));
+});
+
+test("switching the theme in one tab switches the other open tabs", async ({ page, context, isMobile }) => {
+  test.skip(isMobile, "same code on phone");
+  await page.goto("/");
+  const other = await context.newPage();
+  await other.goto("/kb/");
+  const before = await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue("--page").trim());
+  await page.locator("[data-theme-toggle]").click();
+  const after = await page.evaluate(() => document.documentElement.dataset.theme);
+  await expect(other.locator("html")).toHaveAttribute("data-theme", after);
+  const bar = await other.evaluate(() => [...document.querySelectorAll('meta[name="theme-color"]')].map((m) => m.content));
+  expect(bar).not.toContain(before);
+});
+
+test("Ctrl+/ does not open the search, / does", async ({ page, isMobile }) => {
+  test.skip(isMobile, "keyboard only");
+  await page.goto("/kb/");
+  await page.keyboard.press("Control+/");
+  await expect(page.locator(".search-dlg")).not.toHaveAttribute("open", "");
+  await page.keyboard.press("/");
+  await expect(page.locator(".search-dlg")).toHaveAttribute("open", "");
+});
+
+test("the gaming handle is not shown as text on the site", async ({ page }) => {
+  for (const path of ["/", "/about/", "/kb/"]) {
+    await page.goto(path);
+    expect(await page.locator("body").innerText()).not.toMatch(/reykime/i);
+  }
+});
