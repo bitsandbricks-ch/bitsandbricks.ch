@@ -103,15 +103,15 @@ const isStub = isKb && words(doc.body ?? "") < STUB_WORDS;
         {isKb && graph && (
           <div class="notefoot">
             <div class="panel">
-              {back.length > 0 && <><h4>linked from</h4>{back.map((b) => <a class="lk" href={url(b)}>&lt;- {titleOf(b)}</a>)}</>}
-              {links.length > 0 && <><h4>links to</h4>{links.map((b) => <a class="lk" href={url(b)}>-&gt; {titleOf(b)}</a>)}</>}
-              {rel.length > 0 && <><h4>related by tag</h4>{rel.map((b) => <a class="lk" href={url(b.id)}>~ {b.data.title}</a>)}</>}
-              <h4>folder</h4>
+              {back.length > 0 && <><h2 class="ph">linked from</h2>{back.map((b) => <a class="lk" href={url(b)}>&lt;- {titleOf(b)}</a>)}</>}
+              {links.length > 0 && <><h2 class="ph">links to</h2>{links.map((b) => <a class="lk" href={url(b)}>-&gt; {titleOf(b)}</a>)}</>}
+              {rel.length > 0 && <><h2 class="ph">related by tag</h2>{rel.map((b) => <a class="lk" href={url(b.id)}>~ {b.data.title}</a>)}</>}
+              <h2 class="ph">folder</h2>
               <a class="lk" href={url(parentOf(id))}>{parentOf(id).slice(3) || "kb"}/</a>
               <a class="lk phone-only" href="/kb/graph/">full graph -&gt;</a>
             </div>
             <div class="panel local-graph">
-              <h4>local graph</h4>
+              <h2 class="ph">local graph</h2>
               <div class="graphbox"><Graph nodes={graph.nodes} edges={graph.edges} w={340} h={230} label="This note, its folder and the notes next to it" labels="dirs" /></div>
               <a class="lk" href="/kb/graph/">full graph -&gt;</a>
             </div>
@@ -120,13 +120,13 @@ const isStub = isKb && words(doc.body ?? "") < STUB_WORDS;
         {doc.filePath && <p class="editlink"><a href={`${REPO}/edit/main/${doc.filePath}`}>edit this page on GitHub</a> · spotted a mistake? a pull request or a comment helps.</p>}
         {(isKb || lesson) && <Comments />}
         <div class="pn">
-          {prev && <a href={prev.href}><span>&lt;- previous</span><b>{prev.label}</b></a>}
-          {next && <a class="next" href={next.href}><span>next -&gt;</span><b>{next.label}</b></a>}
+          {prev && <a href={prev.href} rel="prev" title="previous (press [)"><span>&lt;- previous</span><b>{prev.label}</b></a>}
+          {next && <a class="next" href={next.href} rel="next" title="next (press ])"><span>next -&gt;</span><b>{next.label}</b></a>}
         </div>
       </footer>
     </article>
     <aside class="doctoc">
-      {toc.length > 0 && <div class="blk"><h4>on this page</h4>{toc.map((h) => <a class={"lk d" + h.depth} href={`#${h.slug}`}>{h.text}</a>)}</div>}
+      {toc.length > 0 && <div class="blk"><h2 class="ph">on this page</h2>{toc.map((h) => <a class={"lk d" + h.depth} href={`#${h.slug}`}>{h.text}</a>)}</div>}
     </aside>
   </div></main>
 </Site>

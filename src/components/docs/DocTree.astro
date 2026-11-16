@@ -1,16 +1,27 @@
 ---
 // The folder tree beside kb notes and lessons, and inside the phone menu. In the kb only the
-// folders on the way to the current page start open (course sections are always open), so a big kb does not unfold all at once. A folder's name
-// links to its overview page; the +/- in front of it opens and closes it.
+// folders on the way to the current page start open, and each folder row is a +/- toggle (wired
+// in theme.js) next to a link to the folder's page; without JavaScript the link still opens the
+// folder. Course sections are plain, always-open <details>.
 import type { TreeItem } from "../../lib/content";
 import { url } from "../../lib/content";
-interface Props { items: TreeItem[]; current: string; links?: boolean; openAll?: boolean }
-const { items, current, links = true, openAll = false } = Astro.props;
+interface Props { items: TreeItem[]; current: string; links?: boolean; openAll?: boolean; hidden?: boolean }
+const { items, current, links = true, openAll = false, hidden = false } = Astro.props;
 const onPath = (id: string) => current === id || current.startsWith(id + "/");
 ---
-<ul>
+<ul hidden={hidden || undefined}>
   {items.map((i) => i.kind === "dir" ? (
-    <li><details open={openAll || onPath(i.id) || undefined}><summary>{links ? <a class="dirlink" href={url(i.id)} aria-current={i.id === current ? "page" : undefined}>{i.label}</a> : i.label}</summary><Astro.self items={i.items} current={current} links={links} openAll={openAll} /></details></li>
+    links ? (
+      <li class="dir">
+        <div class="dirrow">
+          <button class="tw" type="button" aria-expanded={onPath(i.id) ? "true" : "false"} aria-label={`${onPath(i.id) ? "close" : "open"} ${i.label}`} data-tw>{onPath(i.id) ? "-" : "+"}</button>
+          <a class="dirlink" href={url(i.id)} aria-current={i.id === current ? "page" : undefined}>{i.label}</a>
+        </div>
+        <Astro.self items={i.items} current={current} links={links} openAll={openAll} hidden={!onPath(i.id)} />
+      </li>
+    ) : (
+      <li><details open={openAll || onPath(i.id) || undefined}><summary>{i.label}</summary><Astro.self items={i.items} current={current} links={links} openAll={openAll} /></details></li>
+    )
   ) : (
     <li><a href={i.href} aria-current={i.id === current ? "page" : undefined}>{i.label}</a></li>
   ))}

@@ -116,3 +116,30 @@ test("moved notes redirect to their new address", async ({ page }) => {
   await expect(page).toHaveURL(/\/network-types\/ospf-non-broadcast\/$/);
   await expect(page.locator("h1")).toHaveText("OSPF Non-Broadcast");
 });
+
+test("kb tree folders open and close, and link to their page", async ({ page, isMobile }) => {
+  test.skip(isMobile, "the tree is in the menu on phones");
+  await page.goto("/kb/cisco/campus/routing/ospf/ospf-authentication/");
+  const toggle = page.locator(".doctree [data-tw]").filter({ has: page.locator("xpath=following-sibling::a[normalize-space()='bgp/']") }).first();
+  await expect(toggle).toHaveAttribute("aria-expanded", "false");
+  await toggle.click();
+  await expect(toggle).toHaveAttribute("aria-expanded", "true");
+  await expect(page.locator(".doctree a", { hasText: "BGP Messages" })).toBeVisible();
+  await page.locator(".doctree a.dirlink", { hasText: /^bgp\/$/ }).click();
+  await expect(page).toHaveURL(/\/routing\/bgp\/$/);
+});
+
+test("folder cheat sheet lists commands and links to notes", async ({ page }) => {
+  await page.goto("/kb/cisco/campus/routing/");
+  await page.locator("a.lk-cmd").click();
+  await expect(page).toHaveURL(/\/routing\/commands\/$/);
+  expect(await page.locator(".cheat pre").count()).toBeGreaterThan(5);
+});
+
+test("] opens the next note", async ({ page, isMobile }) => {
+  test.skip(isMobile, "keyboard");
+  await page.goto("/kb/cisco/campus/routing/ospf/ospf-authentication/");
+  const next = await page.locator('.pn a[rel="next"]').getAttribute("href");
+  await page.keyboard.press("]");
+  await expect(page).toHaveURL(new RegExp(next.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "$"));
+});

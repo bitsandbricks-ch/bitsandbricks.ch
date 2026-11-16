@@ -12,6 +12,18 @@
       head.querySelector(".nav").addEventListener("click", function (e) { if (e.target.closest("a")) setOpen(false); });
       document.addEventListener("keydown", function (e) { if (e.key === "Escape" && head.classList.contains("open")) { setOpen(false); menu.focus(); } });
     }
+    // long trees: scroll the sidebar so the current page is in view
+    var tree = document.querySelector(".doctree"), here = tree && tree.querySelector('a[aria-current="page"]');
+    if (here && tree.scrollHeight > tree.clientHeight) tree.scrollTop = here.offsetTop - tree.offsetTop - tree.clientHeight / 3;
+    // kb tree: +/- opens and closes a folder
+    document.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-tw]"); if (!b) return;
+      var list = b.parentNode.nextElementSibling, open = b.getAttribute("aria-expanded") !== "true";
+      if (list) list.hidden = !open;
+      b.setAttribute("aria-expanded", open ? "true" : "false");
+      b.textContent = open ? "-" : "+";
+      b.setAttribute("aria-label", (open ? "close " : "open ") + b.nextElementSibling.textContent);
+    });
     // Search: Pagefind's index and UI load the first time the search opens
     var dlg = document.querySelector(".search-dlg"), loaded = false;
     var openSearch = function () {
@@ -48,6 +60,11 @@
     document.addEventListener("keydown", function (e) {
       var t = e.target, typing = t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable);
       if (e.key === "/" && !typing && dlg && !dlg.open) { e.preventDefault(); openSearch(); }
+      // [ and ] go to the previous and next note or lesson
+      if ((e.key === "[" || e.key === "]") && !typing && !e.ctrlKey && !e.metaKey && !e.altKey && !(dlg && dlg.open)) {
+        var to = document.querySelector('.pn a[rel="' + (e.key === "[" ? "prev" : "next") + '"]');
+        if (to) location.href = to.href;
+      }
     });
     var btn = document.querySelector("[data-theme-toggle]");
     if (!btn) return;
