@@ -248,3 +248,32 @@ test("the phone's browser bar follows the colour scheme toggle", async ({ page }
   await page.goto("/blog/");
   expect(new Set(await bar())).toEqual(new Set(["#111111"]));
 });
+
+test("switching the theme in one tab switches the other open tabs", async ({ page, context, isMobile }) => {
+  test.skip(isMobile, "same code on phone");
+  await page.goto("/");
+  const other = await context.newPage();
+  await other.goto("/kb/");
+  const before = await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue("--page").trim());
+  await page.locator("[data-theme-toggle]").click();
+  const after = await page.evaluate(() => document.documentElement.dataset.theme);
+  await expect(other.locator("html")).toHaveAttribute("data-theme", after);
+  const bar = await other.evaluate(() => [...document.querySelectorAll('meta[name="theme-color"]')].map((m) => m.content));
+  expect(bar).not.toContain(before);
+});
+
+test("Ctrl+/ does not open the search, / does", async ({ page, isMobile }) => {
+  test.skip(isMobile, "keyboard only");
+  await page.goto("/kb/");
+  await page.keyboard.press("Control+/");
+  await expect(page.locator(".search-dlg")).not.toHaveAttribute("open", "");
+  await page.keyboard.press("/");
+  await expect(page.locator(".search-dlg")).toHaveAttribute("open", "");
+});
+
+test("the gaming handle is not shown as text on the site", async ({ page }) => {
+  for (const path of ["/", "/about/", "/kb/"]) {
+    await page.goto(path);
+    expect(await page.locator("body").innerText()).not.toMatch(/reykime/i);
+  }
+});
