@@ -2,7 +2,7 @@
 
 .view { padding-block: 40px 72px; }
 .view > .wrap { display: grid; gap: 28px; }
-.vhead { display: grid; gap: 12px; max-width: 48rem; }
+.vhead { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; max-width: 48rem; }
 .vhead h1 { font-size: clamp(1.9rem, 4vw, 3rem); }
 .vhead .lede { color: var(--text-2); font-size: 1.08rem; }
 .tag { font: 500 .78rem/1.4 var(--mono); color: var(--brick); text-decoration: none; }
@@ -12,7 +12,7 @@
 .pill.ok { border-color: var(--accent); color: var(--accent); }
 .pill.cur { border-color: var(--brick); color: var(--brick); }
 .metarow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-.crumb { font: 500 .8rem/1.6 var(--mono); color: var(--text-3); }
+.crumb { display: flex; flex-wrap: wrap; align-items: baseline; font: 500 .8rem/1.6 var(--mono); color: var(--text-3); }
 .crumb i { margin-inline: 6px; }
 .crumb a { color: var(--text-2); text-decoration: none; }
 .crumb a:hover { color: var(--brick); }
@@ -225,7 +225,7 @@ div.quiz { display: grid; gap: 10px; border: 1px solid var(--line-2); border-rad
 
 /* kb notes and lessons: tree | text | on this page */
 .docgrid { display: grid; grid-template-columns: 230px minmax(0, 1fr) 190px; gap: 40px; align-items: start; }
-.docmain { display: grid; gap: 24px; min-width: 0; }
+.docmain { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; min-width: 0; }
 .docmain > .vhead { gap: 10px; }
 .doc .title-meta { margin-top: 4px; }
 .doctree, .doctoc { position: sticky; top: 84px; max-height: calc(100vh - 100px); overflow-y: auto; scrollbar-width: thin; }
@@ -309,7 +309,7 @@ button.tag { background: var(--surface); border: 1px solid var(--line-2); border
 .taglist .n { color: var(--text-3); text-align: right; }
 
 /* prose: smaller headings from imported notes, ordered lists, maths */
-.prose-body h4, .prose-body h5, .prose-body h6 { margin: 6px 0 -6px; font: 600 .82rem/1.4 var(--mono); color: var(--text); text-transform: uppercase; letter-spacing: .05em; }
+.prose-body h4, .prose-body h5, .prose-body h6 { margin: 6px 0 -6px; font: 600 .82rem/1.4 var(--mono); color: var(--text); letter-spacing: .02em; }
 .prose-body ol { margin: 0; padding-left: 24px; display: grid; gap: 6px; }
 .prose-body li > ul, .prose-body li > ol { margin-top: 6px; }
 .prose-body hr { border: 0; border-top: 1px dashed var(--line-2); margin: 6px 0; width: 100%; }
@@ -398,3 +398,12 @@ button.tag { background: var(--surface); border: 1px solid var(--line-2); border
 
 /* [[wiki link]] to a note that does not exist (the content check fails the build on these) */
 .wiki-missing { font-style: normal; color: var(--text-3); text-decoration: underline wavy var(--brick); text-underline-offset: .25em; }
+
+/* Long folder paths (cisco/campus/services/multicast/...) have no spaces: let them break on phones */
+.panel { grid-template-columns: minmax(0, 1fr); }
+.panel .lk, .vhead .prompt, .crumb a, .crumb span { overflow-wrap: anywhere; }
+.tgroup, .notelist { grid-template-columns: minmax(0, 1fr); }
+.notelist a b, .tgroup-hd { min-width: 0; overflow-wrap: anywhere; }
+.prose-body { overflow-wrap: break-word; }
+.prose-body a { overflow-wrap: anywhere; }
+.done-row .btn { white-space: normal; text-align: left; line-height: 1.3; }
