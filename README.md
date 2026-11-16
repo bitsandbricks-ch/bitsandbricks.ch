@@ -66,6 +66,9 @@ link, a leaked secret or a broken reader feature fails the check.
 
 - **Cheat sheets:** folders whose notes have code blocks get `/kb/<folder>/commands/` with every
   snippet on one page (made for printing).
+- **Cisco IOS code:** kb code blocks that look like IOS (or are fenced as ```` ```cisco ````) get
+  prompts, `!` comments, show/debug/no and `<placeholders>` marked at build time
+  (`src/lib/kb-ios.mjs`). Fence other output as ```` ```text ```` to keep it plain.
 - **Moving a note:** move the file, then add `"old path": "new path"` to `src/redirects.json` so
   links from elsewhere keep working.
 - **Callouts:** `> [!note]`, `> [!warning]`, `> [!info]` as the first line of a quote in a kb note.
