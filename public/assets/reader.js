@@ -115,6 +115,8 @@
   function copyButtons() {
     document.querySelectorAll(".prose-body pre").forEach(function (pre) {
       if (pre.parentNode.classList.contains("pre-wrap") || !navigator.clipboard) return;
+      // wide code scrolls sideways, so keyboard users must be able to focus it
+      if (pre.scrollWidth > pre.clientWidth) { pre.tabIndex = 0; pre.setAttribute("aria-label", "code, scrolls sideways"); }
       var wrap = document.createElement("div"); wrap.className = "pre-wrap";
       pre.parentNode.insertBefore(wrap, pre); wrap.appendChild(pre);
       var b = document.createElement("button");
