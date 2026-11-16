@@ -8,6 +8,20 @@ index: no
 <section class="page-hero"><div class="wrap prose">
   <p class="label">404</p>
   <h1>Missing brick.</h1>
-  <p class="lede">There's nothing at this address. Try the <a href="/">start page</a>.</p>
+  <pre class="lost-cli" aria-label="Router output: this address is not in the routing table"><b>$</b> show ip route <span id="lost-path">this-page</span>
+% Network not in table</pre>
+  <p class="lede">There's nothing at this address. Maybe it moved, or the link has a typo.</p>
+  <div id="lost" class="lost" hidden>
+    <p class="prompt"><b>$</b> show ip route longer-prefixes</p>
+    <p>Pages with similar words:</p>
+    <ul id="lost-list"></ul>
+  </div>
+  <div class="btns">
+    <a class="btn btn-p" href="/">start page</a>
+    <a class="btn btn-s" href="/kb/">kb</a>
+    <a class="btn btn-s" href="/blog/">blog</a>
+    <a class="btn btn-s" href="/courses/">courses</a>
+  </div>
 </div></section>
+<script src="/assets/lost.js" defer></script>
 </main>
