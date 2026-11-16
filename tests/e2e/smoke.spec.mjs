@@ -228,3 +228,11 @@ test("saving in two tabs keeps both, and the other tab's star follows", async ({
   await other.locator(`#saved-list [data-save="${a}"]`).click();
   await expect(page.locator(".title-meta [data-save]")).toHaveAttribute("aria-pressed", "false");
 });
+
+test("404 page copes with a broken %-escape in the address", async ({ page }) => {
+  const errors = [];
+  page.on("pageerror", (e) => errors.push(String(e)));
+  await page.goto("/kb/ospf%E0%A4%A/");
+  await expect(page.locator("#lost-path")).toContainText("/kb/ospf");
+  expect(errors).toEqual([]);
+});
