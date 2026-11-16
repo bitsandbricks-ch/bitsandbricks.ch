@@ -8,6 +8,13 @@
     if (c) document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) { m.content = c; });
   };
   if (saved === "light" || saved === "dark") { root.dataset.theme = saved; bar(); }
+  // switched in another tab: follow it, so open tabs don't disagree
+  addEventListener("storage", function (e) {
+    if (e.key !== "bb_theme") return;
+    if (e.newValue === "light" || e.newValue === "dark") root.dataset.theme = e.newValue;
+    else delete root.dataset.theme;
+    bar();
+  });
   document.addEventListener("DOMContentLoaded", function () {
     // Phone menu: the nav drops down under the header
     var menu = document.querySelector("[data-menu-toggle]"), head = document.querySelector(".site-head");
@@ -72,8 +79,9 @@
       });
     }
     document.addEventListener("keydown", function (e) {
-      var t = e.target, typing = t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable);
-      if (e.key === "/" && !typing && dlg && !dlg.open) { e.preventDefault(); openSearch(); }
+      var t = e.target, typing = t && (/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName) || t.isContentEditable);
+      // Ctrl+/ and friends belong to the browser and screen readers
+      if (e.key === "/" && !typing && !e.ctrlKey && !e.metaKey && !e.altKey && dlg && !dlg.open) { e.preventDefault(); openSearch(); }
       // [ and ] go to the previous and next note or lesson
       if ((e.key === "[" || e.key === "]") && !typing && !e.ctrlKey && !e.metaKey && !e.altKey && !(dlg && dlg.open)) {
         var to = document.querySelector('.pn a[rel="' + (e.key === "[" ? "prev" : "next") + '"]');
