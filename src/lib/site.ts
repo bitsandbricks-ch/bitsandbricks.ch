@@ -2,7 +2,7 @@
 // Ported from the old tools/build.py so the existing pages render the same.
 
 export const SITE = "https://bitsandbricks.ch";
-export const NAME = "Bits & Bricks";
+export const NAME = "BitsAndBricks";
 export const GITHUB = "https://github.com/reykimedev";
 export const LINKEDIN = "https://www.linkedin.com/in/mike-keller-181827253/";
 export const MAIL = "mike@cheller.dev";
