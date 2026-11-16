@@ -89,15 +89,22 @@ figcaption b { color: var(--brick); font-weight: 600; }
 .panel h4 { margin: 0; font: 600 .74rem/1.4 var(--mono); color: var(--text-3); text-transform: uppercase; letter-spacing: .07em; }
 .panel a.lk { font: 500 .86rem/1.4 var(--mono); color: var(--text-2); text-decoration: none; }
 .panel a.lk:hover { color: var(--brick); }
-.graph { width: 100%; height: auto; display: block; }
-.graph line { stroke: var(--line-2); stroke-width: 1.2; }
-.graph circle { fill: var(--brick); cursor: pointer; }
-.graph circle.tagn { fill: var(--surface); stroke: var(--text-3); stroke-width: 1.4; }
-.graph circle.me { fill: var(--btn); }
-.graph circle.dim { opacity: .25; }
-.graph text { font: 500 10px var(--mono); fill: var(--text-2); pointer-events: none; }
-.graph g.nd:hover circle { stroke: var(--text); stroke-width: 2; }
-.graph g.nd:hover text { fill: var(--text); }
+.graph { width: 100%; height: auto; display: block; overflow: visible; }
+.graph line { stroke: var(--line-2); stroke-width: 1.4; }
+.graph line.tree { stroke-dasharray: 3 3; stroke-width: 1; }
+.graph circle { fill: var(--brick); }
+.graph rect { fill: var(--surface); stroke: var(--brick); stroke-width: 1.6; }
+.graph .me circle { fill: var(--btn); stroke: var(--text); stroke-width: 1.5; }
+.graph .dim { opacity: .18; }
+.graph .hl circle { stroke: var(--text); stroke-width: 1.5; }
+.graph text { font: 500 10px var(--mono); fill: var(--text-2); pointer-events: none; paint-order: stroke; stroke: var(--surface); stroke-width: 3px; stroke-linejoin: round; }
+.graph .dir text { fill: var(--text); font-weight: 600; }
+.graph.quiet .note text { display: none; }
+.graph.quiet .me text { display: inline; }
+.graph .hl circle { r: 5px; }
+.graph a.nd:hover text, .graph a.nd:focus-visible text { display: inline; fill: var(--text); }
+.graph a.nd:hover circle, .graph a.nd:focus-visible circle, .graph a.nd:hover rect, .graph a.nd:focus-visible rect { stroke: var(--text); stroke-width: 2; }
+.graph a.nd:focus-visible { outline: none; }
 .graphbox { border: 1px solid var(--line-2); border-radius: 6px; background: var(--surface); }
 .cats { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
 .cat { border: 1px solid var(--line-2); border-radius: 6px; background: var(--surface); padding: 14px 16px; text-decoration: none; color: var(--text); display: grid; gap: 4px; }
@@ -231,6 +238,10 @@ div.quiz { display: grid; gap: 10px; border: 1px solid var(--line-2); border-rad
 .doctree a[aria-current], .menu-tree a[aria-current] { background: var(--surface-2); color: var(--text); font-weight: 600; }
 .doctree a[aria-current]::before, .menu-tree a[aria-current]::before { content: "> "; color: var(--brick); }
 .doctree summary, .menu-tree summary { cursor: pointer; list-style: none; padding: 5px 4px; color: var(--text); font-weight: 600; }
+.doctree summary a.dirlink, .menu-tree summary a.dirlink { display: inline; padding: 0; color: var(--text); background: none; }
+.doctree summary a.dirlink:hover, .menu-tree summary a.dirlink:hover { color: var(--brick); text-decoration: underline; }
+.doctree summary a.dirlink[aria-current]::before, .menu-tree summary a.dirlink[aria-current]::before { content: none; }
+.doctree summary a.dirlink[aria-current], .menu-tree summary a.dirlink[aria-current] { color: var(--brick); }
 .doctree summary::-webkit-details-marker, .menu-tree summary::-webkit-details-marker { display: none; }
 .doctree summary::before, .menu-tree summary::before { content: "+ "; color: var(--brick); }
 .doctree details[open] > summary::before, .menu-tree details[open] > summary::before { content: "- "; }
@@ -275,3 +286,24 @@ div.quiz { display: grid; gap: 10px; border: 1px solid var(--line-2); border-rad
 #search .pagefind-ui__result-link { color: var(--brick); }
 #search .pagefind-ui__result-excerpt { color: var(--text-2); }
 #search mark { background: color-mix(in srgb, var(--brick) 22%, transparent); color: var(--text); }
+
+/* tag buttons on the graph page, counts next to tags */
+.tag .count { color: var(--text-3); font-weight: 400; }
+button.tag { background: var(--surface); border: 1px solid var(--line-2); border-radius: 4px; padding: 4px 8px; cursor: pointer; }
+#gtags .tag[aria-pressed="true"] { background: var(--brick); border-color: var(--brick); color: var(--page); }
+#gtags .tag[aria-pressed="true"] .count { color: var(--page); }
+.gstat { font: 500 .82rem/1.4 var(--mono); color: var(--text-3); min-height: 1.4em; margin: 0; }
+
+/* tag pages */
+.tgroup { display: grid; gap: 8px; }
+.tgroup-hd { font: 600 .82rem/1.4 var(--mono); letter-spacing: 0; color: var(--text-3); }
+.tgroup-hd a { color: var(--text-2); text-decoration: none; }
+.tgroup-hd a:hover { color: var(--brick); }
+.tgroup-hd span { color: var(--text-3); font-weight: 400; margin-left: 6px; }
+.taglist { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 0 24px; border-top: 1px solid var(--line); }
+.taglist a { display: grid; grid-template-columns: minmax(0, 9rem) minmax(0, 1fr) 2.5rem; align-items: center; gap: 10px; padding: 9px 2px; border-bottom: 1px solid var(--line); text-decoration: none; color: var(--brick); font: 500 .86rem/1.3 var(--mono); }
+.taglist a:hover b { text-decoration: underline; }
+.taglist b { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.taglist .tbar { height: 6px; background: var(--surface-2); border-radius: 1px; position: relative; }
+.taglist .tbar::before { content: ""; position: absolute; inset: 0 auto 0 0; width: var(--w); background: var(--brick); border-radius: 1px; }
+.taglist .n { color: var(--text-3); text-align: right; }

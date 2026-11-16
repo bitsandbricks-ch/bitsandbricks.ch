@@ -1,9 +1,18 @@
 ---
+// Every kb note, plus an overview page for every folder (/kb/a/b/ lists what is in a/b/).
 import DocPage from "../../components/docs/DocPage.astro";
-import { allDocs, type Doc } from "../../lib/content";
+import FolderPage from "../../components/docs/FolderPage.astro";
+import { allDocs, foldersOf, type Doc } from "../../lib/content";
 export async function getStaticPaths() {
-  return (await allDocs()).filter((d) => d.id.startsWith("kb/")).map((doc) => ({ params: { slug: doc.id.slice(3) }, props: { doc } }));
+  const notes = (await allDocs()).filter((d) => d.id.startsWith("kb/"));
+  const ids = new Set(notes.map((n) => n.id));
+  // a folder whose path is also a note (folder/index.md) keeps the note
+  const folders = foldersOf(notes.map((n) => n.id)).filter((f) => f !== "kb" && !ids.has(f));
+  return [
+    ...notes.map((doc) => ({ params: { slug: doc.id.slice(3) }, props: { doc } })),
+    ...folders.map((folder) => ({ params: { slug: folder.slice(3) }, props: { folder } })),
+  ];
 }
-const { doc } = Astro.props as { doc: Doc };
+const { doc, folder } = Astro.props as { doc?: Doc; folder?: string };
 ---
-<DocPage doc={doc} />
+{doc ? <DocPage doc={doc} /> : <FolderPage id={folder!} />}

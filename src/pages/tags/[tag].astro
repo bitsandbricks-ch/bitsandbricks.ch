@@ -1,21 +1,37 @@
 ---
+// One tag: kb notes grouped by folder, then lessons, then blog posts.
 import Site from "../../layouts/Site.astro";
-import { tagIndex, url } from "../../lib/content";
+import { tagIndex, url, parentOf, type Doc } from "../../lib/content";
+import { day } from "../../lib/blog";
 export async function getStaticPaths() {
   const tags = await tagIndex();
   return [...tags.entries()].map(([tag, v]) => ({ params: { tag }, props: { tag, v } }));
 }
-const { tag, v } = Astro.props as any;
-const fmt = (d: Date) => d.toISOString().slice(0, 10);
+type V = Awaited<ReturnType<typeof tagIndex>> extends Map<string, infer X> ? X : never;
+const { tag, v } = Astro.props as { tag: string; v: V };
+const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
+const notes = v.docs.filter((d) => d.id.startsWith("kb/"));
+const lessons = v.docs.filter((d) => d.id.startsWith("courses/"));
+const byFolder = new Map<string, Doc[]>();
+for (const n of [...notes].sort((a, b) => a.id.localeCompare(b.id))) byFolder.set(parentOf(n.id), [...(byFolder.get(parentOf(n.id)) ?? []), n]);
+const posts = [...v.posts].sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const summary = [notes.length && plural(notes.length, "kb note", "kb notes"), lessons.length && plural(lessons.length, "lesson", "lessons"), posts.length && plural(posts.length, "blog post", "blog posts")].filter(Boolean).join(", ");
 ---
 <Site title={`#${tag}`} description={`Notes, lessons and posts tagged ${tag}.`} path={`/tags/${tag}/`}>
 <main id="main" class="view"><div class="wrap">
+  <nav class="crumb" aria-label="Breadcrumb"><a href="/tags/">tags</a><i>&gt;</i><span aria-current="page">#{tag}</span></nav>
   <div class="vhead">
     <p class="prompt"><b>$</b> <i>show tag {tag}</i></p>
     <h1>#{tag}</h1>
-    <p class="lede">{v.docs.length} notes and lessons, {v.posts.length} posts.</p>
+    <p class="lede">{summary}.{notes.length > 0 && <> <a href={`/kb/graph/?tag=${encodeURIComponent(tag)}`}>Show them in the graph</a>.</>}</p>
   </div>
-  {v.docs.length > 0 && <div class="notelist">{v.docs.map((d: any) => <a href={url(d.id)}><b>{d.data.title}</b><span>{d.id.split("/").slice(0, -1).join("/")}</span></a>)}</div>}
-  {v.posts.length > 0 && <div class="notelist">{v.posts.map((p: any) => <a href={`/blog/${p.id}/`}><b>{p.data.title}</b><span>blog · {fmt(p.data.date)}</span></a>)}</div>}
+  {[...byFolder.entries()].map(([folder, list]) => (
+    <section class="tgroup">
+      <h2 class="tgroup-hd"><a href={url(folder)}>{folder}/</a> <span>{list.length}</span></h2>
+      <div class="notelist">{list.map((d) => <a href={url(d.id)}><b>{d.data.title}</b>{d.data.description && <span>{d.data.description}</span>}</a>)}</div>
+    </section>
+  ))}
+  {lessons.length > 0 && <section class="tgroup"><h2 class="tgroup-hd">courses <span>{lessons.length}</span></h2><div class="notelist">{lessons.map((d) => <a href={url(d.id)}><b>{d.data.title}</b><span>{d.id.split("/").slice(1, -1).join("/")}</span></a>)}</div></section>}
+  {posts.length > 0 && <section class="tgroup"><h2 class="tgroup-hd">blog <span>{posts.length}</span></h2><div class="notelist">{posts.map((p) => <a href={`/blog/${p.id}/`}><b>{p.data.title}</b><span>{day(p.data.date)}</span></a>)}</div></section>}
 </div></main>
 </Site>

@@ -1,0 +1,52 @@
+---
+// A kb folder: its sub-folders and the notes directly in it. /kb/a/b/ lists /kb/a/b/c/ and
+// /kb/a/b/d/. The tree on the left opens at this folder.
+import Site from "../../layouts/Site.astro";
+import Tags from "../Tags.astro";
+import DocTree from "./DocTree.astro";
+import { allDocs, kbNotes, buildTree, folderInfo, url, short } from "../../lib/content";
+
+interface Props { id: string }
+const { id } = Astro.props;
+const notes = await kbNotes();
+const f = folderInfo(notes, id);
+const tree = buildTree(await allDocs(), "kb");
+const parts = id.split("/");
+const crumb: [string, string?][] = [["kb", "/kb/"], ...parts.slice(1, -1).map((p, i): [string, string] => [p, url(parts.slice(0, i + 2).join("/"))]), [parts[parts.length - 1]]];
+const path = url(id);
+const name = short(id);
+// tags used in this folder and below, most used first
+const tagCount = new Map<string, number>();
+notes.filter((n) => n.id.startsWith(id + "/")).forEach((n) => n.data.tags.forEach((t) => tagCount.set(t, (tagCount.get(t) ?? 0) + 1)));
+const topTags = [...tagCount.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, 12).map(([t]) => t);
+---
+<Site title={`${name}/`} description={`Knowledge base notes in ${id.slice(3)}/: ${f.total} notes.`} path={path}>
+  <div slot="menu" class="menu-tree"><p class="label">kb/</p><DocTree items={tree} current={id} /></div>
+  <main id="main" class="view doc"><div class="wrap docgrid">
+    <nav class="doctree" aria-label="Knowledge base">
+      <a class="label" href="/kb/">kb/</a>
+      <DocTree items={tree} current={id} />
+    </nav>
+    <div class="docmain">
+      <div class="vhead">
+        <nav class="crumb" aria-label="Breadcrumb">{crumb.map(([label, href], i) => <>{i > 0 && <i>&gt;</i>}{href ? <a href={href}>{label}</a> : <span aria-current="page">{label}</span>}</>)}</nav>
+        <p class="prompt"><b>$</b> <i>ls {id.slice(3)}/</i></p>
+        <h1>{name}/</h1>
+        <p class="lede">{f.total} {f.total === 1 ? "note" : "notes"}{f.dirs.length ? ` in ${f.dirs.length} ${f.dirs.length === 1 ? "folder" : "folders"}${f.notes.length ? ` and ${f.notes.length} here` : ""}` : ""}.</p>
+        {topTags.length > 0 && <Tags tags={topTags} />}
+      </div>
+      {f.dirs.length > 0 && (
+        <div class="cats">
+          {f.dirs.map((d) => { const sub = folderInfo(notes, d); return (
+            <a class="cat" href={url(d)}><b>{short(d)}/</b><span>{sub.total} {sub.total === 1 ? "note" : "notes"}{sub.dirs.length ? " · " + sub.dirs.map(short).join(", ") : ""}</span></a>
+          ); })}
+        </div>
+      )}
+      {f.notes.length > 0 && (
+        <div class="notelist">
+          {f.notes.map((n) => <a href={url(n.id)}><b>{n.data.title}</b>{n.data.description && <span>{n.data.description}</span>}</a>)}
+        </div>
+      )}
+    </div>
+  </div></main>
+</Site>

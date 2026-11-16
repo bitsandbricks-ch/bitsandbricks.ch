@@ -38,9 +38,11 @@ Pushing to `main` builds and publishes. Pull requests build too, so broken links
 - **Blog post:** add `src/content/blog/<slug>.md` with `title`, `summary`, `date`, `facility`
   (shown as `%HOMELAB-5-POST`), `tags`. `severity: 6` makes it a short note, `draft: true` hides it.
 - **KB note:** add a `.md` file anywhere under `src/content/docs/kb/`. Folders become the sidebar
-  tree. Frontmatter: `title`, `description`, `tags`, `verified: "2026-11"`. Link other notes with
-  normal Markdown links (`/kb/routing/bgp/bgp-basics/` or `../lsa-types/`); backlinks and the graph
-  are built from those links.
+  tree, and every folder gets its own overview page at build time (`/kb/a/b/` lists the notes and
+  sub-folders in `a/b/`), so there is nothing to create by hand. Frontmatter: `title`,
+  `description`, `tags`, `verified: "2026-11"`. Link other notes with normal Markdown links
+  (`/kb/routing/bgp/bgp-basics/` or `../lsa-types/`); backlinks are built from those links. The graph
+  at `/kb/graph/` shows every note under its folder plus those links; `/tags/` lists every tag.
 - **Course:** a folder under `src/content/docs/courses/` with an `index.md` (`course: { path, slot,
   summary }`) and section folders with lessons (`sidebar.order` sets the order, `quiz: true` for
   quizzes). Learning paths are listed in `PATHS` in `src/lib/content.ts`. Every lesson has
