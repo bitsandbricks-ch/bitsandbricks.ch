@@ -232,6 +232,8 @@ test("saving in two tabs keeps both, and the other tab's star follows", async ({
 test("404 page copes with a broken %-escape in the address", async ({ page }) => {
   const errors = [];
   page.on("pageerror", (e) => errors.push(String(e)));
+  // the preview server itself fails on this address (GitHub Pages serves 404.html), so hand the page over directly
+  await page.route("**/kb/ospf%E0%A4%A/", (r) => r.fulfill({ status: 404, path: "dist/404.html", contentType: "text/html" }));
   await page.goto("/kb/ospf%E0%A4%A/");
   await expect(page.locator("#lost-path")).toContainText("/kb/ospf");
   expect(errors).toEqual([]);
