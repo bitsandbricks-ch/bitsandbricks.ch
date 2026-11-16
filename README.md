@@ -32,6 +32,8 @@ npm run preview   # serve dist/ (search only works here, not in npm run dev)
 npm test          # unit tests (kb helpers, secrets check), plain node --test
 npm run test:e2e  # browser smoke tests against dist/ (after npm run build)
 npm run check:content   # list content warnings: stubs, duplicate titles, #todo-style tag lines
+npm run new -- note cisco/campus/routing/ospf "OSPF LSA Types"   # new kb note, frontmatter filled in
+npm run new -- post "Title of the post" --tags homelab,opnsense   # new blog post (starts as draft: true)
 ```
 
 The build stops when a Markdown file looks like it holds a password, token, private key, shell
