@@ -73,10 +73,6 @@ link, a leaked secret or a broken reader feature fails the check.
 - **Cisco IOS code:** kb code blocks that look like IOS (or are fenced as ```` ```cisco ````) get
   prompts, `!` comments, show/debug/no and `<placeholders>` marked at build time
   (`src/lib/kb-ios.mjs`). Fence other output as ```` ```text ```` to keep it plain.
-- **Images:** put the file next to the note (`ospf/lsa-types.png`) and write
-  `![What it shows](./lsa-types.png)`. The build turns it into a resized WebP with width and
-  height set; a missing file fails the build, and an image from another site fails the site check.
-  Alt text is required (it is what a screen reader says); `npm run build` fails without it.
 - **Wiki links:** `[[ospf-packets]]` or `[[OSPF Packets]]` links to a kb note by its file name or
   title, from notes, lessons and blog posts. `[[ospf-packets#Hello packet]]` jumps to a heading,
   `[[ospf-packets|the packets]]` sets the text, `[[bgp/timers]]` picks one of two notes with the same

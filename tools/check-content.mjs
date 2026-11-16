@@ -1,8 +1,7 @@
 // Before the build: check every Markdown file in src/content.
 //   errors (fail the build): secrets, private addresses or shell history (see lib/safety.mjs),
 //                            broken frontmatter, a missing title, a "# " heading (h1),
-//                            a [[wiki link]] that names no kb note,
-//                            an image without alt text
+//                            a [[wiki link]] that names no kb note
 //   warnings (printed):      duplicate titles, stub notes, "#todo"-style tag lines, titles like "X - X"
 // node tools/check-content.mjs [--quiet]   (--quiet: only the warning count)
 import { readdirSync, readFileSync, statSync } from "node:fs";
@@ -35,7 +34,6 @@ for (const file of files) {
   if (!fm.title) errors.push(`${rel}: no title`);
   for (const s of secrets(m[1] + "\n" + body, fm)) errors.push(`${rel}: looks like ${s}`);
   if (/^# \S/m.test(body.replace(/```[\s\S]*?```/g, ""))) errors.push(`${rel}: has a "# " heading; the title is the page's only h1, start at "## "`);
-  if (/!\[\s*\]\(/.test(body.replace(/```[\s\S]*?```/g, ""))) errors.push(`${rel}: an image without alt text (![what it shows](./file.png))`);
   for (const w of wikiLinks(body)) {
     if (!resolveWiki(wiki, w.target)) errors.push(`${rel}: ${w.raw} names no note${wiki.map.get(w.target.toLowerCase()) === null ? " (several notes match, use the folder path: [[folder/name]])" : ""}`);
   }
