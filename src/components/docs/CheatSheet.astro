@@ -18,7 +18,7 @@ const path = url(id) + "commands/";
   <div class="vhead">
     <p class="prompt"><b>$</b> <i>show running-config | section {short(id)}</i></p>
     <h1>Commands in {short(id)}/</h1>
-    <p class="lede">{total} {total === 1 ? "snippet" : "snippets"} from {groups.length} {groups.length === 1 ? "note" : "notes"}, in tree order. Each heading links to its note. <button class="linkbtn" type="button" onclick="print()">Print it</button> for a cheat sheet.</p>
+    <p class="lede">{total} {total === 1 ? "snippet" : "snippets"} from {groups.length} {groups.length === 1 ? "note" : "notes"}, in tree order. Each heading links to its note. <button class="linkbtn" type="button" data-print>Print it</button> for a cheat sheet.</p>
   </div>
   {groups.length === 0 && <div class="empty">No code blocks in this folder yet.</div>}
   {groups.map(({ n, blocks }) => (

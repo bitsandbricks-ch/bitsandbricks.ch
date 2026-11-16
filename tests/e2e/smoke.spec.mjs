@@ -159,3 +159,22 @@ test("404 suggests pages with words from the address", async ({ page }) => {
   await expect(page.locator("#lost-path")).toHaveText("/kb/ospf-authentification/");
   await expect(page.locator('#lost-list a[href="/kb/cisco/campus/routing/ospf/ospf-authentication/"]')).toBeVisible();
 });
+
+test("nothing is blocked by the Content-Security-Policy", async ({ page, isMobile }) => {
+  test.skip(isMobile, "same pages on phone");
+  const blocked = [];
+  page.on("console", (m) => { if (/Content Security Policy|Refused to/i.test(m.text())) blocked.push(m.text()); });
+  for (const path of ["/", "/kb/graph/?tag=ospf", "/blog/", "/tags/", "/kb/cisco/campus/routing/commands/", "/courses/subnetting/3-check/quiz/", "/nope/"]) {
+    await page.goto(path);
+    await page.waitForLoadState("networkidle");
+  }
+  await page.keyboard.press("/");
+  await page.locator(".search-dlg input").fill("bgp");
+  await expect(page.locator(".pagefind-ui__result").first()).toBeVisible({ timeout: 10_000 });
+  await page.goto("/blog/");
+  await page.locator("#q").fill("ospf");
+  await expect(page.locator("#loglist .row:not([hidden])")).not.toHaveCount(0);
+  await page.goto("/kb/graph/?tag=ospf");
+  await expect(page.locator("#gstat")).toContainText("#ospf");
+  expect(blocked).toEqual([]);
+});

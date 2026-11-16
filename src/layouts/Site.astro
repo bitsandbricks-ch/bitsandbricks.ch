@@ -14,6 +14,10 @@ const url = SITE + path;
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+{/* Everything loads from this site; the only exception is Giscus, after a reader clicks "load comments".
+    wasm-unsafe-eval: Pagefind search runs as WebAssembly. Inline styles: the graph and some pages use style="". */}
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://giscus.app; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src https://giscus.app; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>{pageTitle}</title>
 <meta name="description" content={description}>
 {noindex && <meta name="robots" content="noindex">}

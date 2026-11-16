@@ -141,9 +141,50 @@
     });
   }
 
+  // Page bits that used to be inline scripts (the Content-Security-Policy allows no inline code)
+  function filter(input, items, key) {
+    var box = document.getElementById(input);
+    if (!box) return;
+    box.addEventListener("input", function () {
+      var q = box.value.trim().toLowerCase();
+      document.querySelectorAll(items).forEach(function (r) { r.hidden = !!q && r.dataset[key].indexOf(q) < 0; });
+    });
+  }
+
+  function graph() {
+    var fg = document.getElementById("fullgraph"), stat = document.getElementById("gstat"), tags = document.getElementById("gtags"), cur = "";
+    if (!fg || !stat || !tags) return;
+    fg.scrollLeft = (fg.scrollWidth - fg.clientWidth) / 2;
+    function pick(t) {
+      cur = t;
+      var n = 0;
+      fg.querySelectorAll("a.nd").forEach(function (a) {
+        if (a.classList.contains("dir")) { a.classList.toggle("dim", !!cur); return; }
+        var hit = !!cur && (" " + a.dataset.tags + " ").indexOf(" " + cur + " ") >= 0;
+        if (hit) n++;
+        a.classList.toggle("hl", hit);
+        a.classList.toggle("dim", !!cur && !hit);
+      });
+      tags.querySelectorAll("[data-hl]").forEach(function (x) { x.setAttribute("aria-pressed", x.dataset.hl === cur ? "true" : "false"); });
+      stat.textContent = "";
+      if (cur) {
+        var a = document.createElement("a"); a.href = "/tags/" + encodeURIComponent(cur) + "/"; a.textContent = "List them";
+        stat.append(n + " notes tagged #" + cur + ", lit up below. ", a, " or click the tag again to clear.");
+      }
+    }
+    tags.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-hl]"); if (b) pick(cur === b.dataset.hl ? "" : b.dataset.hl);
+    });
+    // /kb/graph/?tag=ospf opens with that tag lit
+    var t = new URLSearchParams(location.search).get("tag");
+    if (t && tags.querySelector('[data-hl="' + CSS.escape(t) + '"]')) pick(t);
+  }
+
   function init() {
     document.querySelectorAll("[data-save]").forEach(paintSave);
     paintProgress(); renderSaved(); anchors(); copyButtons(); quizzes();
+    filter("q", "#loglist .row", "s"); filter("tq", "#taglist a", "t"); graph();
+    document.querySelectorAll("[data-print]").forEach(function (b) { b.addEventListener("click", function () { window.print(); }); });
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();

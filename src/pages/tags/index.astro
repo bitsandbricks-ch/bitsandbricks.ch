@@ -15,11 +15,5 @@ const max = Math.max(1, ...tags.map((x) => x.n));
   <div class="taglist" id="taglist">
     {tags.map(({ t, n }) => <a href={`/tags/${t}/`} data-t={t}><b>#{t}</b><span class="tbar" style={`--w:${Math.round((n / max) * 100)}%`}></span><span class="n">{n}</span></a>)}
   </div>
-  <script is:inline>
-    document.getElementById("tq").addEventListener("input", function (e) {
-      var q = e.target.value.trim().toLowerCase();
-      document.querySelectorAll("#taglist a").forEach(function (a) { a.hidden = !!q && a.dataset.t.indexOf(q) < 0; });
-    });
-  </script>
 </div></main>
 </Site>
