@@ -337,3 +337,11 @@ code { font-size: .86em; background: var(--surface-2); border: 1px solid var(--l
 .slot-on h3 a:hover { color: var(--brick); }
 .slot-on { position: relative; }
 .slot-on h3 a::before { content: ""; position: absolute; inset: 0; }
+
+/* 404 */
+.lost-cli { margin: 18px 0 20px; padding: 12px 14px; border-left: 2px solid var(--brick); background: var(--surface-2); font: 500 .9rem/1.6 var(--mono); color: var(--text-2); white-space: pre-wrap; overflow-wrap: anywhere; }
+.lost-cli b { color: var(--brick); }
+.lost { margin: 18px 0 24px; }
+.lost ul { list-style: none; padding: 0; margin: 8px 0 0; display: grid; gap: 6px; }
+.lost li { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; }
+.lost-url { font: 400 .78rem/1.4 var(--mono); color: var(--text-3); overflow-wrap: anywhere; }
