@@ -1,7 +1,7 @@
 // Unit tests for the pure kb helpers. Run: npm test (node --test, no extra dependencies).
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { url, buildTree, flatTree, linksOf, foldersOf, folderInfo, branchPoint, radial, layout, related, parentOf, type Doc } from "../src/lib/kb-core.ts";
+import { url, buildTree, flatTree, linksOf, wikiOf, foldersOf, folderInfo, branchPoint, radial, layout, related, parentOf, type Doc } from "../src/lib/kb-core.ts";
 
 const doc = (id: string, opts: { title?: string; tags?: string[]; order?: number; body?: string } = {}): Doc => ({
   id, body: opts.body ?? "", data: { title: opts.title ?? id.split("/").pop()!, tags: opts.tags ?? [], sidebar: { order: opts.order } },
@@ -30,6 +30,12 @@ test("linksOf resolves absolute, relative, .md and anchors, skips outside links 
   const ids = new Set(["kb/r/ospf/lsa", "kb/r/ospf/areas", "kb/r/bgp/basics", "kb/s/stp"]);
   const d = doc("kb/r/ospf/areas", { body: "[a](../bgp/basics/) [b](./lsa.md#types) [c](/kb/s/stp/) [d](https://example.com/kb/s/stp/) [e](lsa) [self](./areas/) [gone](../nope/)" });
   assert.deepEqual(linksOf(d, ids).sort(), ["kb/r/bgp/basics", "kb/r/ospf/lsa", "kb/s/stp"]);
+});
+
+test("linksOf counts [[wiki links]] by file name or title", () => {
+  const notes = [doc("kb/r/ospf/lsa", { title: "LSA Types" }), doc("kb/r/ospf/areas", { body: "[[LSA types]] [[areas]] [[nope]]" })];
+  const ids = new Set(notes.map((n) => n.id));
+  assert.deepEqual(linksOf(notes[1], ids, wikiOf(notes)), ["kb/r/ospf/lsa"]);
 });
 
 test("folders: every level, direct children and branch point", () => {

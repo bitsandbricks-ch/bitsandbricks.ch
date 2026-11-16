@@ -2,6 +2,8 @@
 // imports, so tools/test can run them with plain Node (node --test).
 
 /** What these helpers need from a kb note or lesson (a subset of the docs collection entry). */
+import { wikiLinks, wikiIndex, resolveWiki } from "../../tools/lib/wikilinks.mjs";
+
 export interface Doc { id: string; body?: string; data: { title: string; description?: string; tags: string[]; sidebar: { order?: number } } }
 
 export const url = (id: string) => "/" + id.replace(/\/index$/, "") + "/";
@@ -40,9 +42,13 @@ export const flatTree = (items: TreeItem[]): TreeLink[] => items.flatMap((i) => 
 
 
 /** Markdown links from one doc to other docs, as doc ids. Handles /kb/x/ and relative ../x links. */
-export function linksOf(doc: Doc, ids: Set<string>): string[] {
+export function linksOf(doc: Doc, ids: Set<string>, wiki?: ReturnType<typeof wikiIndex>): string[] {
   const out = new Set<string>();
   const body = doc.body ?? "";
+  if (wiki) for (const w of wikiLinks(body)) {
+    const id = resolveWiki(wiki, w.target);
+    if (id && id !== doc.id) out.add(id);
+  }
   const base = doc.id.split("/").slice(0, -1);
   for (const m of body.matchAll(/\]\(([^)\s#]+)(?:#[^)]*)?\)/g)) {
     let href = m[1];
@@ -62,6 +68,9 @@ export function linksOf(doc: Doc, ids: Set<string>): string[] {
   return [...out];
 }
 
+
+/** The [[wiki link]] lookup for a set of notes (pass it to linksOf) */
+export const wikiOf = (notes: Doc[]) => wikiIndex(notes.map((n) => ({ id: n.id, title: n.data.title })));
 
 /** Short node name: the file name of the note */
 export const short = (id: string) => id.split("/").pop()!;

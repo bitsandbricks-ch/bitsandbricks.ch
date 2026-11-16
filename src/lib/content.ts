@@ -1,7 +1,7 @@
 // Build-time helpers for the kb and courses: links between notes, backlinks, tags, the graph
 // layout, and course structure. Everything is worked out from the Markdown files at build time.
 import { getCollection, type CollectionEntry } from "astro:content";
-import { url, buildTree, flatTree, linksOf, short, parentOf, foldersOf, folderInfo, branchPoint, layout, radial, sectionLabel, related, type GNode, type GEdge } from "./kb-core";
+import { url, buildTree, flatTree, linksOf, wikiOf, short, parentOf, foldersOf, folderInfo, branchPoint, layout, radial, sectionLabel, related, type GNode, type GEdge } from "./kb-core";
 export * from "./kb-core";
 
 export type Doc = CollectionEntry<"docs">;
@@ -20,8 +20,9 @@ export async function noteGraph(): Promise<NoteGraph> {
   const ids = new Set(notes.map((n) => n.id));
   const links = new Map<string, string[]>(), back = new Map<string, string[]>();
   notes.forEach((n) => back.set(n.id, []));
+  const wiki = wikiOf(notes);
   for (const n of notes) {
-    const l = linksOf(n, ids);
+    const l = linksOf(n, ids, wiki);
     links.set(n.id, l);
     l.forEach((t) => back.get(t)!.push(n.id));
   }
