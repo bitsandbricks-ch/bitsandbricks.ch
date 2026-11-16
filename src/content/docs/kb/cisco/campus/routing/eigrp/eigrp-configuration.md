@@ -1,5 +1,6 @@
 ---
 title: EIGRP Configuration
+private_ips_ok: true
 tags:
   - eigrp
 status: draft

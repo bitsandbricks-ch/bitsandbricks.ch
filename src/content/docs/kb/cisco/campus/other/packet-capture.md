@@ -6,7 +6,7 @@ status: draft
 version: 0.0.1
 ---
 
-# Normal / Interface Level
+## Normal / Interface Level
 
 ```
 monitor capture CAP interface xy both
@@ -21,7 +21,7 @@ monitor capture CAP stop
 show monitor capture CAP buffer brief
 ```
 
-# CPU
+## CPU
 
 ```
 debug platform software fed switch active inject packet-capture start

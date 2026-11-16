@@ -13,6 +13,7 @@ import { readdirSync, readFileSync, writeFileSync, mkdirSync, rmSync, statSync, 
 import { join, relative, dirname, basename } from "node:path";
 import { execFileSync } from "node:child_process";
 import { parse, stringify } from "yaml";
+import { secrets } from "./lib/safety.mjs";
 
 const args = process.argv.slice(2);
 const ALL_PUBLIC = args.includes("--all-public"); // treat every kb note as public: true
@@ -111,19 +112,6 @@ function write(path, fm, body) {
 }
 
 const published = (fm) => fm.published !== false;
-
-/** Things that must not end up on a public site. Private (RFC 1918) addresses are allowed when the
- *  note says `private_ips_ok: true`, for lab examples. */
-function secrets(body, fm) {
-  const found = [];
-  if (/\b-u\s+['"]?(?!\$)[^\s'"]+:(?![$<])[^\s'"<]+['"]?/.test(body)) found.push("a user:password after -u");
-  if (/[a-z]+:\/\/[^\s/:@]+:[^\s/@<]+@/i.test(body)) found.push("a user:password inside a URL");
-  if (/\b(password|passwd|secret|token|api[_-]?key)\s*[:=]\s*['"]?(?![<$`])[^\s'"]{6,}/i.test(body)) found.push("a password, secret or token value");
-  if (/-----BEGIN [A-Z ]*PRIVATE KEY-----/.test(body)) found.push("a private key");
-  if (fm.private_ips_ok !== true && /\b(10\.\d{1,3}|172\.(1[6-9]|2\d|3[01])|192\.168)\.\d{1,3}\.\d{1,3}\b/.test(body)) found.push("private IP addresses (set private_ips_ok: true if they are lab examples)");
-  if (/^\s*\d+\s+\d{4}-\d\d-\d\d \d\d:\d\d:\d\d /m.test(body)) found.push("shell history with timestamps");
-  return found;
-}
 
 /* ---------- blog ---------- */
 let posts = 0;

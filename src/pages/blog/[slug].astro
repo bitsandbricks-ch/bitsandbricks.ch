@@ -5,6 +5,8 @@ import SaveButton from "../../components/SaveButton.astro";
 import Tags from "../../components/Tags.astro";
 import Comments from "../../components/Comments.astro";
 import { posts, day, minutes, facility, type Post } from "../../lib/blog";
+import { kbNotes, related, url } from "../../lib/content";
+import { REPO } from "../../lib/site";
 export async function getStaticPaths() {
   const all = await posts();
   return all.map((p, i) => ({ params: { slug: p.id }, props: { p, older: all[i + 1], newer: all[i - 1] } }));
@@ -13,6 +15,8 @@ const { p, older, newer } = Astro.props as { p: Post; older?: Post; newer?: Post
 const { Content, headings } = await render(p);
 const h2 = headings.filter((h) => h.depth === 2);
 const path = `/blog/${p.id}/`;
+// kb notes on the same topics, so a post leads into the reference notes
+const inKb = related({ id: "blog/" + p.id, data: { title: p.data.title, tags: p.data.tags, sidebar: {} } }, await kbNotes(), 5);
 ---
 <Site title={p.data.title} description={p.data.summary} path={path} type="article">
 <main id="main" class="view"><div class="wrap">
@@ -25,8 +29,10 @@ const path = `/blog/${p.id}/`;
     {p.data.sample && <p class="sample-note">Sample post written for the first version. Replace it with a real one.</p>}
   </div>
   <div class="read">
-    <article class="prose-body" data-pagefind-body>
+    <article class="prose-body" data-pagefind-body data-pagefind-filter="section:blog">
       <Content />
+      {inKb.length > 0 && <div class="panel" data-pagefind-ignore><h4>more on this in the kb</h4>{inKb.map((n) => <a class="lk" href={url(n.id)}>-&gt; {n.data.title}</a>)}</div>}
+      {p.filePath && <p class="editlink" data-pagefind-ignore><a href={`${REPO}/edit/main/${p.filePath}`}>edit this post on GitHub</a></p>}
       <Comments />
       <div class="pn">
         {older && <a href={`/blog/${older.id}/`}><span>&lt;- older</span><b>{older.data.title}</b></a>}

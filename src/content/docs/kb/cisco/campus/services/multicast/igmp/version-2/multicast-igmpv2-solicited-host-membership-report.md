@@ -7,6 +7,6 @@ status: draft
 version: 0.0.1
 ---
 
-# Multicast IGMPv2 Solicited Host Membership Report - TECH
+## Multicast IGMPv2 Solicited Host Membership Report - TECH
 
 #todo

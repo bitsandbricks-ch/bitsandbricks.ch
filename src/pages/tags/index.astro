@@ -1,0 +1,25 @@
+---
+import Site from "../../layouts/Site.astro";
+import { tagIndex } from "../../lib/content";
+const tags = [...(await tagIndex()).entries()].map(([t, v]) => ({ t, n: v.docs.length + v.posts.length }));
+const max = Math.max(1, ...tags.map((x) => x.n));
+---
+<Site title="Tags" description="Every tag on the blog, kb and courses." path="/tags/">
+<main id="main" class="view"><div class="wrap">
+  <div class="vhead">
+    <p class="prompt"><b>$</b> <i>show tags</i></p>
+    <h1>Tags</h1>
+    <p class="lede">{tags.length} tags across the blog, the kb and the courses. The bar shows how much is filed under each.</p>
+  </div>
+  <label class="filterbox" for="tq"><b>filter&gt;</b> include <input id="tq" type="text" placeholder="ospf, bgp, stp" autocomplete="off"></label>
+  <div class="taglist" id="taglist">
+    {tags.map(({ t, n }) => <a href={`/tags/${t}/`} data-t={t}><b>#{t}</b><span class="tbar" style={`--w:${Math.round((n / max) * 100)}%`}></span><span class="n">{n}</span></a>)}
+  </div>
+  <script is:inline>
+    document.getElementById("tq").addEventListener("input", function (e) {
+      var q = e.target.value.trim().toLowerCase();
+      document.querySelectorAll("#taglist a").forEach(function (a) { a.hidden = !!q && a.dataset.t.indexOf(q) < 0; });
+    });
+  </script>
+</div></main>
+</Site>

@@ -27,24 +27,42 @@ The brand guide is at `/brand/` (source: `src/legacy/brand.html`), logo files in
 ```
 npm ci            # once
 npm run dev       # local preview at http://localhost:4321
-npm run build     # build into dist/, build the search index, check every internal link
+npm run build     # check content, build into dist/, build the search index, check the site
 npm run preview   # serve dist/ (search only works here, not in npm run dev)
+npm test          # unit tests (kb helpers, secrets check), plain node --test
+npm run test:e2e  # browser smoke tests against dist/ (after npm run build)
+npm run check:content   # list content warnings: stubs, duplicate titles, #todo lines
 ```
 
-Pushing to `main` builds and publishes. Pull requests build too, so broken links fail the check.
+The build stops when a Markdown file looks like it holds a password, token, private key, shell
+history or private IP addresses (`tools/lib/safety.mjs`; lab examples with RFC 1918 addresses
+need `private_ips_ok: true` in the frontmatter), or has a `# ` heading (the title is the page's
+h1, start at `## `). After the build, `tools/check.mjs` fails on broken links or anchors, pages
+without a title or with more than one h1, duplicate ids, images without alt text, and anything
+loaded from another site.
+
+Pushing to `main` builds and publishes. Pull requests run the same build and tests, so a broken
+link, a leaked secret or a broken reader feature fails the check.
 
 ### Writing
 
 - **Blog post:** add `src/content/blog/<slug>.md` with `title`, `summary`, `date`, `facility`
   (shown as `%HOMELAB-5-POST`), `tags`. `severity: 6` makes it a short note, `draft: true` hides it.
 - **KB note:** add a `.md` file anywhere under `src/content/docs/kb/`. Folders become the sidebar
-  tree. Frontmatter: `title`, `description`, `tags`, `verified: "2026-11"`. Link other notes with
-  normal Markdown links (`/kb/routing/bgp/bgp-basics/` or `../lsa-types/`); backlinks and the graph
-  are built from those links.
+  tree, and every folder gets its own overview page at build time (`/kb/a/b/` lists the notes and
+  sub-folders in `a/b/`), so there is nothing to create by hand. Frontmatter: `title`,
+  `description`, `tags`, `verified: "2026-11"`. Link other notes with normal Markdown links
+  (`/kb/routing/bgp/bgp-basics/` or `../lsa-types/`); backlinks are built from those links. The graph
+  at `/kb/graph/` shows every note under its folder plus those links; `/tags/` lists every tag.
 - **Course:** a folder under `src/content/docs/courses/` with an `index.md` (`course: { path, slot,
   summary }`) and section folders with lessons (`sidebar.order` sets the order, `quiz: true` for
   quizzes). Learning paths are listed in `PATHS` in `src/lib/content.ts`. Every lesson has
   `access: free` for now; `account` and `paid` are reserved for when accounts exist.
+
+- **Line breaks in kb notes** work like they did in Grav: a single line break inside a paragraph
+  is kept (`src/lib/kb-line-breaks.mjs`). Blog posts and lessons use plain Markdown.
+- **Stubs:** a kb note with under 40 words shows a "stub" note and stays out of search and the
+  sitemap until it is written up (`tools/lib/stubs.mjs`).
 
 ### Importing from Grav
 

@@ -1,15 +1,24 @@
 ---
+// The kb graph as plain SVG: folders are hollow squares, notes dots, the current note green.
+// Thin dashed lines show where a note sits in the tree, solid ones are links between notes.
+// With labels="dirs" (the big graphs) note names show on hover and keyboard focus only.
 import type { GNode, GEdge } from "../lib/content";
-interface Props { nodes: GNode[]; edges: GEdge[]; w: number; h: number; label: string; highlight?: string }
-const { nodes, edges, w, h, label, highlight } = Astro.props;
+interface Props { nodes: GNode[]; edges: GEdge[]; w: number; h: number; label: string; labels?: "all" | "dirs" }
+const { nodes, edges, w, h, label, labels = "all" } = Astro.props;
 const at = new Map(nodes.map((n) => [n.id, n]));
+const f = (v: number) => v.toFixed(1);
+// labels near the right edge go to the left of their dot so they stay inside the box
+const lx = (n: GNode) => (n.x > w * 0.7 ? n.x - n.r - 4 : n.x + n.r + 4);
 ---
-<svg class="graph" viewBox={`0 0 ${w} ${h}`} role="img" aria-label={label}>
-  {edges.map((e) => <line x1={at.get(e.a)!.x.toFixed(1)} y1={at.get(e.a)!.y.toFixed(1)} x2={at.get(e.b)!.x.toFixed(1)} y2={at.get(e.b)!.y.toFixed(1)} />)}
+<svg class={"graph" + (labels === "dirs" ? " quiet" : "")} viewBox={`0 0 ${w} ${h}`} role="group" aria-label={label}>
+  {edges.map((e) => <line class={e.kind} x1={f(at.get(e.a)!.x)} y1={f(at.get(e.a)!.y)} x2={f(at.get(e.b)!.x)} y2={f(at.get(e.b)!.y)} />)}
   {nodes.map((n) => (
-    <a class="nd" href={n.href} data-tags={n.tags.join(" ")}>
-      <circle class={n.kind === "tag" ? "tagn" : n.kind === "me" ? "me" : highlight && !n.tags.includes(highlight) ? "dim" : undefined} cx={n.x.toFixed(1)} cy={n.y.toFixed(1)} r={n.r} />
-      <text x={(n.x + n.r + 4).toFixed(1)} y={(n.y + 3.5).toFixed(1)}>{n.label}</text>
+    <a class={"nd " + n.kind} href={n.href} data-tags={n.tags.join(" ")} aria-label={n.kind === "dir" ? `folder ${n.label}` : n.label}>
+      <title>{n.label}</title>
+      {n.kind === "dir"
+        ? <rect x={f(n.x - n.r)} y={f(n.y - n.r)} width={f(n.r * 2)} height={f(n.r * 2)} rx="1.5" />
+        : <circle cx={f(n.x)} cy={f(n.y)} r={n.r} />}
+      <text x={f(lx(n))} y={f(n.y + 3.5)} text-anchor={n.x > w * 0.7 ? "end" : undefined}>{n.label}</text>
     </a>
   ))}
 </svg>

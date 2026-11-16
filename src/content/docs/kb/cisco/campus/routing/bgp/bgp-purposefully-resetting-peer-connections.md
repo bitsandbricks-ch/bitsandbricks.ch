@@ -1,5 +1,6 @@
 ---
 title: BGP Purposefully Resetting Peer Connections
+private_ips_ok: true
 tags:
   - bgp
 status: draft
