@@ -194,3 +194,21 @@ test("search results work from the keyboard", async ({ page, isMobile }) => {
   await page.keyboard.press("Enter");
   await expect(page).toHaveURL(new RegExp(href.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "$"));
 });
+
+test("saved pages and progress survive a backup round trip", async ({ page, isMobile }) => {
+  test.skip(isMobile, "same code on phone");
+  await page.goto("/kb/cisco/campus/routing/ospf/ospf-authentication/");
+  await page.locator(".title-meta [data-save]").click();
+  await page.goto("/saved/");
+  const download = page.waitForEvent("download");
+  await page.locator("[data-backup-save]").click();
+  const file = await (await download).path();
+  await page.evaluate(() => localStorage.clear());
+  await page.reload();
+  await expect(page.locator("#saved-empty")).toBeVisible();
+  await page.locator("[data-backup-load]").setInputFiles(file);
+  await expect(page.locator("#backup-msg")).toContainText("1 new saved page");
+  await expect(page.locator('#saved-list a[href="/kb/cisco/campus/routing/ospf/ospf-authentication/"]')).toBeVisible();
+  await page.locator("[data-backup-load]").setInputFiles({ name: "x.json", mimeType: "application/json", buffer: Buffer.from('{"saved":{"javascript:alert(1)":{"title":"x"}}}') });
+  await expect(page.locator("#backup-msg")).toContainText("not a backup");
+});
