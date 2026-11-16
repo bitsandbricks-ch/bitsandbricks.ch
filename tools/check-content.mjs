@@ -7,6 +7,7 @@ import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 import { parse } from "yaml";
 import { secrets } from "./lib/safety.mjs";
+import { words, STUB_WORDS } from "./lib/stubs.mjs";
 
 const ROOT = new URL("../src/content/", import.meta.url).pathname;
 const quiet = process.argv.includes("--quiet");
@@ -19,7 +20,6 @@ const files = [];
 })(ROOT);
 
 const errors = [], warnings = [], titles = new Map();
-const words = (s) => s.replace(/```[\s\S]*?```/g, " code ").replace(/^#todo\s*$/gim, "").split(/\s+/).filter(Boolean).length;
 for (const file of files) {
   const rel = relative(ROOT, file);
   const raw = readFileSync(file, "utf8").replace(/\r\n/g, "\n");
@@ -39,7 +39,7 @@ for (const file of files) {
     if (segs.length > 1 && new Set(segs).size < segs.length) warnings.push(`${rel}: title repeats itself ("${fm.title}")`);
   }
   if (/^#todo\s*$/im.test(body)) warnings.push(`${rel}: has a #todo line`);
-  if (rel.startsWith("docs/kb/") && words(body) < 40) warnings.push(`${rel}: stub (${words(body)} words)`);
+  if (rel.startsWith("docs/kb/") && words(body) < STUB_WORDS) warnings.push(`${rel}: stub (${words(body)} words)`);
 }
 for (const [t, list] of titles) if (list.length > 1) warnings.push(`duplicate title "${t}": ${list.join(", ")}`);
 

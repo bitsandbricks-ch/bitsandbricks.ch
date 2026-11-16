@@ -9,6 +9,7 @@ import CourseCard from "../CourseCard.astro";
 import Comments from "../Comments.astro";
 import Graph from "../Graph.astro";
 import DocTree from "./DocTree.astro";
+import { words, STUB_WORDS } from "../../../tools/lib/stubs.mjs";
 import { allDocs, buildTree, flatTree, courses, noteGraph, buildGraph, related, parentOf, url, short, type Doc, type TreeItem } from "../../lib/content";
 
 interface Props { doc: Doc }
@@ -46,15 +47,17 @@ if (isKb) {
 }
 const titleOf = (x: string) => docs.find((d) => d.id === x)?.data.title ?? short(x);
 const kind = isKb ? "kb" : lesson ? "lesson" : "course";
+// stubs stay online but out of search and search engines
+const isStub = isKb && words(doc.body ?? "") < STUB_WORDS;
 ---
-<Site title={data.title} description={data.description ?? data.title} path={path} type="article">
+<Site title={data.title} description={data.description ?? data.title} path={path} type="article" noindex={isStub}>
   <div slot="menu" class="menu-tree"><p class="label">{treeTitle}</p><DocTree items={tree} current={id} links={isKb} /></div>
   <main id="main" class="view doc"><div class="wrap docgrid">
     <nav class="doctree" aria-label={isKb ? "Knowledge base" : "Course"}>
       {isKb ? <a class="label" href="/kb/">kb/</a> : <a class="label" href={course?.href}>{treeTitle}</a>}
       <DocTree items={tree} current={id} links={isKb} />
     </nav>
-    <article class="docmain" data-pagefind-body>
+    <article class="docmain" data-pagefind-body={isStub ? undefined : ""}>
       <div class="vhead">
         {crumb.length > 0 && <nav class="crumb" aria-label="Breadcrumb">{crumb.map(([label, href], i) => <>{i > 0 && <i>&gt;</i>}{href ? <a href={href}>{label}</a> : <span>{label}</span>}</>)}</nav>}
         {data.prompt && <p class="prompt"><b>$</b> <i>{data.prompt}</i></p>}
@@ -67,6 +70,7 @@ const kind = isKb ? "kb" : lesson ? "lesson" : "course";
           <Tags tags={data.tags} />
           <SaveButton url={path} title={data.title} kind={kind} />
         </div>
+        {isStub && <p class="sample-note" data-pagefind-ignore>Stub: only a few lines so far, so it is left out of search for now.</p>}
         {data.sample && <p class="sample-note" data-pagefind-ignore>Sample page written for the first version. Replace it with real content.</p>}
       </div>
       {isCourseIndex && course && (

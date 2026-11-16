@@ -5,6 +5,7 @@ import Site from "../../layouts/Site.astro";
 import Tags from "../Tags.astro";
 import DocTree from "./DocTree.astro";
 import { allDocs, kbNotes, buildTree, folderInfo, url, short } from "../../lib/content";
+import { words, STUB_WORDS } from "../../../tools/lib/stubs.mjs";
 
 interface Props { id: string }
 const { id } = Astro.props;
@@ -44,7 +45,7 @@ const topTags = [...tagCount.entries()].sort((a, b) => b[1] - a[1] || a[0].local
       )}
       {f.notes.length > 0 && (
         <div class="notelist">
-          {f.notes.map((n) => <a href={url(n.id)}><b>{n.data.title}</b>{n.data.description && <span>{n.data.description}</span>}</a>)}
+          {f.notes.map((n) => <a href={url(n.id)}><b>{n.data.title}{words(n.body ?? "") < STUB_WORDS && <em class="stub-tag">stub</em>}</b>{n.data.description && <span>{n.data.description}</span>}</a>)}
         </div>
       )}
     </div>
