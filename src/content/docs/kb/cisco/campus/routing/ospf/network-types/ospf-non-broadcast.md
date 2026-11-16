@@ -1,9 +1,9 @@
 ---
-title: OSFP Non-Broadcast
+title: OSPF Non-Broadcast
 private_ips_ok: true
 tags:
   - ospf
-  - network-type
+  - network-types
 status: draft
 version: 0.0.1
 ---

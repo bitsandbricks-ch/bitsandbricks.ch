@@ -1,5 +1,5 @@
 ---
-title: EtherChannel - EtherChannel
+title: EtherChannel
 tags:
   - etherchannel
 status: draft

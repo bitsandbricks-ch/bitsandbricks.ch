@@ -1,5 +1,5 @@
 ---
-title: OSFP Network Type Broadcast
+title: OSPF Network Type Broadcast
 tags:
   - network-types
   - ospf

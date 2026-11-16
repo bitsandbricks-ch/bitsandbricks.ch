@@ -1,5 +1,5 @@
 ---
-title: EtherChannel - EtherChannel Configuration
+title: EtherChannel Configuration
 tags:
   - etherchannel
 status: draft

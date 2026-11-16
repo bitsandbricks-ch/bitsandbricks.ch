@@ -1,5 +1,5 @@
 ---
-title: EtherChannel - EtherChannel - Troubleshooting
+title: EtherChannel - Troubleshooting
 tags:
   - etherchannel
 status: draft

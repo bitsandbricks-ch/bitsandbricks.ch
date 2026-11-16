@@ -1,5 +1,5 @@
 ---
-title: POE - POE
+title: POE
 tags:
   - switching
 status: draft

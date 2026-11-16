@@ -1,5 +1,5 @@
 ---
-title: IPv6 - IPv6 Device Tracking
+title: IPv6 Device Tracking
 tags:
   - ipv6
 status: draft

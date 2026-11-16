@@ -1,5 +1,5 @@
 ---
-title: IP SLA - IP SLA
+title: IP SLA
 tags:
   - other
 status: draft

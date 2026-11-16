@@ -352,3 +352,7 @@ button.tag { background: var(--surface); border: 1px solid var(--line-2); border
 #search .pagefind-ui__search-clear { font: 500 .78rem/1 var(--mono); color: var(--text-2); background: transparent; border: 0; }
 #search .pagefind-ui__search-clear:hover { color: var(--brick); }
 .search-scope { margin-bottom: 8px; }
+.callout-label { display: block; font: 600 .74rem/1.4 var(--mono); color: var(--brick); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 4px; }
+.prose-body blockquote.callout-warning { border-left-color: var(--brick); }
+.prose-body blockquote.callout-note, .prose-body blockquote.callout-info, .prose-body blockquote.callout-tip { border-left-color: var(--accent); }
+.prose-body blockquote.callout-note .callout-label, .prose-body blockquote.callout-info .callout-label, .prose-body blockquote.callout-tip .callout-label { color: var(--accent); }

@@ -1,0 +1,16 @@
+{
+  "/kb/cisco/campus/misc/logging-configuration-sequence-number/": "/kb/cisco/campus/misc/logging/logging-configuration-sequence-number/",
+  "/kb/cisco/campus/routing/bgp/bgp-generalized-ttl-security-feature-gtsm/": "/kb/cisco/campus/routing/bgp/neighbors/bgp-generalized-ttl-security-feature-gtsm/",
+  "/kb/cisco/campus/routing/bgp/neighbor/": "/kb/cisco/campus/routing/bgp/neighbors/",
+  "/kb/cisco/campus/routing/bgp/neighbor/bgp-neighbor-routes/": "/kb/cisco/campus/routing/bgp/neighbors/bgp-neighbor-routes/",
+  "/kb/cisco/campus/routing/ospf/network-type/": "/kb/cisco/campus/routing/ospf/network-types/",
+  "/kb/cisco/campus/routing/ospf/network-type/osfp-non-broadcast/": "/kb/cisco/campus/routing/ospf/network-types/ospf-non-broadcast/",
+  "/kb/cisco/campus/routing/ospf/network-type/ospf-point-to-multipoint-non-broadcast/": "/kb/cisco/campus/routing/ospf/network-types/ospf-point-to-multipoint-non-broadcast/",
+  "/kb/cisco/campus/routing/ospf/network-type/ospf-point-to-multipoint/": "/kb/cisco/campus/routing/ospf/network-types/ospf-point-to-multipoint/",
+  "/kb/cisco/campus/routing/ospf/network-type/ospf-point-to-point/": "/kb/cisco/campus/routing/ospf/network-types/ospf-point-to-point/",
+  "/kb/cisco/campus/routing/ospf/network-types/osfp-network-type-broadcast/": "/kb/cisco/campus/routing/ospf/network-types/ospf-network-type-broadcast/",
+  "/kb/cisco/campus/routing/ospf/network-types/osfp-network-type-non-broadcast/": "/kb/cisco/campus/routing/ospf/network-types/ospf-network-type-non-broadcast/",
+  "/kb/cisco/campus/routing/ospf/network-types/osfp-network-type-point-to-multipoint-non-broadcast/": "/kb/cisco/campus/routing/ospf/network-types/ospf-network-type-point-to-multipoint-non-broadcast/",
+  "/kb/cisco/campus/routing/ospf/network-types/osfp-network-type-point-to-multipoint/": "/kb/cisco/campus/routing/ospf/network-types/ospf-network-type-point-to-multipoint/",
+  "/kb/cisco/campus/routing/ospf/network-types/osfp-network-type-point-to-point/": "/kb/cisco/campus/routing/ospf/network-types/ospf-network-type-point-to-point/"
+}
