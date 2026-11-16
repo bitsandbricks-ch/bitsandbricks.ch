@@ -31,7 +31,7 @@ npm run build     # check content, build into dist/, build the search index, che
 npm run preview   # serve dist/ (search only works here, not in npm run dev)
 npm test          # unit tests (kb helpers, secrets check), plain node --test
 npm run test:e2e  # browser smoke tests against dist/ (after npm run build)
-npm run check:content   # list content warnings: stubs, duplicate titles, #todo lines
+npm run check:content   # list content warnings: stubs, duplicate titles, #todo-style tag lines
 ```
 
 The build stops when a Markdown file looks like it holds a password, token, private key, shell
@@ -61,6 +61,8 @@ link, a leaked secret or a broken reader feature fails the check.
 
 - **Line breaks in kb notes** work like they did in Grav: a single line break inside a paragraph
   is kept (`src/lib/kb-line-breaks.mjs`). Blog posts and lessons use plain Markdown.
+- **Tag lines:** a line of nothing but Obsidian tags (`#todo/cleanup`, `#certifications/...`) in a
+  kb note is kept in the file but not shown on the site; `npm run check:content` lists them.
 - **Stubs:** a kb note with under 40 words shows a "stub" note and stays out of search and the
   sitemap until it is written up (`tools/lib/stubs.mjs`).
 
