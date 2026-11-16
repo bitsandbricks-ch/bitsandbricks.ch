@@ -112,6 +112,33 @@ export interface GNode { id: string; label: string; href?: string; x: number; y:
 export interface GEdge { a: string; b: string; kind: "link" | "tree" }
 
 /**
+ * Folder labels in the big graphs: each goes right of its square, or left when that is free and
+ * the right is not (always left near the right edge). Labels that would cover another label, a
+ * folder square or a note dot either way are hidden until hover/focus. Shallow folders go first.
+ */
+type Box = [number, number, number, number];
+export function placeLabels(nodes: GNode[], w: number, charW = 6.2, lineH = 12): { left: Set<string>; crowded: Set<string> } {
+  const placed: Box[] = [];
+  const marks: [string, Box][] = nodes.map((n) => [n.id, [n.x - n.r, n.y - n.r, n.x + n.r, n.y + n.r]]);
+  const over = (a: Box, b: Box) => a[0] < b[2] && a[2] > b[0] && a[1] < b[3] && a[3] > b[1];
+  const free = (id: string, b: Box) => b[0] >= 0 && b[2] <= w && !placed.some((o) => over(b, o)) && !marks.some(([m, o]) => m !== id && over(b, o));
+  const left = new Set<string>(), crowded = new Set<string>();
+  const dirs = nodes.filter((n) => n.kind === "dir").sort((a, b) => a.id.split("/").length - b.id.split("/").length || a.id.localeCompare(b.id));
+  for (const n of dirs) {
+    const tw = n.label.length * charW;
+    const r: Box = [n.x + n.r + 4, n.y - lineH / 2, n.x + n.r + 4 + tw, n.y + lineH / 2];
+    const l: Box = [n.x - n.r - 4 - tw, n.y - lineH / 2, n.x - n.r - 4, n.y + lineH / 2];
+    const tries: [boolean, Box][] = n.x > w * 0.7 ? [[true, l], [false, r]] : [[false, r], [true, l]];
+    const ok = tries.find(([, b]) => free(n.id, b));
+    if (!ok) { crowded.add(n.id); if (tries[0][0]) left.add(n.id); continue; }
+    if (ok[0]) left.add(n.id);
+    placed.push(ok[1]);
+  }
+  for (const n of nodes) if (n.kind !== "dir" && n.x > w * 0.7) left.add(n.id);
+  return { left, crowded };
+}
+
+/**
  * A small deterministic force layout (Fruchterman-Reingold with cooling), so the graph looks the
  * same on every build. Repulsion scales with the area per node, so big graphs spread out instead
  * of being pushed against the border.

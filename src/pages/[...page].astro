@@ -16,10 +16,14 @@ const counts: Record<string, string> = p.body.includes("{{count:")
   ? {
       blog: plural((await posts()).length, "post"),
       kb: plural((await kbNotes()).length, "note"),
-      courses: plural((await courses()).length, "course"),
     }
   : {};
-const body = p.body.replace(/\{\{count:(\w+)\}\}/g, (_, k) => counts[k] ?? "");
+if (p.body.includes("{{count:courses")) {
+  const real = (await courses()).filter((c) => !c.sample).length;
+  counts.courses = real ? "online · " + plural(real, "course") : "in the works · samples only";
+  counts["courses-led"] = real ? "on" : "";
+}
+const body = p.body.replace(/\{\{count:([\w-]+)\}\}/g, (_, k) => counts[k] ?? "");
 ---
 <Site title={p.title} description={p.description} path={p.path} noindex={!p.index} fullTitle={p.path === "/"}>
   <Fragment set:html={body} />

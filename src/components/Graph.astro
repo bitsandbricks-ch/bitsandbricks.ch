@@ -2,23 +2,24 @@
 // The kb graph as plain SVG: folders are hollow squares, notes dots, the current note green.
 // Thin dashed lines show where a note sits in the tree, solid ones are links between notes.
 // With labels="dirs" (the big graphs) note names show on hover and keyboard focus only.
-import type { GNode, GEdge } from "../lib/content";
+import { placeLabels, type GNode, type GEdge } from "../lib/content";
 interface Props { nodes: GNode[]; edges: GEdge[]; w: number; h: number; label: string; labels?: "all" | "dirs" }
 const { nodes, edges, w, h, label, labels = "all" } = Astro.props;
 const at = new Map(nodes.map((n) => [n.id, n]));
 const f = (v: number) => v.toFixed(1);
-// labels near the right edge go to the left of their dot so they stay inside the box
-const lx = (n: GNode) => (n.x > w * 0.7 ? n.x - n.r - 4 : n.x + n.r + 4);
+// in the big graphs, folder names that would collide wait for hover/focus like note names
+const { left, crowded } = labels === "dirs" ? placeLabels(nodes, w) : { left: new Set(nodes.filter((n) => n.x > w * 0.7).map((n) => n.id)), crowded: new Set<string>() };
+const lx = (n: GNode) => (left.has(n.id) ? n.x - n.r - 4 : n.x + n.r + 4);
 ---
 <svg class={"graph" + (labels === "dirs" ? " quiet" : "")} viewBox={`0 0 ${w} ${h}`} role="group" aria-label={label}>
   {edges.map((e) => <line class={e.kind} x1={f(at.get(e.a)!.x)} y1={f(at.get(e.a)!.y)} x2={f(at.get(e.b)!.x)} y2={f(at.get(e.b)!.y)} />)}
   {nodes.map((n) => (
-    <a class={"nd " + n.kind} href={n.href} data-tags={n.tags.join(" ")} aria-label={n.kind === "dir" ? `folder ${n.label}` : n.label}>
+    <a class={"nd " + n.kind + (crowded.has(n.id) ? " crowded" : "")} href={n.href} data-tags={n.tags.join(" ")} aria-label={n.kind === "dir" ? `folder ${n.label}` : n.label}>
       <title>{n.label}</title>
       {n.kind === "dir"
         ? <rect x={f(n.x - n.r)} y={f(n.y - n.r)} width={f(n.r * 2)} height={f(n.r * 2)} rx="1.5" />
         : <circle cx={f(n.x)} cy={f(n.y)} r={n.r} />}
-      <text x={f(lx(n))} y={f(n.y + 3.5)} text-anchor={n.x > w * 0.7 ? "end" : undefined}>{n.label}</text>
+      <text x={f(lx(n))} y={f(n.y + 3.5)} text-anchor={left.has(n.id) ? "end" : undefined}>{n.label}</text>
     </a>
   ))}
 </svg>

@@ -146,7 +146,7 @@ test("] opens the next note", async ({ page, isMobile }) => {
 
 test("home rack lists the live blog, kb and courses with counts", async ({ page }) => {
   await page.goto("/");
-  for (const [href, unit] of [["/blog/", /\d+ posts?/], ["/kb/", /\d+ notes?/], ["/courses/", /\d+ courses?/]]) {
+  for (const [href, unit] of [["/blog/", /\d+ posts?/], ["/kb/", /\d+ notes?/], ["/courses/", /\d+ courses?|samples only/]]) {
     const slot = page.locator(".slot-on", { has: page.locator(`h3 a[href="${href}"]`) });
     await expect(slot.locator(".mono")).toContainText(unit);
   }
