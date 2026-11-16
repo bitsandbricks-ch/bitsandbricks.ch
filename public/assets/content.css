@@ -99,7 +99,7 @@ figcaption b { color: var(--brick); font-weight: 600; }
 .graph .hl circle { stroke: var(--text); stroke-width: 1.5; }
 .graph text { font: 500 10px var(--mono); fill: var(--text-2); pointer-events: none; paint-order: stroke; stroke: var(--surface); stroke-width: 3px; stroke-linejoin: round; }
 .graph .dir text { fill: var(--text); font-weight: 600; }
-.graph.quiet .note text { display: none; }
+.graph.quiet .note text, .graph .crowded text { display: none; }
 .graph.quiet .me text { display: inline; }
 .graph .hl circle { r: 5px; }
 .graph a.nd:hover text, .graph a.nd:focus-visible text { display: inline; fill: var(--text); }

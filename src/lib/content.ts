@@ -91,7 +91,7 @@ export async function tagIndex() {
 
 /* ---------- courses ---------- */
 export interface Lesson { id: string; title: string; href: string; section: string; quiz: boolean; access: string }
-export interface Course { id: string; slug: string; title: string; summary: string; path: string; slot: number; href: string; lessons: Lesson[]; sections: { label: string; lessons: Lesson[] }[] }
+export interface Course { id: string; slug: string; title: string; summary: string; path: string; slot: number; href: string; lessons: Lesson[]; sections: { label: string; lessons: Lesson[] }[]; sample: boolean }
 
 
 export async function courses(): Promise<Course[]> {
@@ -105,7 +105,7 @@ export async function courses(): Promise<Course[]> {
     const sections: Course["sections"] = [];
     lessons.forEach((l) => { const last = sections[sections.length - 1]; if (last && last.label === l.section) last.lessons.push(l); else sections.push({ label: l.section, lessons: [l] }); });
     const c = idx.data.course!;
-    out.push({ id: idx.id, slug: idx.id.split("/")[1], title: idx.data.title, summary: c.summary, path: c.path, slot: c.slot, href: url(idx.id), lessons, sections });
+    out.push({ id: idx.id, slug: idx.id.split("/")[1], title: idx.data.title, summary: c.summary, path: c.path, slot: c.slot, href: url(idx.id), lessons, sections, sample: idx.data.sample });
   }
   return out.sort((a, b) => a.slot - b.slot);
 }
