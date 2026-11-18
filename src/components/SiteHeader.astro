@@ -7,7 +7,7 @@ const { path } = Astro.props;
 ---
 <header class="site-head">
   <div class="wrap bar">
-    <a class="brand" href="/" aria-label="Bits and Bricks, home"><Fragment set:html={LOGO} /><span>Bits<b>&amp;</b>Bricks</span></a>
+    <a class="brand" href="/" aria-label="BitsAndBricks, home"><Fragment set:html={LOGO} /><span>Bits<b>&amp;</b>Bricks</span></a>
     <nav class="nav" id="site-menu" aria-label="Main">
       {NAV.map(([href, label]) => <a href={href} aria-current={isCurrent(href, path) ? "page" : undefined}>{label}</a>)}
       <a class="nav-ext" href="/saved/">saved</a>
@@ -31,5 +31,5 @@ const { path } = Astro.props;
     <button type="button" class="tag" data-scope="" aria-pressed="true">all</button><button type="button" class="tag" data-scope="kb" aria-pressed="false">kb</button><button type="button" class="tag" data-scope="blog" aria-pressed="false">blog</button><button type="button" class="tag" data-scope="courses" aria-pressed="false">courses</button>
   </div>
   <div id="search"></div>
-  <p class="search-note">Searches the blog, kb and courses. Press <kbd>/</kbd> to open it from anywhere.</p>
+  <p class="search-note">Searches the blog, kb and courses. Press <kbd>/</kbd> to open it from anywhere, <kbd>↓</kbd> <kbd>↑</kbd> to move through the results and <kbd>Enter</kbd> to open one. On notes and lessons, <kbd>[</kbd> and <kbd>]</kbd> go to the previous and next page.</p>
 </dialog>

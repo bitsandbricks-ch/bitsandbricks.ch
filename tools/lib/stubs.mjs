@@ -5,8 +5,8 @@ import { join, relative } from "node:path";
 
 export const STUB_WORDS = 40;
 
-/** Words of real text in a Markdown body: code blocks count as one word, "#todo" lines as none. */
-export const words = (body) => body.replace(/```[\s\S]*?```/g, " code ").replace(/^#todo\s*$/gim, "").replace(/<!--[\s\S]*?-->/g, "").split(/\s+/).filter(Boolean).length;
+/** Words of real text in a Markdown body: code blocks count as one word, tag-only lines ("#todo/cleanup") as none. */
+export const words = (body) => body.replace(/```[\s\S]*?```/g, " code ").replace(/^[ \t]*(#[\p{L}\p{N}_/-]+[ \t]*)+$/gmu, "").replace(/<!--[\s\S]*?-->/g, "").split(/\s+/).filter(Boolean).length;
 
 /** Site paths (/kb/a/b/) of every stub note under src/content/docs/kb */
 export function stubPaths(root = new URL("../../src/content/docs/", import.meta.url).pathname) {

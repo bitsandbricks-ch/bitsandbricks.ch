@@ -10,5 +10,15 @@ import Site from "../layouts/Site.astro";
   </div>
   <div class="notelist saved-list" id="saved-list" hidden></div>
   <div class="empty" id="saved-empty">Nothing saved yet. Use <b>save</b> on any post, note or lesson and it shows up here.</div>
+  <section class="backup" aria-labelledby="backup-h">
+    <h2 id="backup-h" class="prompt"><b>$</b> <i>copy running-config file:</i></h2>
+    <p>Saved pages and finished lessons live in this browser. To take them to another browser or device, download a backup here and load it there.</p>
+    <div class="btns">
+      <button class="btn btn-s" type="button" data-backup-save>download backup</button>
+      <button class="btn btn-s" type="button" data-backup-pick>load backup</button>
+      <input id="backup-file" type="file" aria-label="Backup file" accept="application/json,.json" data-backup-load hidden>
+    </div>
+    <p class="backup-msg" id="backup-msg" role="status"></p>
+  </section>
 </div></main>
 </Site>

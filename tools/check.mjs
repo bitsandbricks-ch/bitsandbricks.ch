@@ -4,9 +4,12 @@
 //   - pages without <title>, without exactly one <h1>, without lang, or with duplicate ids
 //   - images without alt text, and requests to other sites (no outside requests: the only
 //     allowed one is giscus, loaded on click by reader.js)
+//   - inline scripts or on...= handlers, or a page without the Content-Security-Policy (it
+//     forbids inline code, so these would silently stop working)
 //   - a missing search index
 import { readdirSync, readFileSync, statSync, existsSync } from "node:fs";
 import { join, relative, dirname } from "node:path";
+import { pageProblems, cssProblems } from "./lib/page-check.mjs";
 
 const DIST = new URL("../dist/", import.meta.url).pathname;
 const files = [];
@@ -39,24 +42,22 @@ for (const [file, text] of html) {
   for (const [, attr, raw] of body.matchAll(/\s(href|src)="([^"]*)"/g)) {
     const href = raw.replace(/&amp;/g, "&");
     if (/^(mailto:|tel:|data:|javascript:)/i.test(href)) continue;
-    if (/^(https?:)?\/\//i.test(href)) {
-      if (attr === "src") err(file, `loads ${href} from another site`);
-      continue;
-    }
+    if (/^(https?:)?\/\//i.test(href)) continue; // outside loads: pageProblems
     const u = new URL(href || page, "https://site" + page);
     const t = u.pathname === page && !href.split("#")[0] ? file : target(u.pathname);
     if (!t) { err(file, `broken link ${href}`); continue; }
     if (u.hash && t.endsWith(".html") && !ids(t).has(decodeURIComponent(u.hash.slice(1)))) err(file, `missing anchor ${href}`);
   }
-  if (!/<html[^>]*\slang="/.test(text)) err(file, "no lang on <html>");
-  if (!/<title>[^<]+<\/title>/.test(text)) err(file, "no <title>");
-  const h1 = (body.match(/<h1[\s>]/g) ?? []).length;
-  if (!file.endsWith("404.html") && h1 !== 1 && !/http-equiv="refresh"/.test(text)) err(file, `${h1} <h1> elements`);
-  const seen = new Set();
-  for (const [, id] of body.matchAll(/\sid="([^"]+)"/g)) { if (seen.has(id)) err(file, `duplicate id "${id}"`); seen.add(id); }
-  for (const [img] of body.matchAll(/<img\b[^>]*>/g)) if (!/\salt="/.test(img)) err(file, `image without alt: ${img.slice(0, 80)}`);
+  for (const p of pageProblems(text, { notFound: file.endsWith("404.html") })) err(file, p);
 }
+// stylesheets: fonts and images must come from this site too
+(function walk(dir) {
+  for (const f of readdirSync(dir)) {
+    const p = join(dir, f);
+    if (statSync(p).isDirectory()) walk(p); else if (p.endsWith(".css")) for (const m of cssProblems(readFileSync(p, "utf8"))) err(p, m);
+  }
+})(DIST);
 if (!existsSync(join(DIST, "pagefind/pagefind-ui.js"))) errors.push("no search index (dist/pagefind)");
 
-console.log(errors.length ? errors.join("\n") : `site ok: ${files.length} pages (links, anchors, titles, headings, ids, alt text, no outside requests)`);
+console.log(errors.length ? errors.join("\n") : `site ok: ${files.length} pages (links, anchors, titles, headings, ids, alt text, CSP, no outside requests)`);
 process.exit(errors.length ? 1 : 0);

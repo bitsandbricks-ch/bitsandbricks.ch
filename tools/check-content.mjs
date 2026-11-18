@@ -1,13 +1,15 @@
 // Before the build: check every Markdown file in src/content.
 //   errors (fail the build): secrets, private addresses or shell history (see lib/safety.mjs),
-//                            broken frontmatter, a missing title, a "# " heading (h1)
-//   warnings (printed):      duplicate titles, stub notes, "#todo" lines, titles like "X - X"
+//                            broken frontmatter, a missing title, a "# " heading (h1),
+//                            a [[wiki link]] that names no kb note
+//   warnings (printed):      duplicate titles, stub notes, "#todo"-style tag lines, titles like "X - X"
 // node tools/check-content.mjs [--quiet]   (--quiet: only the warning count)
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 import { parse } from "yaml";
 import { secrets } from "./lib/safety.mjs";
 import { words, STUB_WORDS } from "./lib/stubs.mjs";
+import { wikiLinks, wikiIndex, resolveWiki, notesOnDisk } from "./lib/wikilinks.mjs";
 
 const ROOT = new URL("../src/content/", import.meta.url).pathname;
 const quiet = process.argv.includes("--quiet");
@@ -20,6 +22,7 @@ const files = [];
 })(ROOT);
 
 const errors = [], warnings = [], titles = new Map();
+const wiki = wikiIndex(notesOnDisk());
 for (const file of files) {
   const rel = relative(ROOT, file);
   const raw = readFileSync(file, "utf8").replace(/\r\n/g, "\n");
@@ -31,6 +34,9 @@ for (const file of files) {
   if (!fm.title) errors.push(`${rel}: no title`);
   for (const s of secrets(m[1] + "\n" + body, fm)) errors.push(`${rel}: looks like ${s}`);
   if (/^# \S/m.test(body.replace(/```[\s\S]*?```/g, ""))) errors.push(`${rel}: has a "# " heading; the title is the page's only h1, start at "## "`);
+  for (const w of wikiLinks(body)) {
+    if (!resolveWiki(wiki, w.target)) errors.push(`${rel}: ${w.raw} names no note${wiki.map.get(w.target.toLowerCase()) === null ? " (several notes match, use the folder path: [[folder/name]])" : ""}`);
+  }
   if (fm.draft) continue;
   if (fm.title) {
     const key = String(fm.title).toLowerCase();
@@ -38,7 +44,8 @@ for (const file of files) {
     const segs = String(fm.title).split(" - ").map((x) => x.trim().toLowerCase());
     if (segs.length > 1 && new Set(segs).size < segs.length) warnings.push(`${rel}: title repeats itself ("${fm.title}")`);
   }
-  if (/^#todo\s*$/im.test(body)) warnings.push(`${rel}: has a #todo line`);
+  const tagLines = body.replace(/```[\s\S]*?```/g, "").match(/^[ \t]*(#[\p{L}\p{N}_/-]+[ \t]*)+$/gmu);
+  if (tagLines) warnings.push(`${rel}: Obsidian tag line, not shown on the site: ${tagLines.map((t) => t.trim()).join(", ")}`);
   if (rel.startsWith("docs/kb/") && words(body) < STUB_WORDS) warnings.push(`${rel}: stub (${words(body)} words)`);
 }
 for (const [t, list] of titles) if (list.length > 1) warnings.push(`duplicate title "${t}": ${list.join(", ")}`);

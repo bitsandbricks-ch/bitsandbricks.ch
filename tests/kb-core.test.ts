@@ -1,7 +1,7 @@
 // Unit tests for the pure kb helpers. Run: npm test (node --test, no extra dependencies).
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { url, buildTree, flatTree, linksOf, foldersOf, folderInfo, branchPoint, radial, layout, related, parentOf, type Doc } from "../src/lib/kb-core.ts";
+import { url, buildTree, flatTree, linksOf, wikiOf, placeLabels, foldersOf, folderInfo, branchPoint, radial, layout, related, parentOf, type Doc } from "../src/lib/kb-core.ts";
 
 const doc = (id: string, opts: { title?: string; tags?: string[]; order?: number; body?: string } = {}): Doc => ({
   id, body: opts.body ?? "", data: { title: opts.title ?? id.split("/").pop()!, tags: opts.tags ?? [], sidebar: { order: opts.order } },
@@ -30,6 +30,12 @@ test("linksOf resolves absolute, relative, .md and anchors, skips outside links 
   const ids = new Set(["kb/r/ospf/lsa", "kb/r/ospf/areas", "kb/r/bgp/basics", "kb/s/stp"]);
   const d = doc("kb/r/ospf/areas", { body: "[a](../bgp/basics/) [b](./lsa.md#types) [c](/kb/s/stp/) [d](https://example.com/kb/s/stp/) [e](lsa) [self](./areas/) [gone](../nope/)" });
   assert.deepEqual(linksOf(d, ids).sort(), ["kb/r/bgp/basics", "kb/r/ospf/lsa", "kb/s/stp"]);
+});
+
+test("linksOf counts [[wiki links]] by file name or title", () => {
+  const notes = [doc("kb/r/ospf/lsa", { title: "LSA Types" }), doc("kb/r/ospf/areas", { body: "[[LSA types]] [[areas]] [[nope]]" })];
+  const ids = new Set(notes.map((n) => n.id));
+  assert.deepEqual(linksOf(notes[1], ids, wikiOf(notes)), ["kb/r/ospf/lsa"]);
 });
 
 test("folders: every level, direct children and branch point", () => {
@@ -69,4 +75,24 @@ test("related ranks shared tags first, then the nearest folder", () => {
   const notes = [me, doc("kb/s/x", { tags: ["ospf"] }), doc("kb/r/ospf/y", { tags: ["ospf"] }), doc("kb/r/z", { tags: ["ospf", "security"] }), doc("kb/q", { tags: ["bgp"] })];
   assert.deepEqual(related(me, notes).map((n) => n.id), ["kb/r/z", "kb/r/ospf/y", "kb/s/x"]);
   assert.deepEqual(related(doc("kb/none"), notes), []);
+});
+
+test("codeBlocks finds fenced code and skips diagrams", async () => {
+  const { codeBlocks } = await import("../src/lib/kb-core.ts");
+  const body = "text\n```\nshow ip ospf neighbor\n```\nmore\n```cisco\nrouter ospf 1\n network 0.0.0.0 255.255.255.255 area 0\n```\n```mermaid\ngraph TD\n```\n````\n```nested```\n````\n";
+  assert.deepEqual(codeBlocks(body), [
+    { lang: "", code: "show ip ospf neighbor" },
+    { lang: "cisco", code: "router ospf 1\n network 0.0.0.0 255.255.255.255 area 0" },
+    { lang: "", code: "```nested```" },
+  ]);
+});
+
+test("placeLabels flips a label left when the right is taken, hides it when both are", () => {
+  const n = (id: string, x: number, y: number, kind: "dir" | "note" = "dir") => ({ id, label: id.split("/").pop() + "/", x, y, r: 5, kind, tags: [] as string[] });
+  const free = placeLabels([n("a", 100, 100)], 600);
+  assert.ok(!free.left.has("a") && !free.crowded.has("a"), "free label goes right");
+  const flip = placeLabels([n("b", 300, 200), n("b/n", 315, 200, "note")], 600);
+  assert.ok(flip.left.has("b") && !flip.crowded.has("b"), "right side blocked by a dot: left");
+  const both = placeLabels([n("c", 300, 200), n("c/n", 315, 200, "note"), n("c/m", 285, 200, "note")], 600);
+  assert.ok(both.crowded.has("c"), "both sides blocked: hidden until hover");
 });

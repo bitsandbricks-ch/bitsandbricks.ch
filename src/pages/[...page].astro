@@ -1,6 +1,8 @@
 ---
 import Site from "../layouts/Site.astro";
+import { posts } from "../lib/blog";
 import { pages, type LegacyPage } from "../lib/legacy";
+import { kbNotes, courses } from "../lib/content";
 
 export function getStaticPaths() {
   return pages
@@ -8,7 +10,21 @@ export function getStaticPaths() {
     .map((p) => ({ params: { page: p.path === "/" ? undefined : p.path.replace(/^\/|\/$/g, "") }, props: { p } }));
 }
 const { p } = Astro.props as { p: LegacyPage };
+// Live numbers for the home page's rack slots, counted at build time
+const plural = (n: number, one: string) => `${n} ${one}${n === 1 ? "" : "s"}`;
+const counts: Record<string, string> = p.body.includes("{{count:")
+  ? {
+      blog: plural((await posts()).length, "post"),
+      kb: plural((await kbNotes()).length, "note"),
+    }
+  : {};
+if (p.body.includes("{{count:courses")) {
+  const real = (await courses()).filter((c) => !c.sample).length;
+  counts.courses = real ? "online · " + plural(real, "course") : "in the works · samples only";
+  counts["courses-led"] = real ? "on" : "";
+}
+const body = p.body.replace(/\{\{count:([\w-]+)\}\}/g, (_, k) => counts[k] ?? "");
 ---
 <Site title={p.title} description={p.description} path={p.path} noindex={!p.index} fullTitle={p.path === "/"}>
-  <Fragment set:html={p.body} />
+  <Fragment set:html={body} />
 </Site>

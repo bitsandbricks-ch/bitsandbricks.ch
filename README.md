@@ -2,7 +2,7 @@
 
 [![Pages](https://github.com/bitsandbricks-ch/bitsandbricks.ch/actions/workflows/pages.yml/badge.svg?branch=main)](https://github.com/bitsandbricks-ch/bitsandbricks.ch/actions/workflows/pages.yml?query=branch%3Amain) [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-bitsandbricks-ffdd00?logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/bitsandbricks)
 
-The Bits & Bricks website: Mike's projects (Hubra, Labdex, Homelab), plus the blog,
+The BitsAndBricks website: Mike's projects (Hubra, Labdex, Homelab), plus the blog,
 the knowledge base and courses. Built with [Astro](https://astro.build), with search by
 [Pagefind](https://pagefind.app), published as static files on GitHub Pages.
 No cookies, no tracking, no outside requests (comments load only when a reader clicks).
@@ -31,7 +31,9 @@ npm run build     # check content, build into dist/, build the search index, che
 npm run preview   # serve dist/ (search only works here, not in npm run dev)
 npm test          # unit tests (kb helpers, secrets check), plain node --test
 npm run test:e2e  # browser smoke tests against dist/ (after npm run build)
-npm run check:content   # list content warnings: stubs, duplicate titles, #todo lines
+npm run check:content   # list content warnings: stubs, duplicate titles, #todo-style tag lines
+npm run new -- note cisco/campus/routing/ospf "OSPF LSA Types"   # new kb note, frontmatter filled in
+npm run new -- post "Title of the post" --tags homelab,opnsense   # new blog post (starts as draft: true)
 ```
 
 The build stops when a Markdown file looks like it holds a password, token, private key, shell
@@ -61,8 +63,27 @@ link, a leaked secret or a broken reader feature fails the check.
 
 - **Line breaks in kb notes** work like they did in Grav: a single line break inside a paragraph
   is kept (`src/lib/kb-line-breaks.mjs`). Blog posts and lessons use plain Markdown.
+- **Tag lines:** a line of nothing but Obsidian tags (`#todo/cleanup`, `#certifications/...`) in a
+  kb note is kept in the file but not shown on the site; `npm run check:content` lists them.
 - **Stubs:** a kb note with under 40 words shows a "stub" note and stays out of search and the
   sitemap until it is written up (`tools/lib/stubs.mjs`).
+
+- **Cheat sheets:** folders whose notes have code blocks get `/kb/<folder>/commands/` with every
+  snippet on one page (made for printing).
+- **Cisco IOS code:** kb code blocks that look like IOS (or are fenced as ```` ```cisco ````) get
+  prompts, `!` comments, show/debug/no and `<placeholders>` marked at build time
+  (`src/lib/kb-ios.mjs`). Fence other output as ```` ```text ```` to keep it plain.
+- **Wiki links:** `[[ospf-packets]]` or `[[OSPF Packets]]` links to a kb note by its file name or
+  title, from notes, lessons and blog posts. `[[ospf-packets#Hello packet]]` jumps to a heading,
+  `[[ospf-packets|the packets]]` sets the text, `[[bgp/timers]]` picks one of two notes with the same
+  name. They count as links in the graph and in "linked from". A wiki link to no note fails the
+  build (`npm run check:content` says which).
+- **Content-Security-Policy:** every page carries one (`src/layouts/Site.astro`): scripts only from
+  `/assets/` (and giscus.app once a reader loads comments), no inline `<script>` or `onclick=`.
+  Put page code in `public/assets/`; `npm run build` fails on inline scripts.
+- **Moving a note:** move the file, then add `"old path": "new path"` to `src/redirects.json` so
+  links from elsewhere keep working.
+- **Callouts:** `> [!note]`, `> [!warning]`, `> [!info]` as the first line of a quote in a kb note.
 
 ### Importing from Grav
 

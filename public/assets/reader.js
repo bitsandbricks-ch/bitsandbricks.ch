@@ -6,6 +6,9 @@
   function load(k) { try { return JSON.parse(localStorage.getItem(k) || "{}") || {}; } catch (e) { return {}; } }
   function store(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
   var saved = load("bb_saved"), done = load("bb_done");
+  // Re-read before every change: another tab may have saved something since this page loaded,
+  // and writing our old copy back would drop it.
+  function refresh() { saved = load("bb_saved"); done = load("bb_done"); }
   var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
 
   function paintSave(btn) {
@@ -36,13 +39,16 @@
   function renderSaved() {
     var box = document.getElementById("saved-list"), empty = document.getElementById("saved-empty");
     if (!box) return;
-    var keys = Object.keys(saved);
+    var keys = Object.keys(saved).filter(function (u) { return /^\/[^/]/.test(u); }); // site paths only
     box.innerHTML = keys.map(function (u) { var s = saved[u]; return '<div class="saved-row"><a href="' + esc(u) + '"><b>' + esc(s.title) + "</b><span>" + esc(s.kind) + " · " + esc(u) + '</span></a><button class="star" type="button" aria-pressed="true" data-save="' + esc(u) + '" data-title="' + esc(s.title) + '" data-kind="' + esc(s.kind) + '" aria-label="Remove ' + esc(s.title) + ' from saved"><span>remove</span></button></div>'; }).join("");
     box.hidden = !keys.length;
     if (empty) empty.hidden = !!keys.length;
   }
 
+  function repaint() { renderSaved(); document.querySelectorAll("[data-save]").forEach(paintSave); paintProgress(); }
+
   document.addEventListener("click", function (e) {
+    if (e.target.closest("[data-done-next],[data-save],[data-done],[data-reset]")) refresh();
     var dn = e.target.closest("[data-done-next]");
     if (dn) { done[dn.dataset.doneNext] = 1; store("bb_done", done); return; } // the link then navigates
     var t = e.target.closest("[data-save],[data-done],[data-reset],[data-comments]");
@@ -115,6 +121,8 @@
   function copyButtons() {
     document.querySelectorAll(".prose-body pre").forEach(function (pre) {
       if (pre.parentNode.classList.contains("pre-wrap") || !navigator.clipboard) return;
+      // wide code scrolls sideways, so keyboard users must be able to focus it
+      if (pre.scrollWidth > pre.clientWidth) { pre.tabIndex = 0; pre.setAttribute("aria-label", "code, scrolls sideways"); }
       var wrap = document.createElement("div"); wrap.className = "pre-wrap";
       pre.parentNode.insertBefore(wrap, pre); wrap.appendChild(pre);
       var b = document.createElement("button");
@@ -139,9 +147,89 @@
     });
   }
 
+  // Page bits that used to be inline scripts (the Content-Security-Policy allows no inline code)
+  function filter(input, items, key) {
+    var box = document.getElementById(input);
+    if (!box) return;
+    box.addEventListener("input", function () {
+      var q = box.value.trim().toLowerCase();
+      document.querySelectorAll(items).forEach(function (r) { r.hidden = !!q && r.dataset[key].indexOf(q) < 0; });
+    });
+  }
+
+  function graph() {
+    var fg = document.getElementById("fullgraph"), stat = document.getElementById("gstat"), tags = document.getElementById("gtags"), cur = "";
+    if (!fg || !stat || !tags) return;
+    fg.scrollLeft = (fg.scrollWidth - fg.clientWidth) / 2;
+    function pick(t) {
+      cur = t;
+      var n = 0;
+      fg.querySelectorAll("a.nd").forEach(function (a) {
+        if (a.classList.contains("dir")) { a.classList.toggle("dim", !!cur); return; }
+        var hit = !!cur && (" " + a.dataset.tags + " ").indexOf(" " + cur + " ") >= 0;
+        if (hit) n++;
+        a.classList.toggle("hl", hit);
+        a.classList.toggle("dim", !!cur && !hit);
+      });
+      tags.querySelectorAll("[data-hl]").forEach(function (x) { x.setAttribute("aria-pressed", x.dataset.hl === cur ? "true" : "false"); });
+      stat.textContent = "";
+      if (cur) {
+        var a = document.createElement("a"); a.href = "/tags/" + encodeURIComponent(cur) + "/"; a.textContent = "List them";
+        stat.append(n + " notes tagged #" + cur + ", lit up below. ", a, " or click the tag again to clear.");
+      }
+    }
+    tags.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-hl]"); if (b) pick(cur === b.dataset.hl ? "" : b.dataset.hl);
+    });
+    // /kb/graph/?tag=ospf opens with that tag lit
+    var t = new URLSearchParams(location.search).get("tag");
+    if (t && tags.querySelector('[data-hl="' + CSS.escape(t) + '"]')) pick(t);
+  }
+
+  // Backup of saved pages and lesson progress as a JSON file, to move them to another browser
+  function backup() {
+    var dl = document.querySelector("[data-backup-save]"), up = document.querySelector("[data-backup-load]"), msg = document.getElementById("backup-msg");
+    if (!dl || !up) return;
+    document.querySelector("[data-backup-pick]").addEventListener("click", function () { up.click(); });
+    dl.addEventListener("click", function () {
+      var blob = new Blob([JSON.stringify({ app: "bitsandbricks.ch", version: 1, saved: saved, done: done }, null, 2)], { type: "application/json" });
+      var a = document.createElement("a");
+      a.href = URL.createObjectURL(blob); a.download = "bitsandbricks-saved.json";
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+    });
+    up.addEventListener("change", function () {
+      var f = up.files && up.files[0]; if (!f) return;
+      var r = new FileReader();
+      r.onload = function () {
+        var data; try { data = JSON.parse(r.result); } catch (e) { data = null; }
+        if (!data || data.app !== "bitsandbricks.ch") { msg.textContent = "% That file is not a backup from this site."; return; }
+        refresh();
+        var n = 0, m = 0;
+        Object.keys(data.saved || {}).forEach(function (u) {
+          var s = data.saved[u];
+          if (/^\/[^/]/.test(u) && s && typeof s.title === "string") { if (!saved[u]) n++; saved[u] = { title: s.title.slice(0, 200), kind: String(s.kind || "").slice(0, 20) }; }
+        });
+        Object.keys(data.done || {}).forEach(function (id) { if (/^[\w\/.-]+$/.test(id)) { if (!done[id]) m++; done[id] = 1; } });
+        store("bb_saved", saved); store("bb_done", done);
+        renderSaved(); paintProgress();
+        msg.textContent = "Loaded: " + n + " new saved " + (n === 1 ? "page" : "pages") + ", " + m + " new finished " + (m === 1 ? "lesson" : "lessons") + ".";
+        up.value = "";
+      };
+      r.readAsText(f);
+    });
+  }
+
+  // Keep stars and progress current when another tab changes them, or when the back button
+  // shows this page from the browser's cache.
+  window.addEventListener("storage", function (e) { if (e.key === null || e.key === "bb_saved" || e.key === "bb_done") { refresh(); repaint(); } });
+  window.addEventListener("pageshow", function (e) { if (e.persisted) { refresh(); repaint(); } });
+
   function init() {
     document.querySelectorAll("[data-save]").forEach(paintSave);
     paintProgress(); renderSaved(); anchors(); copyButtons(); quizzes();
+    backup(); filter("q", "#loglist .row", "s"); filter("tq", "#taglist a", "t"); graph();
+    document.querySelectorAll("[data-print]").forEach(function (b) { b.addEventListener("click", function () { window.print(); }); });
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();

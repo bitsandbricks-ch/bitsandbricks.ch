@@ -4,7 +4,7 @@
 import Site from "../../layouts/Site.astro";
 import Tags from "../Tags.astro";
 import DocTree from "./DocTree.astro";
-import { allDocs, kbNotes, buildTree, folderInfo, url, short } from "../../lib/content";
+import { allDocs, kbNotes, buildTree, folderInfo, codeBlocks, url, short } from "../../lib/content";
 import { words, STUB_WORDS } from "../../../tools/lib/stubs.mjs";
 
 interface Props { id: string }
@@ -15,6 +15,7 @@ const tree = buildTree(await allDocs(), "kb");
 const parts = id.split("/");
 const crumb: [string, string?][] = [["kb", "/kb/"], ...parts.slice(1, -1).map((p, i): [string, string] => [p, url(parts.slice(0, i + 2).join("/"))]), [parts[parts.length - 1]]];
 const path = url(id);
+const snippets = notes.filter((n) => n.id.startsWith(id + "/")).reduce((s, n) => s + codeBlocks(n.body ?? "").length, 0);
 const name = short(id);
 // tags used in this folder and below, most used first
 const tagCount = new Map<string, number>();
@@ -35,6 +36,7 @@ const topTags = [...tagCount.entries()].sort((a, b) => b[1] - a[1] || a[0].local
         <h1>{name}/</h1>
         <p class="lede">{f.total} {f.total === 1 ? "note" : "notes"}{f.dirs.length ? ` in ${f.dirs.length} ${f.dirs.length === 1 ? "folder" : "folders"}${f.notes.length ? ` and ${f.notes.length} here` : ""}` : ""}.</p>
         {topTags.length > 0 && <Tags tags={topTags} />}
+        {snippets > 0 && <p><a class="lk-cmd" href={path + "commands/"}>$ show commands: {snippets} {snippets === 1 ? "snippet" : "snippets"} from this folder on one page -&gt;</a></p>}
       </div>
       {f.dirs.length > 0 && (
         <div class="cats">

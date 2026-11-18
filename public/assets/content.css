@@ -2,7 +2,7 @@
 
 .view { padding-block: 40px 72px; }
 .view > .wrap { display: grid; gap: 28px; }
-.vhead { display: grid; gap: 12px; max-width: 48rem; }
+.vhead { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; max-width: 48rem; }
 .vhead h1 { font-size: clamp(1.9rem, 4vw, 3rem); }
 .vhead .lede { color: var(--text-2); font-size: 1.08rem; }
 .tag { font: 500 .78rem/1.4 var(--mono); color: var(--brick); text-decoration: none; }
@@ -12,7 +12,7 @@
 .pill.ok { border-color: var(--accent); color: var(--accent); }
 .pill.cur { border-color: var(--brick); color: var(--brick); }
 .metarow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-.crumb { font: 500 .8rem/1.6 var(--mono); color: var(--text-3); }
+.crumb { display: flex; flex-wrap: wrap; align-items: baseline; font: 500 .8rem/1.6 var(--mono); color: var(--text-3); }
 .crumb i { margin-inline: 6px; }
 .crumb a { color: var(--text-2); text-decoration: none; }
 .crumb a:hover { color: var(--brick); }
@@ -68,7 +68,7 @@ figcaption b { color: var(--brick); font-weight: 600; }
 .fig .area.a { stroke: var(--brick); } .fig .area.b { stroke: var(--accent); }
 .fig text.al { fill: var(--brick); font-weight: 600; } .fig text.bl { fill: var(--accent); font-weight: 600; }
 .side { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 84px); display: grid; gap: 18px; }
-.side h4 { margin: 0; font: 600 .74rem/1.4 var(--mono); color: var(--text-3); text-transform: uppercase; letter-spacing: .07em; }
+.side h4, .side h2.ph { margin: 0; font: 600 .74rem/1.4 var(--mono); color: var(--text-3); text-transform: uppercase; letter-spacing: .07em; }
 .side .blk { display: grid; gap: 6px; }
 .side a.lk { font: 500 .84rem/1.4 var(--mono); color: var(--text-2); text-decoration: none; }
 .side a.lk:hover { color: var(--brick); }
@@ -86,7 +86,7 @@ figcaption b { color: var(--brick); font-weight: 600; }
 .notemain { display: grid; gap: 22px; min-width: 0; }
 .notefoot { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; }
 .panel { border: 1px solid var(--line-2); border-radius: 6px; background: var(--surface); padding: 14px 16px; display: grid; gap: 10px; align-content: start; min-width: 0; }
-.panel h4 { margin: 0; font: 600 .74rem/1.4 var(--mono); color: var(--text-3); text-transform: uppercase; letter-spacing: .07em; }
+.panel h4, .panel h2.ph, .doctoc h2.ph, .side h2.ph { margin: 0; font: 600 .74rem/1.4 var(--mono); color: var(--text-3); text-transform: uppercase; letter-spacing: .07em; }
 .panel a.lk { font: 500 .86rem/1.4 var(--mono); color: var(--text-2); text-decoration: none; }
 .panel a.lk:hover { color: var(--brick); }
 .graph { width: 100%; height: auto; display: block; overflow: visible; }
@@ -99,7 +99,7 @@ figcaption b { color: var(--brick); font-weight: 600; }
 .graph .hl circle { stroke: var(--text); stroke-width: 1.5; }
 .graph text { font: 500 10px var(--mono); fill: var(--text-2); pointer-events: none; paint-order: stroke; stroke: var(--surface); stroke-width: 3px; stroke-linejoin: round; }
 .graph .dir text { fill: var(--text); font-weight: 600; }
-.graph.quiet .note text { display: none; }
+.graph.quiet .note text, .graph .crowded text { display: none; }
 .graph.quiet .me text { display: inline; }
 .graph .hl circle { r: 5px; }
 .graph a.nd:hover text, .graph a.nd:focus-visible text { display: inline; fill: var(--text); }
@@ -225,7 +225,7 @@ div.quiz { display: grid; gap: 10px; border: 1px solid var(--line-2); border-rad
 
 /* kb notes and lessons: tree | text | on this page */
 .docgrid { display: grid; grid-template-columns: 230px minmax(0, 1fr) 190px; gap: 40px; align-items: start; }
-.docmain { display: grid; gap: 24px; min-width: 0; }
+.docmain { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; min-width: 0; }
 .docmain > .vhead { gap: 10px; }
 .doc .title-meta { margin-top: 4px; }
 .doctree, .doctoc { position: sticky; top: 84px; max-height: calc(100vh - 100px); overflow-y: auto; scrollbar-width: thin; }
@@ -247,7 +247,7 @@ div.quiz { display: grid; gap: 10px; border: 1px solid var(--line-2); border-rad
 .doctree details[open] > summary::before, .menu-tree details[open] > summary::before { content: "- "; }
 .doctoc { display: grid; gap: 6px; }
 .doctoc .blk { display: grid; gap: 6px; }
-.doctoc h4, .toc-m summary { margin: 0; font: 600 .74rem/1.4 var(--mono); color: var(--text-3); text-transform: uppercase; letter-spacing: .07em; }
+.doctoc h4, .doctoc h2.ph, .toc-m summary { margin: 0; font: 600 .74rem/1.4 var(--mono); color: var(--text-3); text-transform: uppercase; letter-spacing: .07em; }
 .doctoc a.lk, .toc-m a.lk { font: 500 .82rem/1.4 var(--mono); color: var(--text-2); text-decoration: none; }
 .doctoc a.lk:hover, .toc-m a.lk:hover { color: var(--brick); }
 .doctoc a.lk::before, .toc-m a.lk::before { content: "# "; color: var(--brick); }
@@ -309,7 +309,7 @@ button.tag { background: var(--surface); border: 1px solid var(--line-2); border
 .taglist .n { color: var(--text-3); text-align: right; }
 
 /* prose: smaller headings from imported notes, ordered lists, maths */
-.prose-body h4, .prose-body h5, .prose-body h6 { margin: 6px 0 -6px; font: 600 .82rem/1.4 var(--mono); color: var(--text); text-transform: uppercase; letter-spacing: .05em; }
+.prose-body h4, .prose-body h5, .prose-body h6 { margin: 6px 0 -6px; font: 600 .82rem/1.4 var(--mono); color: var(--text); letter-spacing: .02em; }
 .prose-body ol { margin: 0; padding-left: 24px; display: grid; gap: 6px; }
 .prose-body li > ul, .prose-body li > ol { margin-top: 6px; }
 .prose-body hr { border: 0; border-top: 1px dashed var(--line-2); margin: 6px 0; width: 100%; }
@@ -352,3 +352,64 @@ button.tag { background: var(--surface); border: 1px solid var(--line-2); border
 #search .pagefind-ui__search-clear { font: 500 .78rem/1 var(--mono); color: var(--text-2); background: transparent; border: 0; }
 #search .pagefind-ui__search-clear:hover { color: var(--brick); }
 .search-scope { margin-bottom: 8px; }
+.callout-label { display: block; font: 600 .74rem/1.4 var(--mono); color: var(--brick); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 4px; }
+.prose-body blockquote.callout-warning { border-left-color: var(--brick); }
+.prose-body blockquote.callout-note, .prose-body blockquote.callout-info, .prose-body blockquote.callout-tip { border-left-color: var(--accent); }
+.prose-body blockquote.callout-note .callout-label, .prose-body blockquote.callout-info .callout-label, .prose-body blockquote.callout-tip .callout-label { color: var(--accent); }
+
+/* breadcrumb links are underlined lightly so they read as links next to plain text */
+.crumb a { text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: .25em; }
+.crumb a:hover { text-decoration-color: currentColor; }
+/* kb tree: the folder row is a toggle button plus a link to the folder page */
+.dirrow { display: flex; align-items: center; gap: 2px; }
+.tw { flex: none; width: 1.6em; padding: 5px 0; border: 0; background: none; color: var(--brick); font: 600 .84rem/1.35 var(--mono); cursor: pointer; border-radius: 3px; }
+.tw:hover { background: var(--surface-2); }
+.doctree a.dirlink, .menu-tree a.dirlink { padding: 5px 4px; color: var(--text); font-weight: 600; }
+.doctree a.dirlink:hover, .menu-tree a.dirlink:hover { color: var(--brick); }
+.doctree a.dirlink[aria-current]::before, .menu-tree a.dirlink[aria-current]::before { content: none; }
+.doctree a.dirlink[aria-current], .menu-tree a.dirlink[aria-current] { color: var(--brick); background: none; }
+
+/* command cheat sheet */
+.lk-cmd { font: 500 .86rem/1.4 var(--mono); color: var(--brick); }
+.linkbtn { font: inherit; color: var(--brick); background: none; border: 0; padding: 0; text-decoration: underline; cursor: pointer; }
+.cheat { display: grid; gap: 8px; }
+.cheat h2 { font: 700 1.05rem/1.3 var(--sans); font-stretch: 110%; letter-spacing: 0; display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; }
+.cheat h2 a { color: var(--text); text-decoration: none; }
+.cheat h2 a:hover { color: var(--brick); }
+.cheat h2 span { font: 400 .76rem/1.4 var(--mono); color: var(--text-3); }
+.cheat .prose-body { max-width: none; gap: 8px; }
+
+/* print: just the text, no chrome */
+@media print {
+  .site-head, .site-foot, .doctree, .doctoc, .toc-m, .kbx, .comments, .star, .copy, .hanchor, .skip, .search-dlg, .linkbtn, .side, .title-meta .star { display: none !important; }
+  body { background: #fff; color: #000; font-size: 11pt; }
+  .docgrid, .read { display: block; }
+  .view { padding: 0; }
+  .prose-body pre, .cheat pre { white-space: pre-wrap; break-inside: avoid; border-color: #999; }
+  .cheat { break-inside: avoid-page; }
+  a { color: #000; }
+}
+
+/* Cisco IOS blocks in kb notes (marked at build time by src/lib/kb-ios.mjs) */
+.prose-body pre.ios .p { color: var(--brick); font-weight: 600; }
+.prose-body pre.ios .c { color: var(--text-3); font-style: italic; }
+.prose-body pre.ios .k { color: var(--accent); font-weight: 600; }
+.prose-body pre.ios .v { color: var(--text-2); text-decoration: underline dotted; text-underline-offset: .2em; }
+
+/* [[wiki link]] to a note that does not exist (the content check fails the build on these) */
+.wiki-missing { font-style: normal; color: var(--text-3); text-decoration: underline wavy var(--brick); text-underline-offset: .25em; }
+
+/* Long folder paths (cisco/campus/services/multicast/...) have no spaces: let them break on phones */
+.panel { grid-template-columns: minmax(0, 1fr); }
+.panel .lk, .vhead .prompt, .crumb a, .crumb span { overflow-wrap: anywhere; }
+.tgroup, .notelist { grid-template-columns: minmax(0, 1fr); }
+.notelist a b, .tgroup-hd { min-width: 0; overflow-wrap: anywhere; }
+.prose-body { overflow-wrap: break-word; }
+.prose-body a { overflow-wrap: anywhere; }
+.done-row .btn { white-space: normal; text-align: left; line-height: 1.3; }
+
+/* /saved/: backup to a file */
+.backup { margin-top: 40px; display: grid; gap: 10px; max-width: 48rem; }
+.backup h2 { font-size: .85rem; }
+.backup p { color: var(--text-2); }
+.backup-msg { font: 500 .85rem/1.4 var(--mono); }

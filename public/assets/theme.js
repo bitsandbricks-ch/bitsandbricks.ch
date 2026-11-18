@@ -2,7 +2,19 @@
 (function () {
   var root = document.documentElement, saved = null;
   try { saved = localStorage.getItem("bb_theme"); } catch (e) {}
-  if (saved === "light" || saved === "dark") root.dataset.theme = saved;
+  // a chosen scheme also recolours the phone's browser bar, whatever the system setting says
+  var bar = function () {
+    var c = getComputedStyle(root).getPropertyValue("--page").trim(); // site.css loads before this script
+    if (c) document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) { m.content = c; });
+  };
+  if (saved === "light" || saved === "dark") { root.dataset.theme = saved; bar(); }
+  // switched in another tab: follow it, so open tabs don't disagree
+  addEventListener("storage", function (e) {
+    if (e.key !== "bb_theme") return;
+    if (e.newValue === "light" || e.newValue === "dark") root.dataset.theme = e.newValue;
+    else delete root.dataset.theme;
+    bar();
+  });
   document.addEventListener("DOMContentLoaded", function () {
     // Phone menu: the nav drops down under the header
     var menu = document.querySelector("[data-menu-toggle]"), head = document.querySelector(".site-head");
@@ -12,6 +24,18 @@
       head.querySelector(".nav").addEventListener("click", function (e) { if (e.target.closest("a")) setOpen(false); });
       document.addEventListener("keydown", function (e) { if (e.key === "Escape" && head.classList.contains("open")) { setOpen(false); menu.focus(); } });
     }
+    // long trees: scroll the sidebar so the current page is in view
+    var tree = document.querySelector(".doctree"), here = tree && tree.querySelector('a[aria-current="page"]');
+    if (here && tree.scrollHeight > tree.clientHeight) tree.scrollTop = here.offsetTop - tree.offsetTop - tree.clientHeight / 3;
+    // kb tree: +/- opens and closes a folder
+    document.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-tw]"); if (!b) return;
+      var list = b.parentNode.nextElementSibling, open = b.getAttribute("aria-expanded") !== "true";
+      if (list) list.hidden = !open;
+      b.setAttribute("aria-expanded", open ? "true" : "false");
+      b.textContent = open ? "-" : "+";
+      b.setAttribute("aria-label", (open ? "close " : "open ") + b.nextElementSibling.textContent);
+    });
     // Search: Pagefind's index and UI load the first time the search opens
     var dlg = document.querySelector(".search-dlg"), loaded = false;
     var openSearch = function () {
@@ -44,10 +68,25 @@
     if (dlg) {
       dlg.querySelector("[data-search-close]").addEventListener("click", function () { dlg.close(); });
       dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); });
+      // Keyboard: arrows walk the results, Enter in the box opens the first one
+      dlg.addEventListener("keydown", function (e) {
+        var input = dlg.querySelector(".pagefind-ui__search-input");
+        var links = Array.prototype.slice.call(dlg.querySelectorAll("#search .pagefind-ui__result-link"));
+        var at = links.indexOf(document.activeElement);
+        if (e.key === "Enter" && e.target === input && links.length) { e.preventDefault(); location.href = links[0].href; }
+        else if (e.key === "ArrowDown" && links.length && (e.target === input || at >= 0)) { e.preventDefault(); links[Math.min(at + 1, links.length - 1)].focus(); }
+        else if (e.key === "ArrowUp" && at >= 0) { e.preventDefault(); if (at === 0 && input) input.focus(); else links[at - 1].focus(); }
+      });
     }
     document.addEventListener("keydown", function (e) {
-      var t = e.target, typing = t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable);
-      if (e.key === "/" && !typing && dlg && !dlg.open) { e.preventDefault(); openSearch(); }
+      var t = e.target, typing = t && (/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName) || t.isContentEditable);
+      // Ctrl+/ and friends belong to the browser and screen readers
+      if (e.key === "/" && !typing && !e.ctrlKey && !e.metaKey && !e.altKey && dlg && !dlg.open) { e.preventDefault(); openSearch(); }
+      // [ and ] go to the previous and next note or lesson
+      if ((e.key === "[" || e.key === "]") && !typing && !e.ctrlKey && !e.metaKey && !e.altKey && !(dlg && dlg.open)) {
+        var to = document.querySelector('.pn a[rel="' + (e.key === "[" ? "prev" : "next") + '"]');
+        if (to) location.href = to.href;
+      }
     });
     var btn = document.querySelector("[data-theme-toggle]");
     if (!btn) return;
@@ -55,6 +94,7 @@
       var dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
       root.dataset.theme = dark ? "light" : "dark";
       try { localStorage.setItem("bb_theme", root.dataset.theme); } catch (e) {}
+      bar();
     });
   });
 })();

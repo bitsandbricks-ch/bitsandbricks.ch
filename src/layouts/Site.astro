@@ -14,6 +14,10 @@ const url = SITE + path;
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+{/* Everything loads from this site; the only exception is Giscus, after a reader clicks "load comments".
+    wasm-unsafe-eval: Pagefind search runs as WebAssembly. Inline styles: the graph and some pages use style="". */}
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://giscus.app; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src https://giscus.app; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>{pageTitle}</title>
 <meta name="description" content={description}>
 {noindex && <meta name="robots" content="noindex">}
@@ -26,9 +30,11 @@ const url = SITE + path;
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#111111">
+{/* the phone's browser bar matches the header (--page); theme.js follows the toggle */}
+<meta name="theme-color" content="#f7f7f4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-<link rel="alternate" type="application/rss+xml" title="Bits & Bricks blog" href="/blog/rss.xml">
+<link rel="alternate" type="application/rss+xml" title="BitsAndBricks blog" href="/blog/rss.xml">
 <link rel="preload" href="/assets/fonts/archivo-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/ibm-plex-mono-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/site.css">

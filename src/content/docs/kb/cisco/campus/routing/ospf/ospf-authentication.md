@@ -38,7 +38,7 @@ Type 2 authentication, or the simple password authentication (more commonly refe
 router ospf 1
  area <area-number> authentication
 
-interfac Gig x/y
+interface Gig x/y
  ip ospf authentication-key xxx
 ```
 
