@@ -1,0 +1,6 @@
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.woff2 binary
+# Written by npm, never by hand; collapsed in diffs.
+package-lock.json linguist-generated=true

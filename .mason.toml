@@ -1,0 +1,4 @@
+# Mason's per-repo settings file. The handbook profile says which rules apply here.
+[handbook]
+profile = "static-site"
+version = "v1"
