@@ -20,8 +20,14 @@ Run what CI runs (`.github/workflows/pages.yml`) and make it pass:
 - `npm run build` (checks content, builds, indexes search and checks every internal link)
 - `npm run test:e2e` (after the build; needs `npx playwright install chromium` once)
 
+## Differs from the handbook
+
+- **No pre-commit hooks yet**: there is no `.pre-commit-config.yaml` ([decision 0010](https://github.com/bitsandbricks-ch/handbook/blob/main/decisions/0010-pre-commit.md)), so skip `pre-commit run --all-files` until it lands.
+
 ## Repo-specific rules
 
+- Work from an issue: open one if there is none, comment when you start and when blocked, link it from the PR.
+- Commits and PR titles follow Conventional Commits, with these scopes: `blog`, `kb`, `courses`, `pages`, `tools`, `ci`.
 - **Publishing:** every merge to `main` deploys the site. Nothing goes live except through a merged pull request.
 - **No releases:** the site has no version and no changelog
   ([decision 0012](https://github.com/bitsandbricks-ch/handbook/blob/main/decisions/0012-no-changelog-without-releases.md));
